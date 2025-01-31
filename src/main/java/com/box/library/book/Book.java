@@ -1,24 +1,35 @@
 package com.box.library.book;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "books")
 public class Book {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String title;
     private String author;
     private String publisher;
     private String ISBN;
-    private BookStatus status;
+
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private BookStatus status = BookStatus.AVAILABLE;
 
     public Book() {
     }
 
-    public Book(Long id, String title, String author, String publisher, String ISBN, BookStatus status) {
+    public Book(Long id, String title, String author, String publisher, String ISBN) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.publisher = publisher;
         this.ISBN = ISBN;
-        this.status = status;
+        this.status = BookStatus.AVAILABLE;
     }
 
     public Long getId() {
