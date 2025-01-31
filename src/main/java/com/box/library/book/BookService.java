@@ -10,4 +10,8 @@ public class BookService {
     public BookService(BookRepository repository) {
         this.repository = repository;
     }
+
+    public Book create(Book book) {
+       return repository.save(book);
+    }
 }
