@@ -24,6 +24,7 @@ public class BookController {
         Pageable pageable = PageRequest.of(0, 10);
         Page<Book> booksPage = service.findAll(pageable);
         return ResponseEntity.ok()
+                .headers(createResponseHeaders(booksPage))
                 .body(booksPage.getContent());
     }
 
@@ -31,5 +32,14 @@ public class BookController {
     public ResponseEntity<Book> create(@RequestBody Book book) {
         Book savedBook = service.create(book);
         return ResponseEntity.ok(savedBook);
+    }
+
+    private HttpHeaders createResponseHeaders(Page<Book> booksPage) {
+        long totalBooks = service.count();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Range", "books " + 0 + "-"
+                + booksPage.getNumberOfElements()
+                + "/" + totalBooks);
+        return headers;
     }
 }

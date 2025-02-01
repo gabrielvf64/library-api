@@ -20,4 +20,8 @@ public class BookService {
     public Book create(Book book) {
         return repository.save(book);
     }
+
+    public long count() {
+        return repository.count();
+    }
 }
