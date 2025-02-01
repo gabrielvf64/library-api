@@ -20,7 +20,7 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Book>> getAllBooks(@RequestHeader(value = "Range", required = false) String range) {
+    public ResponseEntity<List<Book>> findAllPageable(@RequestHeader(value = "Range", required = false) String range) {
         Pageable pageable = PageRequest.of(0, 10);
         Page<Book> booksPage = service.findAll(pageable);
         return ResponseEntity.ok()
