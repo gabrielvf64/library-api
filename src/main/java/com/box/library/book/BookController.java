@@ -19,6 +19,12 @@ public class BookController {
         this.service = service;
     }
 
+    @PostMapping
+    public ResponseEntity<Book> create(@RequestBody Book book) {
+        Book savedBook = service.create(book);
+        return ResponseEntity.ok(savedBook);
+    }
+
     @GetMapping
     public ResponseEntity<List<Book>> findAllPageable(@RequestHeader(value = "Range", required = false) String range) {
         Pageable pageable = PageRequest.of(0, 10);
@@ -26,12 +32,6 @@ public class BookController {
         return ResponseEntity.ok()
                 .headers(createResponseHeaders(booksPage))
                 .body(booksPage.getContent());
-    }
-
-    @PostMapping
-    public ResponseEntity<Book> create(@RequestBody Book book) {
-        Book savedBook = service.create(book);
-        return ResponseEntity.ok(savedBook);
     }
 
     private HttpHeaders createResponseHeaders(Page<Book> booksPage) {
