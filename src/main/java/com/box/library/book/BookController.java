@@ -26,11 +26,6 @@ public class BookController {
     @GetMapping
     public ResponseEntity<List<Book>> findAll() {
         List<Book> books = service.findAll();
-
-        if(books == null || books.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.ok(books);
+        return books.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(books);
     }
 }
