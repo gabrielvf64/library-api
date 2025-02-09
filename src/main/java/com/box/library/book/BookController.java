@@ -28,4 +28,10 @@ public class BookController {
         List<Book> books = service.findAll();
         return books.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(books);
     }
+
+    @GetMapping("{id}")
+    public ResponseEntity<Book> findById(@PathVariable Long id) {
+        Book book = service.findById(id);
+        return book != null ? ResponseEntity.ok(book) : ResponseEntity.notFound().build();
+    }
 }

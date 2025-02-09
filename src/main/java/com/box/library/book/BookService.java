@@ -17,5 +17,12 @@ public class BookService {
        return repository.save(book);
     }
 
-    public List<Book> findAll() { return repository.findAll(); }
+    public List<Book> findAll() {
+        return repository.findAll();
+    }
+
+    public Book findById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
+
 }
