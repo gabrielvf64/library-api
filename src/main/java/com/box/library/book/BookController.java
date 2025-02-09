@@ -29,9 +29,8 @@ public class BookController {
         return books.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(books);
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<Book> findById(@PathVariable Long id) {
-        Book book = service.findById(id);
-        return book != null ? ResponseEntity.ok(book) : ResponseEntity.notFound().build();
+    @GetMapping("{bookId}")
+    public ResponseEntity<Book> findById(@PathVariable Long bookId) {
+        return ResponseEntity.ok(service.findById(bookId));
     }
 }
