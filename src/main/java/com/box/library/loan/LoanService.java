@@ -1,5 +1,6 @@
 package com.box.library.loan;
 
+import com.box.library.exception.LoanNotFoundException;
 import com.box.library.request.CreateLoanRequest;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +29,14 @@ public class LoanService {
         return repository.findByUserId(userId);
     }
 
+
     public Loan returnLoan(Long loanId) {
-        Loan loan = repository.findById(loanId).orElseThrow();
-        loan.setStatus(LoanStatus.FINISHED);
-        loan.setReturnDate(LocalDate.now());
-        return repository.save(loan);
+        return repository.findById(loanId)
+                .map(loan -> {
+                    loan.setReturnDate(LocalDate.now());
+                    loan.setStatus(LoanStatus.FINISHED);
+                    return repository.save(loan);
+                })
+                .orElseThrow(() -> new LoanNotFoundException(loanId));
     }
-
-
 }
