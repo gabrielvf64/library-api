@@ -15,7 +15,7 @@ public class Loan {
 
     private Long userId;
 
-    private List<Long> bookIds;
+    private List<Long> booksIds;
 
     private LocalDate loanDate;
     private LocalDate expectedReturnDate;
@@ -25,9 +25,9 @@ public class Loan {
     public Loan() {
     }
 
-    public Loan(Long userId, List<Long> bookIds) {
+    public Loan(Long userId, List<Long> booksIds) {
         this.userId = userId;
-        this.bookIds = bookIds;
+        this.booksIds = booksIds;
         this.loanDate = LocalDate.now();
         this.expectedReturnDate = loanDate.plusDays(3);
         this.status = LoanStatus.ACTIVE;
@@ -49,12 +49,12 @@ public class Loan {
         this.userId = userId;
     }
 
-    public List<Long> getBookIds() {
-        return bookIds;
+    public List<Long> getBooksIds() {
+        return booksIds;
     }
 
-    public void setBookIds(List<Long> bookIds) {
-        this.bookIds = bookIds;
+    public void setBooksIds(List<Long> booksIds) {
+        this.booksIds = booksIds;
     }
 
     public LocalDate getLoanDate() {
