@@ -1,5 +1,6 @@
 package com.box.library.book;
 
+import com.box.library.exception.BookNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,5 +18,11 @@ public class BookService {
        return repository.save(book);
     }
 
-    public List<Book> findAll() { return repository.findAll(); }
+    public List<Book> findAll() {
+        return repository.findAll();
+    }
+
+    public Book findById(Long bookId) {
+        return repository.findById(bookId).orElseThrow(() -> new BookNotFoundException(bookId));
+    }
 }
