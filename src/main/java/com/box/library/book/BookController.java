@@ -28,4 +28,10 @@ public class BookController {
         List<Book> books = service.findAll();
         return books.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(books);
     }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<Book>> findAllByFilter(String author, String title, String isbn) {
+        List<Book> books = service.findAllByFilter(author, title, isbn);
+        return books.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(books);
+    }
 }
