@@ -3,7 +3,6 @@ package com.box.library.user;
 import jakarta.persistence.*;
 
 @Entity
-
 @Table(name = "users")
 public class LibraryUser {
 
