@@ -34,7 +34,7 @@ class BookServiceTest {
         assertEquals("Java Spring", result.getTitle());
         assertEquals("John Doe", result.getAuthor());
         assertEquals("SpringPublisher", result.getPublisher());
-        assertEquals("1234567890", result.getISBN());
+        assertEquals("1234567890", result.getIsbn());
         assertEquals(BookStatus.AVAILABLE, result.getStatus());
     }
 

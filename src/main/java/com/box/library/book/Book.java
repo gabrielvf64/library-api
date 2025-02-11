@@ -13,7 +13,7 @@ public class Book {
     private String title;
     private String author;
     private String publisher;
-    private String ISBN;
+    private String isbn;
 
 
     @Column(nullable = false)
@@ -23,12 +23,12 @@ public class Book {
     public Book() {
     }
 
-    public Book(Long id, String title, String author, String publisher, String ISBN) {
+    public Book(Long id, String title, String author, String publisher, String isbn) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.publisher = publisher;
-        this.ISBN = ISBN;
+        this.isbn = isbn;
         this.status = BookStatus.AVAILABLE;
     }
 
@@ -64,12 +64,12 @@ public class Book {
         this.publisher = publisher;
     }
 
-    public String getISBN() {
-        return ISBN;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public BookStatus getStatus() {
