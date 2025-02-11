@@ -14,8 +14,27 @@ public class BookService {
     }
 
     public Book create(Book book) {
-       return repository.save(book);
+        return repository.save(book);
     }
 
-    public List<Book> findAll() { return repository.findAll(); }
+    public List<Book> findAll() {
+        return repository.findAll();
+    }
+
+    public List<Book> findAllByFilter(String author, String title, String isbn) {
+        if (hasNoFilterAttribute(author, title, isbn)) {
+            throw new IllegalArgumentException("Pelo menos um parâmetro de busca deve ser informado.");
+        }
+        return repository.findByAuthorContainingIgnoreCaseOrTitleContainingIgnoreCaseOrIsbnContainingIgnoreCase(author,
+                title, isbn);
+    }
+
+    private boolean hasNoFilterAttribute(String author, String title, String isbn) {
+        return isAttributeNullOrBlank(author) && isAttributeNullOrBlank(title)
+                && isAttributeNullOrBlank(isbn);
+    }
+
+    private boolean isAttributeNullOrBlank(String string) {
+        return string == null || string.isBlank();
+    }
 }
