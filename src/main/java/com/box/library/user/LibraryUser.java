@@ -1,6 +1,5 @@
 package com.box.library.user;
 
-
 import jakarta.persistence.*;
 
 @Entity
