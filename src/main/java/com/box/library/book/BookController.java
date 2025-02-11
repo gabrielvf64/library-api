@@ -33,4 +33,10 @@ public class BookController {
     public ResponseEntity<Book> findById(@PathVariable Long bookId) {
         return ResponseEntity.ok(service.findById(bookId));
     }
+
+    @DeleteMapping("{bookId}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long bookId) {
+        service.deleteById(bookId);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -25,4 +25,9 @@ public class BookService {
     public Book findById(Long bookId) {
         return repository.findById(bookId).orElseThrow(() -> new BookNotFoundException(bookId));
     }
+
+    public void deleteById(Long bookId) {
+        Book book = findById(bookId);
+        repository.deleteById(book.getId());
+    }
 }
