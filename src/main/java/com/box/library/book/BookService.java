@@ -27,7 +27,6 @@ public class BookService {
     }
 
     public void deleteById(Long bookId) {
-        Book book = findById(bookId);
-        repository.deleteById(book.getId());
+        repository.deleteById(bookId);
     }
 }
