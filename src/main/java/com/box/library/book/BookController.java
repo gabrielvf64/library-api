@@ -29,12 +29,12 @@ public class BookController {
         return books.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(books);
     }
 
-    @GetMapping("{bookId}")
+    @GetMapping("/{bookId}")
     public ResponseEntity<Book> findById(@PathVariable Long bookId) {
         return ResponseEntity.ok(service.findById(bookId));
     }
 
-    @DeleteMapping("{bookId}")
+    @DeleteMapping("/{bookId}")
     public ResponseEntity<Void> deleteById(@PathVariable Long bookId) {
         service.deleteById(bookId);
         return ResponseEntity.noContent().build();
