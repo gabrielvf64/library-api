@@ -62,4 +62,15 @@ public class LibraryUserController {
         }
     }
 
+    // Endpoint to delete a user
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        try {
+            service.deleteUser(id);
+            return ResponseEntity.noContent().build(); // Retorna 204 No Content, se o usuário for removido com sucesso
+        } catch (UserNotFoundException ex) {
+            return ResponseEntity.notFound().build(); // Retorna 404, se o usuário não for encontrado
+        }
+    }
+
 }

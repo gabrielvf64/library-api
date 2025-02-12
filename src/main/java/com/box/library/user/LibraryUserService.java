@@ -56,4 +56,20 @@ public class LibraryUserService {
 
         return repository.save(existingUser);
     }
+
+    // Method to delete a user by ID (old)
+//    public void deleteUser(Long id) {
+//        LibraryUser user = repository.findById(id)
+//                .orElseThrow(() -> new UserNotFoundException(id));
+//        repository.delete(user);
+//    }
+//
+    // Method to delete a user by ID (new)
+    public void deleteUser(Long id) {
+        if (!repository.existsById(id)) {
+            throw new UserNotFoundException(id);
+        }
+        repository.deleteById(id);
+    }
+
 }
