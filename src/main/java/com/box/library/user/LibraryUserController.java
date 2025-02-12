@@ -33,4 +33,10 @@ public class LibraryUserController {
         List<LibraryUser> users = service.findAllUsers();
         return users.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(users);
     }
+
+    // Endpoint to search for user by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<LibraryUser> findUserById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findUserById(id));
+    }
 }
