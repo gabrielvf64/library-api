@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.ResponseEntity;
 
+import com.box.library.exception.UserNotFoundException;
+
 import java.util.List;
 
 
@@ -39,4 +41,25 @@ public class LibraryUserController {
     public ResponseEntity<LibraryUser> findUserById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findUserById(id));
     }
+
+    // Endpoint to update a user (old)
+//    @PutMapping("/{id}")
+//    public ResponseEntity<LibraryUser> updateUser(@PathVariable Long id, @RequestBody LibraryUser updatedUser) {
+//        LibraryUser user = service.updateUser(id, updatedUser);
+//        return ResponseEntity.ok(user);
+//    }
+
+    // Endpoint to update a user (new)
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody LibraryUser updatedUser) {
+        try {
+            LibraryUser user = service.updateUser(id, updatedUser);
+            return ResponseEntity.ok(user);
+        } catch (UserNotFoundException ex) {
+            return ResponseEntity.notFound().build(); // Returns 404 if the user is not found
+        } catch (Exception ex) {
+            return ResponseEntity.internalServerError().body("Erro ao atualizar usuário");
+        }
+    }
+
 }

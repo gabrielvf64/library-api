@@ -30,4 +30,30 @@ public class LibraryUserService {
         return repository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
+
+    // Method to update an existing user (old)
+//    public LibraryUser updateUser(Long id, LibraryUser updatedUser) {
+//        return repository.findById(id)
+//                .map(existingUser -> {
+//                    existingUser.setName(updatedUser.getName());
+//                    existingUser.setCpf(updatedUser.getCpf());
+//                    return repository.save(existingUser);
+//                })
+//                .orElseThrow(() -> new UserNotFoundException(id));
+//    }
+
+    // Method to update an existing user (new)
+    public LibraryUser updateUser(Long id, LibraryUser updatedUser) {
+        LibraryUser existingUser = repository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+
+        if (updatedUser.getName() != null && !updatedUser.getName().trim().isEmpty()) {
+            existingUser.setName(updatedUser.getName());
+        }
+        if (updatedUser.getCpf() != null && !updatedUser.getCpf().trim().isEmpty()) {
+            existingUser.setCpf(updatedUser.getCpf());
+        }
+
+        return repository.save(existingUser);
+    }
 }
