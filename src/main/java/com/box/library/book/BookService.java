@@ -27,6 +27,9 @@ public class BookService {
     }
 
     public void deleteById(Long bookId) {
+        if(!repository.existsById(bookId)) {
+            throw new BookNotFoundException(bookId);
+        }
         repository.deleteById(bookId);
     }
 }
