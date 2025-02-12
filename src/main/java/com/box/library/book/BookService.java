@@ -15,7 +15,7 @@ public class BookService {
     }
 
     public Book create(Book book) {
-       return repository.save(book);
+        return repository.save(book);
     }
 
     public List<Book> findAll() {
@@ -24,5 +24,12 @@ public class BookService {
 
     public Book findById(Long bookId) {
         return repository.findById(bookId).orElseThrow(() -> new BookNotFoundException(bookId));
+    }
+
+    public void deleteById(Long bookId) {
+        if (!repository.existsById(bookId)) {
+            throw new BookNotFoundException(bookId);
+        }
+        repository.deleteById(bookId);
     }
 }
