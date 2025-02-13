@@ -10,4 +10,8 @@ public class LibraryUserService {
     public LibraryUserService(LibraryUserRepository repository) {
         this.repository = repository;
     }
+
+    public LibraryUser createUser(LibraryUser user) {
+        return repository.save(user);
+    }
 }
