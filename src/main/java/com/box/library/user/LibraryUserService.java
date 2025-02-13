@@ -11,7 +11,6 @@ public class LibraryUserService {
         this.repository = repository;
     }
 
-    // Method to create a user
     public LibraryUser createUser(LibraryUser user) {
         return repository.save(user);
     }
