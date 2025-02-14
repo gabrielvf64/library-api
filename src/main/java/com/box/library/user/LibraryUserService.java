@@ -2,6 +2,8 @@ package com.box.library.user;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class LibraryUserService {
 
@@ -14,4 +16,6 @@ public class LibraryUserService {
     public LibraryUser createUser(LibraryUser user) {
         return repository.save(user);
     }
+
+    public List<LibraryUser> findAll() { return repository.findAll(); }
 }
