@@ -32,4 +32,11 @@ public class BookService {
         }
         repository.deleteById(bookId);
     }
+
+    public Book update(Long bookId, Book updateBook) {
+        Book existingBook = findById(bookId);
+        existingBook.updateFields(updateBook);
+        return repository.save(existingBook);
+    }
+
 }
