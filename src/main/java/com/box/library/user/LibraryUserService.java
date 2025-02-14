@@ -1,5 +1,6 @@
 package com.box.library.user;
 
+import com.box.library.exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,5 +18,12 @@ public class LibraryUserService {
         return repository.save(user);
     }
 
-    public List<LibraryUser> findAll() { return repository.findAll(); }
+    public List<LibraryUser> findAllUsers() {
+        return repository.findAll();
+    }
+
+    public LibraryUser findUserById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+    }
 }
