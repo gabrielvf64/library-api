@@ -1,6 +1,8 @@
 package com.box.library.user;
 
+import com.box.library.request.UpdateLibraryUser;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,14 +26,20 @@ public class LibraryUserController {
     }
 
     @GetMapping
-    public ResponseEntity <List<LibraryUser>> findAll(){
-        List <LibraryUser> libraryUsers  = service.findAll();
+    public ResponseEntity<List<LibraryUser>> findAll() {
+        List<LibraryUser> libraryUsers = service.findAll();
         return libraryUsers.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(libraryUsers);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<LibraryUser> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<LibraryUser> update(@PathVariable Long id, @RequestBody UpdateLibraryUser request) {
+        var updatedEntity = service.update(id, request);
+        return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
