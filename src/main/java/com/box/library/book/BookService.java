@@ -1,6 +1,7 @@
 package com.box.library.book;
 
 import com.box.library.exception.BookNotFoundException;
+import com.box.library.request.UpdateBook;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,14 +34,14 @@ public class BookService {
         repository.deleteById(bookId);
     }
 
-    public Book update(Long bookId, Book updateBook) {
-        var existingBook = findById(bookId);
+    public Book update(Long id, UpdateBook request) {
+        var existingBook = findById(id);
 
-        existingBook.setTitle(updateBook.getTitle());
-        existingBook.setAuthor(updateBook.getAuthor());
-        existingBook.setISBN(updateBook.getISBN());
-        existingBook.setPublisher(updateBook.getPublisher());
-        existingBook.setStatus(updateBook.getStatus());
+        existingBook.setTitle(request.title());
+        existingBook.setAuthor(request.author());
+        existingBook.setISBN(request.ISBN());
+        existingBook.setPublisher(request.publisher());
+        existingBook.setStatus(request.status());
 
         return repository.save(existingBook);
     }
