@@ -32,4 +32,8 @@ public class LibraryUserService {
     private boolean doesNotExitsById(Long id) {
         return !repository.existsById(id);
     }
+
+    public LibraryUser findById(Long id) {
+        return repository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+    }
 }
