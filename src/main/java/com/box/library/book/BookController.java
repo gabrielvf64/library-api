@@ -1,6 +1,7 @@
 package com.box.library.book;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,7 +42,8 @@ public class BookController {
     }
 
     @PutMapping("/{bookId}")
-    public ResponseEntity<Book> updateById(@PathVariable Long bookId, @RequestBody Book book) {
-        return ResponseEntity.ok(service.update(bookId, book));
+    public ResponseEntity<Book> update(@PathVariable Long bookId, @RequestBody Book book) {
+        var updatedEntity = service.update(bookId, book);
+        return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
     }
 }

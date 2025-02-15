@@ -1,7 +1,6 @@
 package com.box.library.book;
 
 import jakarta.persistence.*;
-import org.springframework.util.StringUtils;
 
 @Entity
 @Table(name = "books")
@@ -31,24 +30,6 @@ public class Book {
         this.publisher = publisher;
         this.ISBN = ISBN;
         this.status = BookStatus.AVAILABLE;
-    }
-
-    public void updateFields(Book updatedBook){
-        if (StringUtils.hasText(updatedBook.getAuthor())){
-            this.setAuthor(updatedBook.getAuthor());
-        }
-        if (StringUtils.hasText(updatedBook.getPublisher())){
-            this.setPublisher(updatedBook.getPublisher());
-        }
-        if (StringUtils.hasText(updatedBook.getISBN())){
-            this.setISBN(updatedBook.getISBN());
-        }
-        if (StringUtils.hasText(updatedBook.getTitle())){
-            this.setTitle(updatedBook.getTitle());
-        }
-        if (updatedBook.getStatus() != null){
-            this.setStatus(updatedBook.getStatus());
-        }
     }
 
     public Long getId() {

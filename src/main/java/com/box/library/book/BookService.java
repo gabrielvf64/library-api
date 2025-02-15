@@ -34,8 +34,14 @@ public class BookService {
     }
 
     public Book update(Long bookId, Book updateBook) {
-        Book existingBook = findById(bookId);
-        existingBook.updateFields(updateBook);
+        var existingBook = findById(bookId);
+
+        existingBook.setTitle(updateBook.getTitle());
+        existingBook.setAuthor(updateBook.getAuthor());
+        existingBook.setISBN(updateBook.getISBN());
+        existingBook.setPublisher(updateBook.getPublisher());
+        existingBook.setStatus(updateBook.getStatus());
+
         return repository.save(existingBook);
     }
 
