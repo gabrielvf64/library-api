@@ -23,18 +23,17 @@ public class LibraryUserService {
         return repository.findAll();
     }
 
-    public LibraryUser findById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
-    }
-
     public LibraryUser update(Long id, UpdateLibraryUser request) {
-        LibraryUser entity = repository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
+        LibraryUser entity = findById(id);
 
         entity.setName(request.name());
         entity.setCpf(request.cpf());
 
         return repository.save(entity);
+    }
+
+    public LibraryUser findById(Long id) {
+        return repository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
 
     public void deleteById(Long id) {
