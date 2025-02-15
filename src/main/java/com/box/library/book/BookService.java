@@ -1,8 +1,10 @@
 package com.box.library.book;
 
 import com.box.library.exception.BookNotFoundException;
+import com.box.library.exception.NoFilterProvidedException;
 import com.box.library.request.UpdateBook;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -44,6 +46,18 @@ public class BookService {
         existingBook.setStatus(request.status());
 
         return repository.save(existingBook);
+    }
+
+    public List<Book> findAllByFilter(String author, String title, String isbn, String publisher) {
+        if (hasNoFilterAttribute(author, title, isbn, publisher)) {
+            throw new NoFilterProvidedException();
+        }
+        return repository.findByAuthorContainingIgnoreCaseOrTitleContainingIgnoreCaseOrISBNContainingIgnoreCaseOrPublisherContainingIgnoreCase(author, title, isbn, publisher);
+    }
+
+    private boolean hasNoFilterAttribute(String author, String title, String isbn, String publisher) {
+        return !StringUtils.hasText(author) && !StringUtils.hasText(title)
+                && !StringUtils.hasText(isbn) && !StringUtils.hasText(publisher);
     }
 
 }
