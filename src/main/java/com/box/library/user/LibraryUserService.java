@@ -1,6 +1,7 @@
 package com.box.library.user;
 
 import com.box.library.exception.UserNotFoundException;
+import com.box.library.request.UpdateLibraryUser;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,5 +36,15 @@ public class LibraryUserService {
 
     public LibraryUser findById(Long id) {
         return repository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+    }
+
+    public LibraryUser update(Long id, UpdateLibraryUser request) {
+        LibraryUser entity = repository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+
+        entity.setName(request.name());
+        entity.setCpf(request.cpf());
+
+        return repository.save(entity);
     }
 }
