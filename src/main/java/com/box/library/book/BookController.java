@@ -31,20 +31,20 @@ public class BookController {
         return books.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(books);
     }
 
-    @GetMapping("/{bookId}")
-    public ResponseEntity<Book> findById(@PathVariable Long bookId) {
-        return ResponseEntity.ok(service.findById(bookId));
+    @GetMapping("/{id}")
+    public ResponseEntity<Book> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findById(id));
     }
 
-    @DeleteMapping("/{bookId}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long bookId) {
-        service.deleteById(bookId);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{bookId}")
-    public ResponseEntity<Book> update(@PathVariable Long bookId, @RequestBody UpdateBook request) {
-        var updatedEntity = service.update(bookId, request);
+    @PutMapping("/{id}")
+    public ResponseEntity<Book> update(@PathVariable Long id, @RequestBody UpdateBook request) {
+        var updatedEntity = service.update(id, request);
         return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
     }
 }
