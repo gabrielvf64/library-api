@@ -53,11 +53,14 @@ Inicie o servidor
 
 A API estará disponível em: http://localhost:8080
 
-## Configuração do Bando de dados H2
+## Documentação
+http://localhost:8080/swagger-ui/index.html
 
-O projeto utiliza o banco de dados H2 em memória. A configuração já está definida no arquivo application.properties
+## Configuração do Banco de dados H2
 
-Para acessar o console web do H2 após rodar a aplicação, vá até: http://localhost:8080/h2-console e use os seguintes dados:
+O projeto utiliza o banco de dados H2 em memória. A configuração está definida no arquivo application.properties
+
+Para acessar o console web do H2, após rodar a aplicação, vá até: http://localhost:8080/h2-console e use os seguintes dados:
 
 JDBC URL: jdbc:h2:mem:testdb
 
@@ -73,4 +76,4 @@ Para rodar os testes, rode o seguinte comando
 ```bash
   mvn test
 ```
-Isso executará todos os testes unitários e de integração configurados no projeto.
+Isso executará todos os testes unitários e de integração do projeto.
