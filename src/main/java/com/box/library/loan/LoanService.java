@@ -2,6 +2,8 @@ package com.box.library.loan;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class LoanService {
 
@@ -9,5 +11,9 @@ public class LoanService {
 
     public LoanService(LoanRepository repository) {
         this.repository = repository;
+    }
+
+    public List<Loan> findAll() {
+        return repository.findAll();
     }
 }
