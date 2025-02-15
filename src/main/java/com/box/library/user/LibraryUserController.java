@@ -1,7 +1,6 @@
 package com.box.library.user;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +27,11 @@ public class LibraryUserController {
     public ResponseEntity <List<LibraryUser>> findAll(){
         List <LibraryUser> libraryUsers  = service.findAll();
         return libraryUsers.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(libraryUsers);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<LibraryUser> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findById(id));
     }
 
     @DeleteMapping("/{id}")
