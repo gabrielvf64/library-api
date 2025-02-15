@@ -23,17 +23,6 @@ public class LibraryUserService {
         return repository.findAll();
     }
 
-    public void deleteById(Long id) {
-        if (doesNotExitsById(id)) {
-            throw new UserNotFoundException(id);
-        }
-        repository.deleteById(id);
-    }
-
-    private boolean doesNotExitsById(Long id) {
-        return !repository.existsById(id);
-    }
-
     public LibraryUser findById(Long id) {
         return repository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
@@ -46,5 +35,16 @@ public class LibraryUserService {
         entity.setCpf(request.cpf());
 
         return repository.save(entity);
+    }
+
+    public void deleteById(Long id) {
+        if (doesNotExitsById(id)) {
+            throw new UserNotFoundException(id);
+        }
+        repository.deleteById(id);
+    }
+
+    private boolean doesNotExitsById(Long id) {
+        return !repository.existsById(id);
     }
 }
