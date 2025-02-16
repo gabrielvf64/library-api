@@ -25,20 +25,21 @@ public class LoanService {
     }
 
     public Loan create(CreateLoan request) {
-        Loan entity = new Loan(request.userId(), request.booksIds());
+        var entity = new Loan(request.userId(), request.booksIds());
         return repository.save(entity);
     }
 
     public ReportResponse generateLoanReport(String format, LoanStatus status) {
-        List<Loan> filteredLoans = repository.findByStatus(status);
 
-        Exporter exporter = getExporterFromFileFormat(format);
+        var filteredLoans = repository.findByStatus(status);
 
-        String reportContent = exporter.export(filteredLoans, status);
+        var exporter = getExporterFromFileFormat(format);
 
-        String contentType = getContentType(format);
+        var reportContent = exporter.export(filteredLoans, status);
 
-        String extension = getFileExtension(format);
+        var contentType = getContentType(format);
+
+        var extension = getFileExtension(format);
 
         return new ReportResponse(reportContent, contentType, extension);
     }
