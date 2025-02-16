@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+// TODO[11]: sealed interface
 @Service
 public sealed interface Exporter permits HtmlExporter, CsvExporter {
 

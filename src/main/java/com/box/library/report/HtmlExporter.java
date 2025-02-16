@@ -40,6 +40,7 @@ public final class HtmlExporter implements Exporter {
                 .collect(Collectors.joining());
 
 
+        // TODO[12]: Text blocks
         return """
                 <h1>Relatorio de emprestimos - Status: %s</h1>
                 <table border="1">

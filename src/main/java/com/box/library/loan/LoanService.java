@@ -74,6 +74,7 @@ public class LoanService {
         };
     }
 
+    // TODO[13]: Switch expressions
     private static String getFileExtension(String format) {
         return switch (format.toLowerCase()) {
             case "csv" -> "csv";
