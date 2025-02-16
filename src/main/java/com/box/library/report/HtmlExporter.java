@@ -42,7 +42,7 @@ public class HtmlExporter implements Exporter {
                 <h1>Relatorio de emprestimos - Status: %s</h1>
                 <table border="1">
                     <tr>
-                        <th>Id do emprestimos</th>
+                        <th>Id do emprestimo</th>
                         <th>Ids dos livros</th>
                         <th>Id do usuario</th>
                         <th>Data do emprestimo</th>
