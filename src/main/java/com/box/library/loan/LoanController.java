@@ -22,13 +22,13 @@ public class LoanController {
 
     @GetMapping
     public ResponseEntity<List<Loan>> findAll() {
-        List<Loan> loansList = service.findAll();
+        var loansList = service.findAll();
         return loansList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(loansList);
     }
 
     @PostMapping
     public ResponseEntity<Loan> create(@RequestBody CreateLoan request) {
-        Loan savedLoan = service.create(request);
+        var savedLoan = service.create(request);
         return ResponseEntity.ok(savedLoan);
     }
 
