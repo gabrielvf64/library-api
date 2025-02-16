@@ -1,5 +1,6 @@
 package com.box.library.loan;
 
+import com.box.library.request.CreateLoan;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
