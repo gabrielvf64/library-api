@@ -37,6 +37,12 @@ public class LoanController {
         return ResponseEntity.ok(savedLoan);
     }
 
+    @PostMapping("/{loanId}/return")
+    public ResponseEntity<Loan> returnLoan(@PathVariable Long loanId) {
+        var loan = service.returnLoan(loanId);
+        return ResponseEntity.ok(loan);
+    }
+
     @GetMapping(value = "/report", produces = {"text/html", "text/csv"})
     public ResponseEntity<String> exportLoans(
             @RequestParam(defaultValue = "html") String format,
