@@ -14,12 +14,10 @@ import java.util.List;
 public class LoanService {
 
     private final LoanRepository repository;
-    private final LibraryUserService userService;
     private final List<Exporter> exporters;
 
-    public LoanService(LoanRepository repository, LibraryUserService userService, List<Exporter> exporters) {
+    public LoanService(LoanRepository repository, List<Exporter> exporters) {
         this.repository = repository;
-        this.userService = userService;
         this.exporters = exporters;
     }
 
