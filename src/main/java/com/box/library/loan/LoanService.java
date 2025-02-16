@@ -4,8 +4,7 @@ import com.box.library.exception.LoanNotFoundException;
 import com.box.library.report.Exporter;
 import com.box.library.request.CreateLoan;
 import com.box.library.response.ReportResponse;
-import com.box.library.user.LibraryUserRepository;
-import jakarta.persistence.EntityNotFoundException;
+import com.box.library.user.LibraryUserService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,12 +14,12 @@ import java.util.List;
 public class LoanService {
 
     private final LoanRepository repository;
-    private final LibraryUserRepository userRepository;
+    private final LibraryUserService userService;
     private final List<Exporter> exporters;
 
-    public LoanService(LoanRepository repository, LibraryUserRepository userRepository, List<Exporter> exporters) {
+    public LoanService(LoanRepository repository, LibraryUserService userService, List<Exporter> exporters) {
         this.repository = repository;
-        this.userRepository = userRepository;
+        this.userService = userService;
         this.exporters = exporters;
     }
 
@@ -29,9 +28,6 @@ public class LoanService {
     }
 
     public List<Loan> findByUserId(Long userId) {
-        if (!userRepository.existsById(userId)) {
-            throw new EntityNotFoundException("Usuário com ID " + userId + " não encontrado.");
-        }
         return repository.findByUserId(userId);
     }
 
