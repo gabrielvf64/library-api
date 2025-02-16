@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// TODO[7]: Implementação de interface
 @Service
 public class HtmlExporter implements Exporter {
 
@@ -37,6 +38,7 @@ public class HtmlExporter implements Exporter {
                         loan.getExpectedReturnDate()
                 ))
                 .collect(Collectors.joining());
+
 
         return """
                 <h1>Relatorio de emprestimos - Status: %s</h1>
