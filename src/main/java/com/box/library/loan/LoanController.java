@@ -29,4 +29,10 @@ public class LoanController {
         Loan savedLoan = service.create(request);
         return ResponseEntity.ok(savedLoan);
     }
+
+    @PostMapping("/{loanId}/return")
+    public ResponseEntity<Loan> returnLoan(@PathVariable Long loanId) {
+        var loan = service.returnLoan(loanId);
+        return ResponseEntity.ok(loan);
+    }
 }
