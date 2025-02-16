@@ -47,4 +47,11 @@ public class BookController {
         var updatedEntity = service.update(id, request);
         return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
     }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<Book>> findAllByFilter(@RequestParam(required = false) String author, @RequestParam(required = false) String title,
+                                                      @RequestParam(required = false) String isbn, @RequestParam(required = false) String publisher) {
+        List<Book> books = service.findAllByFilter(author, title, isbn, publisher);
+        return books.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(books);
+    }
 }
