@@ -21,19 +21,20 @@ public class BookController {
 
     @PostMapping
     public ResponseEntity<Book> create(@RequestBody Book book) {
-        Book savedBook = service.create(book);
+        var savedBook = service.create(book);
         return ResponseEntity.ok(savedBook);
     }
 
     @GetMapping
     public ResponseEntity<List<Book>> findAll() {
-        List<Book> books = service.findAll();
+        var books = service.findAll();
         return books.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(books);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Book> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(service.findById(id));
+        var book = service.findById(id);
+        return ResponseEntity.ok(book);
     }
 
     @DeleteMapping("/{id}")
@@ -51,7 +52,7 @@ public class BookController {
     @GetMapping("/filter")
     public ResponseEntity<List<Book>> findAllByFilter(@RequestParam(required = false) String author, @RequestParam(required = false) String title,
                                                       @RequestParam(required = false) String isbn, @RequestParam(required = false) String publisher) {
-        List<Book> books = service.findAllByFilter(author, title, isbn, publisher);
+        var books = service.findAllByFilter(author, title, isbn, publisher);
         return books.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(books);
     }
 }

@@ -21,19 +21,20 @@ public class LibraryUserController {
 
     @PostMapping
     public ResponseEntity<LibraryUser> createUser(@RequestBody LibraryUser user) {
-        LibraryUser savedUser = service.createUser(user);
+        var savedUser = service.createUser(user);
         return ResponseEntity.ok(savedUser);
     }
 
     @GetMapping
     public ResponseEntity<List<LibraryUser>> findAll() {
-        List<LibraryUser> libraryUsers = service.findAll();
+        var libraryUsers = service.findAll();
         return libraryUsers.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(libraryUsers);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<LibraryUser> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(service.findById(id));
+        var libraryUser = service.findById(id);
+        return ResponseEntity.ok(libraryUser);
     }
 
     @PutMapping("/{id}")
