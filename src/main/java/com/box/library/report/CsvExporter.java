@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CsvExporter implements Exporter {
+public non-sealed class CsvExporter implements Exporter {
 
     public static final String CSV = "csv";
 
