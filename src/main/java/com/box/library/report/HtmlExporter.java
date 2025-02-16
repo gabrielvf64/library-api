@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class HtmlExporter implements Exporter {
+public final class HtmlExporter implements Exporter {
 
     private static final String HTML = "html";
 

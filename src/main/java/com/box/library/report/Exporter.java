@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface Exporter {
+public sealed interface Exporter permits HtmlExporter, CsvExporter {
 
     String export(List<Loan> loans, LoanStatus status);
 
