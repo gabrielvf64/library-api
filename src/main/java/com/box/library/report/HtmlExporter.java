@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 @Service
 public class HtmlExporter implements Exporter {
 
+    private static final String HTML = "html";
+
     @Override
     public String export(List<Loan> loans, LoanStatus status) {
         if (loans.isEmpty()) {
@@ -49,5 +51,10 @@ public class HtmlExporter implements Exporter {
                 %s
                 </table>
                 """.formatted(status, rows);
+    }
+
+    @Override
+    public String getFileExtension() {
+        return HTML;
     }
 }
