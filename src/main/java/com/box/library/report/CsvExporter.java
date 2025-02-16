@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 // TODO[8]: Classe concreta - Implementação de interface
 @Service
-public class CsvExporter implements Exporter {
+public non-sealed class CsvExporter implements Exporter {
 
     public static final String CSV = "csv";
 

@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 // TODO[7]: Implementação de interface
 @Service
-public class HtmlExporter implements Exporter {
+public final class HtmlExporter implements Exporter {
 
     private static final String HTML = "html";
 
