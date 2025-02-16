@@ -17,6 +17,11 @@ public class LoanService {
         return repository.findAll();
     }
 
+    public Loan create(CreateLoan request) {
+        Loan entity = new Loan(request.userId(), request.booksIds());
+        return repository.save(entity);
+    }
+
     public List<Loan> getLoansByUser(Long userId) {
         return repository.findByUserId(userId);
     }
