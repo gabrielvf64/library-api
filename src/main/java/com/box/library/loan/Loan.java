@@ -15,11 +15,14 @@ public class Loan {
 
     private Long userId;
 
+    @ElementCollection
     private List<Long> booksIds;
 
     private LocalDate loanDate;
     private LocalDate expectedReturnDate;
     private LocalDate returnDate;
+
+    @Enumerated(EnumType.STRING)
     private LoanStatus status;
 
     public Loan() {

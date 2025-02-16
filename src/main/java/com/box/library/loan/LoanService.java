@@ -16,4 +16,8 @@ public class LoanService {
     public List<Loan> findAll() {
         return repository.findAll();
     }
+
+    public List<Loan> getLoansByUser(Long userId) {
+        return repository.findByUserId(userId);
+    }
 }
