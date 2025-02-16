@@ -8,5 +8,8 @@ import java.util.List;
 
 @Service
 public interface Exporter {
+
     String export(List<Loan> loans, LoanStatus status);
+
+    String getFileExtension();
 }
