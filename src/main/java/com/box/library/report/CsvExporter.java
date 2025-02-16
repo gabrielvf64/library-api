@@ -19,7 +19,7 @@ public class CsvExporter implements Exporter {
         }
 
         String header = """
-                Loan id,Books ids,User id,Loan Date,Expected Return Date
+                ID do emprestimo, IDs dos livros, ID do usuario, Data do emprestimo, Data esperada de devolucao
                 """;
 
         String rows = loans.stream()

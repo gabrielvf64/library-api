@@ -47,14 +47,14 @@ public class LoanService {
         return exporters.stream()
                 .filter(e -> e.getFileExtension().equalsIgnoreCase(format))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Formato não supoertado: " + format));
+                .orElseThrow(() -> new IllegalArgumentException("Formato não suportado: " + format));
     }
 
     private static String getContentType(String format) {
         return switch (format.toLowerCase()) {
             case "csv" -> "text/csv";
             case "html" -> "text/html";
-            default -> throw new IllegalArgumentException("Formato não supoertado: " + format);
+            default -> throw new IllegalArgumentException("Formato não suportado: " + format);
         };
     }
 
@@ -62,7 +62,7 @@ public class LoanService {
         return switch (format.toLowerCase()) {
             case "csv" -> "csv";
             case "html" -> "html";
-            default -> throw new IllegalArgumentException("Formato não supoertado: " + format);
+            default -> throw new IllegalArgumentException("Formato não suportado: " + format);
         };
     }
 }

@@ -16,7 +16,7 @@ public class HtmlExporter implements Exporter {
     public String export(List<Loan> loans, LoanStatus status) {
         if (loans.isEmpty()) {
             return """
-                    <h1>No loans found with status: %s.</h1>
+                    <h1>Nenhum empréstimo encontrado com status: %s.</h1>
                     """.formatted(status);
         }
 
@@ -39,14 +39,14 @@ public class HtmlExporter implements Exporter {
                 .collect(Collectors.joining());
 
         return """
-                <h1>Loans Report - Status: %s</h1>
+                <h1>Relatorio de emprestimos - Status: %s</h1>
                 <table border="1">
                     <tr>
-                        <th>Loan id</th>
-                        <th>Books ids</th>
-                        <th>User id</th>
-                        <th>Loan Date</th>
-                        <th>Expected Return Date</th>
+                        <th>Id do emprestimos</th>
+                        <th>Ids dos livros</th>
+                        <th>Id do usuario</th>
+                        <th>Data do emprestimo</th>
+                        <th>Data de retorno esperada</th>
                     </tr>
                 %s
                 </table>

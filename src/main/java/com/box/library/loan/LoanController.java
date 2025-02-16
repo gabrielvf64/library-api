@@ -40,7 +40,7 @@ public class LoanController {
         var reportResponse = service.generateLoanReport(format, status);
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=loans." + reportResponse.getExtension())
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=relatorio." + reportResponse.getExtension())
                 .contentType(MediaType.parseMediaType(reportResponse.getContentType()))
                 .body(reportResponse.getContent());
     }
