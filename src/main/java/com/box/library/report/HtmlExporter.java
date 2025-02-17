@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// TODO[7]: Implementação de interface
 @Service
 public final class HtmlExporter implements Exporter {
 
@@ -38,6 +39,8 @@ public final class HtmlExporter implements Exporter {
                 ))
                 .collect(Collectors.joining());
 
+
+        // TODO[12]: Text blocks
         return """
                 <h1>Relatorio de emprestimos - Status: %s</h1>
                 <table border="1">

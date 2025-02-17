@@ -1,5 +1,6 @@
 package com.box.library.exception;
 
+// TODO[6]: Herança
 public class BookNotFoundException extends RuntimeException {
 
     public BookNotFoundException(Long bookId) {

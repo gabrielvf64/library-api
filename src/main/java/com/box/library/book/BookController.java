@@ -13,14 +13,19 @@ import java.util.List;
 @Tag(name = "Livros", description = "Endpoints para gerenciamento de livros")
 public class BookController {
 
+    // TODO[5]: CRUD de livros
+
     private final BookService service;
 
     public BookController(BookService service) {
         this.service = service;
     }
 
+    // TODO[1]: Criação de livro
     @PostMapping
     public ResponseEntity<Book> create(@RequestBody Book book) {
+
+        // TODO[9]: Usando var
         var savedBook = service.create(book);
         return ResponseEntity.ok(savedBook);
     }
@@ -49,6 +54,7 @@ public class BookController {
         return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
     }
 
+    // TODO[4]: Busca de livros por filtros
     @GetMapping("/filter")
     public ResponseEntity<List<Book>> findAllByFilter(@RequestParam(required = false) String author, @RequestParam(required = false) String title,
                                                       @RequestParam(required = false) String isbn, @RequestParam(required = false) String publisher) {

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// TODO[8]: Classe concreta - Implementação de interface
 @Service
 public non-sealed class CsvExporter implements Exporter {
 
