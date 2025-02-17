@@ -56,6 +56,10 @@ A API estará disponível em: http://localhost:8080
 ## Documentação
 http://localhost:8080/swagger-ui/index.html
 
+## Coleção do Postman
+Baixe e importe no Postman:  
+[collection.json](./src/main/resources/collection.json)
+
 ## Configuração do Banco de dados H2
 
 O projeto utiliza o banco de dados H2 em memória. A configuração está definida no arquivo application.properties
