@@ -1,5 +1,7 @@
 package com.box.library.jwt;
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,5 +37,31 @@ public class JwtUtils {
         LocalDateTime localDateTime = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         LocalDateTime endDate = localDateTime.plusDays(EXPIRATION_DAYS).plusHours(EXPIRATION_HOURS).plusMinutes(EXPIRATION_MINUTES);
         return Date.from(endDate.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    public static JwtTokenResponse createToken(String username, String role) {
+        Date issuedAt = new Date();
+        Date expireDate = toExpireDate(issuedAt);
+
+//        String token = Jwts.builder()
+//                .setHeaderParam("typ", "JWT")
+//                .setSubject(username) //TODO testar com id do usuario
+//                .setIssuedAt(issuedAt)
+//                .setExpiration(expireDate)
+//                .signWith(generateKey(), SignatureAlgorithm.HS256)
+//                .claim("role", role)
+//                .compact();
+
+        String token = Jwts.builder()
+                .header().add("typ", "JWT").and()
+                .subject(username)  //TODO testar com id do usuario
+                .issuedAt(issuedAt)
+                .expiration(expireDate)
+                .signWith(generateKey(), SignatureAlgorithm.HS256)
+                .claim("role", role)
+                .compact();
+
+
+        return new JwtTokenResponse(token);
     }
 }
