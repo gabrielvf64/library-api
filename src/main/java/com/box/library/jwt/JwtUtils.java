@@ -69,6 +69,27 @@ public class JwtUtils {
         return null;
     }
 
+    public static boolean isNotValidToken(String token) {
+        return !isValidToken(token);
+    }
+
+    public static boolean isValidToken(String token) {
+        try {
+            Jwts.parser()
+                    .verifyWith(generateKey())
+                    .build()
+                    .parseSignedClaims(removeBearer(token));
+            return true;
+        } catch (JwtException e) {
+            log.error(String.format("Token inválido: %s", e.getMessage()));
+        }
+        return false;
+    }
+
+    public static boolean doesNotStartsWithBearer(String token) {
+        return !token.startsWith(JwtUtils.BEARER);
+    }
+
     private static Date getExpireDate(Date startDate) {
         LocalDateTime startDateTime = startDate.toInstant()
                 .atZone(ZoneId.systemDefault())
@@ -81,22 +102,8 @@ public class JwtUtils {
         return Date.from(endDate.atZone(ZoneId.systemDefault()).toInstant());
     }
 
-
     private static SecretKey generateKey() {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
-    }
-
-    private static boolean isValidToken(String token) {
-        try {
-            Jwts.parser()
-                    .verifyWith(generateKey())
-                    .build()
-                    .parseSignedClaims(removeBearer(token));
-            return true;
-        } catch (JwtException e) {
-            log.error(String.format("Token inválido: %s", e.getMessage()));
-        }
-        return false;
     }
 
     private static String removeBearer(String token) {
