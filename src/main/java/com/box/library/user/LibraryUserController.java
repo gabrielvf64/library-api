@@ -46,10 +46,10 @@ public class LibraryUserController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> updatePassword(@PathVariable Long id,
-                                               @Valid @RequestBody UpdatePasswordRequest request) {
-        service.updatePassword(id, request);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<LibraryUser> updatePassword(@PathVariable Long id,
+                                                      @Valid @RequestBody UpdatePasswordRequest request) {
+        var updatedPassword = service.updatePassword(id, request);
+        return new ResponseEntity<>(updatedPassword, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
