@@ -4,10 +4,16 @@ VALUES
 ('Effective Java', 'Joshua Bloch', 'Addison-Wesley', '9780134685991', 'AVAILABLE'),
 ('Design Patterns', 'Erich Gamma', 'Addison-Wesley', '9780201633610', 'BORROWED');
 
-INSERT INTO users (cpf, name)
+INSERT INTO users (username, password, role, cpf, name)
 VALUES
-('12345678901', 'John Doe'),
-('98765432109', 'Jane Doe');
+('batman', '123', 'ADMIN', '60236589032', 'Bruce Wayne'),
+('vader', '456', 'ADMIN', '24322949045', 'Anakin Skywalker'),
+('spiderman', '789', 'CLIENT', '62006878034', 'Peter Parker'),
+('superman', '111', 'CLIENT', '44787350005', 'Clark Kent'),
+('wolverine', '222', 'CLIENT', '11589197003', 'Logan'),
+('hulk', '333', 'CLIENT', '21922355003', 'Bruce Banner'),
+('thor', '444', 'CLIENT', '21922355003', 'Thor');
+
 
 INSERT INTO LOANS (USER_ID, BOOKS_IDS, LOAN_DATE, EXPECTED_RETURN_DATE, RETURN_DATE, STATUS)
 VALUES
