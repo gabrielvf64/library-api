@@ -19,4 +19,9 @@ public class JwtUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return new JwtUserDetails(libraryUserService.findByUsername(username));
     }
+
+    public JwtTokenResponse getJwtToken(String username) {
+        var libraryUserRole = libraryUserService.findRoleByUsername(username);
+        return JwtUtils.createToken(username, libraryUserRole.name());
+    }
 }

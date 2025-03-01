@@ -34,6 +34,11 @@ public class LibraryUserService {
                 .orElseThrow(() -> new UserNotFoundException(username));
     }
 
+    @Transactional(readOnly = true)
+    public Role findRoleByUsername(String username) {
+        return repository.findRoleByUsername(username);
+    }
+
     public LibraryUser update(Long id, UpdateLibraryUser request) {
         var entity = findById(id);
 
