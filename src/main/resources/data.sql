@@ -6,13 +6,13 @@ VALUES
 
 INSERT INTO users (username, password, role, cpf, name)
 VALUES
-('batman', '123', 'ADMIN', '60236589032', 'Bruce Wayne'),
-('vader', '456', 'ADMIN', '24322949045', 'Anakin Skywalker'),
-('spiderman', '789', 'CLIENT', '62006878034', 'Peter Parker'),
-('superman', '111', 'CLIENT', '44787350005', 'Clark Kent'),
-('wolverine', '222', 'CLIENT', '11589197003', 'Logan'),
-('hulk', '333', 'CLIENT', '21922355003', 'Bruce Banner'),
-('thor', '444', 'CLIENT', '21922355003', 'Thor');
+('batman', '$2a$10$Nh1M35SC9QX5Qn6Cm9pK3.LYAkRLI03qZI1w3l/YRFxVy.4x1V/oe', 'ADMIN', '60236589032', 'Bruce Wayne'), --password: 123
+
+('vader', '$2a$10$ToXihRsZaAIj/MAwsB5pHeRqdPuBW6e9H4SUI1F4nOEG2IT08FLV6', 'ADMIN', '24322949045', 'Anakin Skywalker'), --password: 456
+
+('spiderman', '$2a$10$n5VxUOHCpcv7f8CJwdrdAOP72zfEqbWzBB4CTP1xqbz7w3CUqfvW2', 'CLIENT', '62006878034', 'Peter Parker'), --password: 789
+
+('superman', '$2a$10$6HhxiIDYziOtChtHBaiF7uc0HKtfkyaddknkd9KGh8LuzWEndE7OS', 'CLIENT', '44787350005', 'Clark Kent'); --password: 111
 
 
 INSERT INTO LOANS (USER_ID, BOOKS_IDS, LOAN_DATE, EXPECTED_RETURN_DATE, RETURN_DATE, STATUS)
