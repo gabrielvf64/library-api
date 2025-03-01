@@ -35,7 +35,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         var token = request.getHeader(JwtUtils.AUTHORIZATION);
 
         if (token == null || JwtUtils.doesNotStartsWithBearer(token)) {
-            log.info("Token null ou não começa com Bearer");
+            log.info("Token nulo ou não começa com Bearer");
             filterChain.doFilter(request, response);
             return;
         }
