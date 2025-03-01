@@ -28,7 +28,7 @@ public class JwtUtils {
 
     public static final long EXPIRATION_HOURS = 0;
 
-    public static final long EXPIRATION_MINUTES = 2;
+    public static final long EXPIRATION_MINUTES = 30;
 
     private static final Logger log = LoggerFactory.getLogger(JwtUtils.class);
 
