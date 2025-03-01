@@ -2,6 +2,7 @@ package com.box.library.user;
 
 import com.box.library.exception.UserNotFoundException;
 import com.box.library.request.UpdateLibraryUser;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,11 +13,15 @@ public class LibraryUserService {
 
     private final LibraryUserRepository repository;
 
-    public LibraryUserService(LibraryUserRepository repository) {
+    private final PasswordEncoder passwordEncoder;
+
+    public LibraryUserService(LibraryUserRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public LibraryUser createUser(LibraryUser user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return repository.save(user);
     }
 
