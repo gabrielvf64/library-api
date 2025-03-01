@@ -17,13 +17,16 @@ import java.io.IOException;
 @Slf4j
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
-    private final JwtUserDetailsService jwtUserDetailsService;
+    private JwtUserDetailsService jwtUserDetailsService;
 
-    private static final Logger log = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
+    public JwtAuthorizationFilter() {
+    }
 
     public JwtAuthorizationFilter(JwtUserDetailsService jwtUserDetailsService) {
         this.jwtUserDetailsService = jwtUserDetailsService;
     }
+
+    private static final Logger log = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
