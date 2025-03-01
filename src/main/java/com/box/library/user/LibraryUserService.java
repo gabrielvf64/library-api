@@ -1,7 +1,9 @@
 package com.box.library.user;
 
+import com.box.library.exception.InvalidPasswordException;
 import com.box.library.exception.UserNotFoundException;
 import com.box.library.request.UpdateLibraryUser;
+import com.box.library.request.UpdatePasswordRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,6 +55,21 @@ public class LibraryUserService {
         return repository.save(entity);
     }
 
+    public LibraryUser updatePassword(Long id, UpdatePasswordRequest request) {
+        if (newPasswordIsNotEqualsToConfirmPassword(request)) {
+            throw new InvalidPasswordException("Nova senha não é igual à confirmação de senha");
+        }
+
+        var libraryUser = findById(id);
+
+        if (currentPasswordDoesNotMatch(request, libraryUser)) {
+            throw new InvalidPasswordException("Senha atual não é igual à senha informada");
+        }
+
+        libraryUser.setPassword(passwordEncoder.encode(request.newPassword()));
+        return libraryUser;
+    }
+
     public void deleteById(Long id) {
         if (doesNotExitsById(id)) {
             throw new UserNotFoundException(id);
@@ -62,5 +79,13 @@ public class LibraryUserService {
 
     private boolean doesNotExitsById(Long id) {
         return !repository.existsById(id);
+    }
+
+    private static boolean newPasswordIsNotEqualsToConfirmPassword(UpdatePasswordRequest request) {
+        return !request.newPassword().equals(request.confirmPassword());
+    }
+
+    private boolean currentPasswordDoesNotMatch(UpdatePasswordRequest request, LibraryUser libraryUser) {
+        return !passwordEncoder.matches(request.currentPassword(), libraryUser.getPassword());
     }
 }
