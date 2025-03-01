@@ -25,12 +25,10 @@ public class LibraryUser {
     public LibraryUser() {
     }
 
-    public LibraryUser(Long id, String username, String password,
-                       Role role, String cpf, String name) {
-        this.id = id;
+    public LibraryUser(String username, String password, String role, String cpf, String name) {
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.role = Role.valueOf(role);
         this.cpf = cpf;
         this.name = name;
     }

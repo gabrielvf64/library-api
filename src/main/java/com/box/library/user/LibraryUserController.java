@@ -22,8 +22,8 @@ public class LibraryUserController {
     }
 
     @PostMapping
-    public ResponseEntity<LibraryUser> createUser(@RequestBody LibraryUser user) {
-        var savedUser = service.createUser(user);
+    public ResponseEntity<LibraryUser> createUser(@RequestBody CreateUserRequest request) {
+        var savedUser = service.createUser(request);
         return ResponseEntity.ok(savedUser);
     }
 

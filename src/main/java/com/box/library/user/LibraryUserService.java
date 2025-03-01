@@ -22,9 +22,12 @@ public class LibraryUserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public LibraryUser createUser(LibraryUser user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return repository.save(user);
+    public LibraryUser createUser(CreateUserRequest request) {
+        var entity = toEntity(request);
+
+        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+
+        return repository.save(entity);
     }
 
     public List<LibraryUser> findAll() {
@@ -87,5 +90,10 @@ public class LibraryUserService {
 
     private boolean currentPasswordDoesNotMatch(UpdatePasswordRequest request, LibraryUser libraryUser) {
         return !passwordEncoder.matches(request.currentPassword(), libraryUser.getPassword());
+    }
+
+    private LibraryUser toEntity(CreateUserRequest request) {
+        return new LibraryUser(request.username(), request.password(), request.role(),
+                request.cpf(), request.name());
     }
 }
