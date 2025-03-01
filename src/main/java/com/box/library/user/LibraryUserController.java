@@ -1,5 +1,6 @@
 package com.box.library.user;
 
+import com.box.library.request.CreateUserRequest;
 import com.box.library.request.UpdateLibraryUser;
 import com.box.library.request.UpdatePasswordRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;

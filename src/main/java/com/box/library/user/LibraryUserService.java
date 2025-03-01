@@ -2,6 +2,7 @@ package com.box.library.user;
 
 import com.box.library.exception.InvalidPasswordException;
 import com.box.library.exception.UserNotFoundException;
+import com.box.library.request.CreateUserRequest;
 import com.box.library.request.UpdateLibraryUser;
 import com.box.library.request.UpdatePasswordRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;

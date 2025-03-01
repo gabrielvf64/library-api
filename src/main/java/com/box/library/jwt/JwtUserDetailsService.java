@@ -1,5 +1,6 @@
 package com.box.library.jwt;
 
+import com.box.library.response.JwtTokenResponse;
 import com.box.library.user.LibraryUserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

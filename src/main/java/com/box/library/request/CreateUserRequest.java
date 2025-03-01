@@ -1,4 +1,4 @@
-package com.box.library.user;
+package com.box.library.request;
 
 import jakarta.validation.constraints.NotBlank;
 

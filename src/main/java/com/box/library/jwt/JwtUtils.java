@@ -1,5 +1,6 @@
 package com.box.library.jwt;
 
+import com.box.library.response.JwtTokenResponse;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
