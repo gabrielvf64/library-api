@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/auth")
 public class AuthenticationController {
 
 
@@ -32,7 +32,7 @@ public class AuthenticationController {
         this.authenticationManager = authenticationManager;
     }
 
-    @PostMapping("/authenticate")
+    @PostMapping
     public ResponseEntity<?> authenticate(@RequestBody @Valid UserLoginRequest loginRequest) {
         log.info("Autenticando com {}", loginRequest.username());
 

@@ -22,6 +22,11 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableMethodSecurity
 public class SecurityConfig {
 
+    public static final String API_PATH = "/api/v1";
+    public static final String USERS_PATH = "/users";
+    public static final String AUTHENTICATION_PATH = "/auth";
+    public static final String H2_CONSOLE_PATH = "/h2-console/**";
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -30,8 +35,9 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
-                        .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, API_PATH + USERS_PATH).permitAll()
+                        .requestMatchers(HttpMethod.POST, API_PATH + AUTHENTICATION_PATH).permitAll()
+                        .requestMatchers(H2_CONSOLE_PATH).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
