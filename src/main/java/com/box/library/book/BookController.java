@@ -1,5 +1,6 @@
 package com.box.library.book;
 
+import com.box.library.request.CreateBook;
 import com.box.library.request.UpdateBook;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -23,10 +24,10 @@ public class BookController {
 
     // TODO[1]: Criação de livro
     @PostMapping
-    public ResponseEntity<Book> create(@RequestBody Book book) {
+    public ResponseEntity<Book> create(@RequestBody CreateBook request) {
 
         // TODO[9]: Usando var
-        var savedBook = service.create(book);
+        var savedBook = service.create(request);
         return ResponseEntity.ok(savedBook);
     }
 

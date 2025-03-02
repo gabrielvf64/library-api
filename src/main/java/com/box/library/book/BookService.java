@@ -3,6 +3,7 @@ package com.box.library.book;
 import com.box.library.author.AuthorService;
 import com.box.library.exception.BookNotFoundException;
 import com.box.library.exception.NoFilterProvidedException;
+import com.box.library.request.CreateBook;
 import com.box.library.request.UpdateBook;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -20,7 +21,9 @@ public class BookService {
         this.authorService = authorService;
     }
 
-    public Book create(Book book) {
+    public Book create(CreateBook request) {
+        var authors = authorService.findAllByIds(request.authorsId());
+        Book book = new Book(request.title(), authors, request.publisher(), request.ISBN());
         return repository.save(book);
     }
 
