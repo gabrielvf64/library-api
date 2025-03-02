@@ -1,9 +1,10 @@
 package com.box.library.customer;
 
+import com.box.library.request.UpdateCustomerRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(Customer request, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<Customer> create(Customer request) {
         return ResponseEntity.ok(service.create(request));
     }
 
@@ -32,6 +33,13 @@ public class CustomerController {
     @GetMapping("/{id}")
     public ResponseEntity<Customer> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Customer> update(@PathVariable Long id,
+                                           @RequestBody UpdateCustomerRequest request) {
+        var updatedEntity = service.update(id, request);
+        return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

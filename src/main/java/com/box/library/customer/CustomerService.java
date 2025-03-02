@@ -1,6 +1,7 @@
 package com.box.library.customer;
 
 import com.box.library.exception.UserNotFoundException;
+import com.box.library.request.UpdateCustomerRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +25,15 @@ public class CustomerService {
 
     public Customer findById(Long id) {
         return repository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+    }
+
+    public Customer update(Long id, UpdateCustomerRequest request) {
+        var entity = findById(id);
+
+        entity.setName(request.name());
+        entity.setCpf(request.cpf());
+
+        return repository.save(entity);
     }
 
     public void deleteById(Long id) {
