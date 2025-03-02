@@ -3,7 +3,6 @@ package com.box.library.user;
 import com.box.library.exception.InvalidPasswordException;
 import com.box.library.exception.UserNotFoundException;
 import com.box.library.request.CreateUserRequest;
-import com.box.library.request.UpdateLibraryUser;
 import com.box.library.request.UpdatePasswordRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,10 +30,12 @@ public class LibraryUserService {
         return repository.save(entity);
     }
 
+    @Transactional(readOnly = true)
     public List<LibraryUser> findAll() {
         return repository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public LibraryUser findById(Long id) {
         return repository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
@@ -50,15 +51,7 @@ public class LibraryUserService {
         return repository.findRoleByUsername(username);
     }
 
-    public LibraryUser update(Long id, UpdateLibraryUser request) {
-        var entity = findById(id);
-
-        entity.setName(request.name());
-        entity.setCpf(request.cpf());
-
-        return repository.save(entity);
-    }
-
+    @Transactional
     public LibraryUser updatePassword(Long id, UpdatePasswordRequest request) {
         if (newPasswordIsNotEqualsToConfirmPassword(request)) {
             throw new InvalidPasswordException("Nova senha não é igual à confirmação de senha");
@@ -94,7 +87,6 @@ public class LibraryUserService {
     }
 
     private LibraryUser toEntity(CreateUserRequest request) {
-        return new LibraryUser(request.username(), request.password(), request.role(),
-                request.cpf(), request.name());
+        return new LibraryUser(request.username(), request.password(), request.role());
     }
 }

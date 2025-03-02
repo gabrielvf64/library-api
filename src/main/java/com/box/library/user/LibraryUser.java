@@ -18,19 +18,13 @@ public class LibraryUser {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    private String cpf;
-
-    private String name;
-
     public LibraryUser() {
     }
 
-    public LibraryUser(String username, String password, String role, String cpf, String name) {
+    public LibraryUser(String username, String password, String role) {
         this.username = username;
         this.password = password;
         this.role = Role.valueOf(role);
-        this.cpf = cpf;
-        this.name = name;
     }
 
     public Long getId() {
@@ -63,22 +57,6 @@ public class LibraryUser {
 
     public void setRole(Role role) {
         this.role = role;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }
 

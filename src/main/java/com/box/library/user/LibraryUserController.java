@@ -1,7 +1,6 @@
 package com.box.library.user;
 
 import com.box.library.request.CreateUserRequest;
-import com.box.library.request.UpdateLibraryUser;
 import com.box.library.request.UpdatePasswordRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -40,12 +39,6 @@ public class LibraryUserController {
     public ResponseEntity<LibraryUser> findById(@PathVariable Long id) {
         var libraryUser = service.findById(id);
         return ResponseEntity.ok(libraryUser);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<LibraryUser> update(@PathVariable Long id, @RequestBody UpdateLibraryUser request) {
-        var updatedEntity = service.update(id, request);
-        return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
