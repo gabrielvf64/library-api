@@ -1,6 +1,6 @@
 package com.box.library.customer;
 
-import com.box.library.request.UpdateCustomerRequest;
+import com.box.library.request.CustomerRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<Customer> create(Customer request) {
+    public ResponseEntity<Customer> create(@RequestBody CustomerRequest request) {
         return ResponseEntity.ok(service.create(request));
     }
 
@@ -37,7 +37,7 @@ public class CustomerController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Customer> update(@PathVariable Long id,
-                                           @RequestBody UpdateCustomerRequest request) {
+                                           @RequestBody CustomerRequest request) {
         var updatedEntity = service.update(id, request);
         return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
     }
