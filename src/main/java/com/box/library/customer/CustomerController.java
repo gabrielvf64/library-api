@@ -1,9 +1,12 @@
 package com.box.library.customer;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -18,8 +21,14 @@ public class CustomerController {
         this.service = service;
     }
 
+    @PostMapping
+    public ResponseEntity<?> create(Customer request, UriComponentsBuilder uriBuilder) {
+        return ResponseEntity.ok(service.create(request));
+    }
+
     @GetMapping
-    public List<Customer> findAll() {
-        return service.findAll();
+    public ResponseEntity<List<Customer>> findAll() {
+        var list = service.findAll();
+        return list.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(list);
     }
 }

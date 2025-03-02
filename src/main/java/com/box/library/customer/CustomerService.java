@@ -13,6 +13,10 @@ public class CustomerService {
         this.repository = repository;
     }
 
+    public Customer create(Customer customer) {
+        return repository.save(customer);
+    }
+
     public List<Customer> findAll() {
         return repository.findAll();
     }
