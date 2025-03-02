@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,33 +22,34 @@ public class LoanController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<Loan>> findAll() {
         var loansList = service.findAll();
         return loansList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(loansList);
     }
 
     @GetMapping("/user/{userId}")
+    @PreAuthorize("hasAuthority('ADMIN') OR (hasAuthority('CLIENT') AND #id == authentication.principal.id)")
     public ResponseEntity<List<Loan>> findByUserId(@PathVariable Long userId) {
         var loans = service.findByUserId(userId);
         return loans.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(loans);
     }
 
-    // TODO[2]: Criação de empréstimo
-
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
     public ResponseEntity<Loan> create(@RequestBody CreateLoan request) {
         var savedLoan = service.create(request);
         return ResponseEntity.ok(savedLoan);
     }
 
-    // TODO[3]: Devolução de empréstimo
-
     @PostMapping("/{loanId}/return")
+    @PreAuthorize("hasAuthority('ADMIN') OR (hasAuthority('CLIENT') AND #id == authentication.principal.id)")
     public ResponseEntity<Loan> returnLoan(@PathVariable Long loanId) {
         var loan = service.returnLoan(loanId);
         return ResponseEntity.ok(loan);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value = "/report", produces = {"text/html", "text/csv"})
     public ResponseEntity<String> exportLoans(
             @RequestParam(defaultValue = "html") String format,
