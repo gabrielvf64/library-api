@@ -6,13 +6,13 @@ VALUES
 
 INSERT INTO users (cpf, name)
 VALUES
-('12345678901', 'John Doe'),
-('98765432109', 'Jane Doe');
+('12345678901', 'batman'),
+('98765432109', 'spiderman');
 
 INSERT INTO customers (cpf, name)
 VALUES
-('12345678901', 'John Doe'),
-('98765432109', 'Jane Doe');
+('12345678901', 'Bruce Wayne'),
+('98765432109', 'Peter Parker');
 
 INSERT INTO LOANS (USER_ID, BOOKS_IDS, LOAN_DATE, EXPECTED_RETURN_DATE, RETURN_DATE, STATUS)
 VALUES

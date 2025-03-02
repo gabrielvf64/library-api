@@ -17,4 +17,9 @@ public class Customer {
     private Long id;
     private String cpf;
     private String name;
+
+    public Customer(String name, String cpf) {
+        this.name = name;
+        this.cpf = cpf;
+    }
 }
