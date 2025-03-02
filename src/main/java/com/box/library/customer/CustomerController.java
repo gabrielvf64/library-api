@@ -20,7 +20,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('CLIENT')")
+    @PreAuthorize("hasAuthority('ADMIN') OR (hasAuthority('CLIENT') AND #id == authentication.principal.id)")
     public ResponseEntity<Customer> create(@Valid @RequestBody CreateCustomerRequest request,
                                            @AuthenticationPrincipal JwtUserDetails jwtUserDetails) {
         var entity = service.save(request, jwtUserDetails);
@@ -28,13 +28,13 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN') OR (hasAuthority('CLIENT') AND #id == authentication.principal.id)")
     public ResponseEntity<Customer> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
     @GetMapping("/details")
-    @PreAuthorize("hasAuthority('CLIENT')")
+    @PreAuthorize("hasAuthority('ADMIN') OR (hasAuthority('CLIENT') AND #id == authentication.principal.id)")
     public ResponseEntity<Customer> getDetails(@AuthenticationPrincipal JwtUserDetails jwtUserDetails) {
         var entity = service.findUserById(jwtUserDetails.getId());
         return ResponseEntity.ok(entity);
