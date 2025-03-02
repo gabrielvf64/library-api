@@ -13,7 +13,7 @@ public class JwtUserDetails extends User {
                 AuthorityUtils.createAuthorityList(libraryUser.getRole().name()));
     }
 
-    public Long getUserId() {
+    public Long getId() {
         return this.libraryUser.getId();
     }
 
