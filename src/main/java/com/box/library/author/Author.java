@@ -1,7 +1,7 @@
 package com.box.library.author;
 
 import com.box.library.book.Book;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,8 +24,8 @@ public class Author {
 
     private String name;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "authors")
+    @JsonIgnoreProperties("authors")
+    @ManyToMany(mappedBy = "authors", fetch = FetchType.LAZY)
     private List<Book> books;
 
 }

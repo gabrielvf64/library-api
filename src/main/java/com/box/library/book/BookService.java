@@ -41,7 +41,7 @@ public class BookService {
 
     public Book update(Long id, UpdateBook request) {
         var existingBook = findById(id);
-        var authors = authorService.findAllbyIds(request.authorsId());
+        var authors = authorService.findAllByIds(request.authorsId());
 
         existingBook.setTitle(request.title());
         existingBook.setAuthors(authors);

@@ -13,8 +13,11 @@ public class AuthorService {
         this.repository = repository;
     }
 
-    public List<Author> findAllbyIds(List<Long> ids) {
+    public List<Author> findAllByIds(List<Long> ids) {
         return repository.findAllById(ids);
     }
 
+    public List<Author> findAll() {
+        return repository.findAll();
+    }
 }

@@ -1,6 +1,7 @@
 package com.box.library.book;
 
 import com.box.library.author.Author;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
+    @JsonIgnoreProperties("books")
     private List<Author> authors;
 
     private String publisher;
