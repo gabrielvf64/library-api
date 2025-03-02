@@ -1,6 +1,9 @@
 package com.box.library.book;
 
+import com.box.library.author.Author;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "books")
@@ -11,7 +14,15 @@ public class Book {
     private Long id;
 
     private String title;
-    private String author;
+
+    @ManyToMany
+    @JoinTable(
+            name = "book_author",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    private List<Author> authors;
+
     private String publisher;
     private String ISBN;
 
@@ -23,10 +34,10 @@ public class Book {
     public Book() {
     }
 
-    public Book(Long id, String title, String author, String publisher, String ISBN) {
+    public Book(Long id, String title, List<Author> authors, String publisher, String ISBN) {
         this.id = id;
         this.title = title;
-        this.author = author;
+        this.authors = authors;
         this.publisher = publisher;
         this.ISBN = ISBN;
         this.status = BookStatus.AVAILABLE;
@@ -48,12 +59,12 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
+    public List<Author> getAuthors() {
+        return authors;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
     }
 
     public String getPublisher() {

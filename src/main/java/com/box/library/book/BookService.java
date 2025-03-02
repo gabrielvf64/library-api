@@ -1,5 +1,6 @@
 package com.box.library.book;
 
+import com.box.library.author.AuthorService;
 import com.box.library.exception.BookNotFoundException;
 import com.box.library.exception.NoFilterProvidedException;
 import com.box.library.request.UpdateBook;
@@ -12,9 +13,11 @@ import java.util.List;
 public class BookService {
 
     private final BookRepository repository;
+    private final AuthorService authorService;
 
-    public BookService(BookRepository repository) {
+    public BookService(BookRepository repository, AuthorService authorService) {
         this.repository = repository;
+        this.authorService = authorService;
     }
 
     public Book create(Book book) {
@@ -38,9 +41,10 @@ public class BookService {
 
     public Book update(Long id, UpdateBook request) {
         var existingBook = findById(id);
+        var authors = authorService.findAllbyIds(request.authorsId());
 
         existingBook.setTitle(request.title());
-        existingBook.setAuthor(request.author());
+        existingBook.setAuthors(authors);
         existingBook.setISBN(request.ISBN());
         existingBook.setPublisher(request.publisher());
         existingBook.setStatus(request.status());
@@ -52,7 +56,8 @@ public class BookService {
         if (hasNoFilterAttribute(author, title, isbn, publisher)) {
             throw new NoFilterProvidedException();
         }
-        return repository.findByAuthorContainingIgnoreCaseOrTitleContainingIgnoreCaseOrISBNContainingIgnoreCaseOrPublisherContainingIgnoreCase(author, title, isbn, publisher);
+        return repository.findByAuthorsNameContainingIgnoreCaseOrTitleContainingIgnoreCaseOrISBNContainingIgnoreCaseOrPublisherContainingIgnoreCase(
+                author, title, isbn, publisher);
     }
 
     private boolean hasNoFilterAttribute(String author, String title, String isbn, String publisher) {

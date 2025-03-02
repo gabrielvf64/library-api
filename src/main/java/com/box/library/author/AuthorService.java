@@ -2,6 +2,8 @@ package com.box.library.author;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AuthorService {
 
@@ -9,6 +11,10 @@ public class AuthorService {
 
     public AuthorService(AuthorRepository repository) {
         this.repository = repository;
+    }
+
+    public List<Author> findAllbyIds(List<Long> ids) {
+        return repository.findAllById(ids);
     }
 
 }
