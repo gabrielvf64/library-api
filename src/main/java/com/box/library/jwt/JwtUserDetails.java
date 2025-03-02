@@ -6,11 +6,12 @@ import org.springframework.security.core.userdetails.User;
 
 public class JwtUserDetails extends User {
 
-    private LibraryUser libraryUser;
+    private final LibraryUser libraryUser;
 
     public JwtUserDetails(LibraryUser libraryUser) {
         super(libraryUser.getUsername(), libraryUser.getPassword(),
                 AuthorityUtils.createAuthorityList(libraryUser.getRole().name()));
+        this.libraryUser = libraryUser;
     }
 
     public Long getId() {
