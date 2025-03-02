@@ -17,7 +17,7 @@ public class Customer {
     private String cpf;
 
     @OneToOne
-    @JoinColumn(name = "id_user", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private LibraryUser user;
 
     // TODO: Por o endereço do cliente
