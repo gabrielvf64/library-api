@@ -68,4 +68,7 @@ public class BookService {
                 && !StringUtils.hasText(isbn) && !StringUtils.hasText(publisher);
     }
 
+    public List<Book> findAllByIds(List<Long> booksIds) {
+        return repository.findAllById(booksIds);
+    }
 }

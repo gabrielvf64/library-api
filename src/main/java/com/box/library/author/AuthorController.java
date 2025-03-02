@@ -1,10 +1,9 @@
 package com.box.library.author;
 
+import com.box.library.request.CreateAuthor;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +22,11 @@ public class AuthorController {
     public ResponseEntity<List<Author>> findAll() {
         var authorsList = service.findAll();
         return authorsList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(authorsList);
+    }
+
+    @PostMapping
+    public ResponseEntity<Author> create(@RequestBody CreateAuthor request) {
+        var savedAuthor = service.create(request);
+        return ResponseEntity.ok(savedAuthor);
     }
 }
