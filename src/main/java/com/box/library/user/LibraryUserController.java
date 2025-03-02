@@ -29,19 +29,21 @@ public class LibraryUserController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<LibraryUser>> findAll() {
         var libraryUsers = service.findAll();
         return libraryUsers.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(libraryUsers);
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN') OR (hasAuthority('CLIENT') AND #id == authentication.principal.id)")
     public ResponseEntity<LibraryUser> findById(@PathVariable Long id) {
         var libraryUser = service.findById(id);
         return ResponseEntity.ok(libraryUser);
     }
 
     @PatchMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT') AND (#id == authentication.principal.id)")
     public ResponseEntity<LibraryUser> updatePassword(@PathVariable Long id,
                                                       @Valid @RequestBody UpdatePasswordRequest request) {
         var updatedPassword = service.updatePassword(id, request);
@@ -49,6 +51,7 @@ public class LibraryUserController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') OR (hasAuthority('CLIENT') AND #id == authentication.principal.id)")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
