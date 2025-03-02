@@ -22,6 +22,10 @@ public class Customer {
 
     // TODO: Por o endereço do cliente
 
+
+    public Customer() {
+    }
+
     public Customer(CreateCustomerRequest request) {
         this.name = request.name();
         this.cpf = request.cpf();
