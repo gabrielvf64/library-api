@@ -1,6 +1,6 @@
 package com.box.library.author;
 
-import com.box.library.request.CreateAuthor;
+import com.box.library.request.CreateAuthorRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ public class AuthorController {
     }
 
     @PostMapping
-    public ResponseEntity<Author> create(@RequestBody CreateAuthor request) {
+    public ResponseEntity<Author> create(@RequestBody CreateAuthorRequest request) {
         var savedAuthor = service.create(request);
         return ResponseEntity.ok(savedAuthor);
     }

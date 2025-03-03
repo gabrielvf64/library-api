@@ -1,7 +1,7 @@
 package com.box.library.author;
 
 import com.box.library.book.BookService;
-import com.box.library.request.CreateAuthor;
+import com.box.library.request.CreateAuthorRequest;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +26,9 @@ public class AuthorService {
         return repository.findAll();
     }
 
-    public Author create(CreateAuthor request) {
-        var books = bookService.findAllByIds(request.booksId());
-        Author author = new Author(request.name(), books);
+    public Author create(CreateAuthorRequest request) {
+        var books = bookService.findAllByIds(request.booksIds());
+        var author = new Author(request.name(), books);
         books.forEach(book -> book.getAuthors().add(author));
         return repository.save(author);
     }

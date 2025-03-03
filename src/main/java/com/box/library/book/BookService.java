@@ -3,8 +3,8 @@ package com.box.library.book;
 import com.box.library.author.AuthorService;
 import com.box.library.exception.BookNotFoundException;
 import com.box.library.exception.NoFilterProvidedException;
-import com.box.library.request.CreateBook;
-import com.box.library.request.UpdateBook;
+import com.box.library.request.CreateBookRequest;
+import com.box.library.request.UpdateBookRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -21,14 +21,18 @@ public class BookService {
         this.authorService = authorService;
     }
 
-    public Book create(CreateBook request) {
-        var authors = authorService.findAllByIds(request.authorsId());
-        Book book = new Book(request.title(), authors, request.publisher(), request.ISBN());
+    public Book create(CreateBookRequest request) {
+        var authors = authorService.findAllByIds(request.authorsIds());
+        var book = new Book(request.title(), authors, request.publisher(), request.ISBN());
         return repository.save(book);
     }
 
     public List<Book> findAll() {
         return repository.findAll();
+    }
+
+    public List<Book> findAllByIds(List<Long> booksIds) {
+        return repository.findAllById(booksIds);
     }
 
     public Book findById(Long id) {
@@ -42,9 +46,9 @@ public class BookService {
         repository.deleteById(id);
     }
 
-    public Book update(Long id, UpdateBook request) {
+    public Book update(Long id, UpdateBookRequest request) {
         var existingBook = findById(id);
-        var authors = authorService.findAllByIds(request.authorsId());
+        var authors = authorService.findAllByIds(request.authorsIds());
 
         existingBook.setTitle(request.title());
         existingBook.setAuthors(authors);
@@ -68,7 +72,4 @@ public class BookService {
                 && !StringUtils.hasText(isbn) && !StringUtils.hasText(publisher);
     }
 
-    public List<Book> findAllByIds(List<Long> booksIds) {
-        return repository.findAllById(booksIds);
-    }
 }
