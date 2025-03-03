@@ -29,4 +29,10 @@ public class AuthorController {
         var savedAuthor = service.create(request);
         return ResponseEntity.ok(savedAuthor);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Author> findById(@PathVariable Long id) {
+        var author = service.findById(id);
+        return ResponseEntity.ok(author);
+    }
 }
