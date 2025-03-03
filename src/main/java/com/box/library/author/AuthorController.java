@@ -1,6 +1,7 @@
 package com.box.library.author;
 
 import com.box.library.request.CreateAuthorRequest;
+import com.box.library.request.UpdateAuthorRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,4 +36,11 @@ public class AuthorController {
         var author = service.findById(id);
         return ResponseEntity.ok(author);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Author> update(@PathVariable Long id, @RequestBody UpdateAuthorRequest request) {
+        var updatedAuthor = service.update(id, request);
+        return ResponseEntity.ok(updatedAuthor);
+    }
+
 }

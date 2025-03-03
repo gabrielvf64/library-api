@@ -3,6 +3,7 @@ package com.box.library.author;
 import com.box.library.book.BookService;
 import com.box.library.exception.AuthorNotFoundException;
 import com.box.library.request.CreateAuthorRequest;
+import com.box.library.request.UpdateAuthorRequest;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,23 @@ public class AuthorService {
         var books = bookService.findAllByIds(request.booksIds());
         var author = new Author(request.name(), books);
         books.forEach(book -> book.getAuthors().add(author));
+        return repository.save(author);
+    }
+
+    public Author update(Long id, UpdateAuthorRequest request) {
+        var author = findById(id);
+        var books = bookService.findAllByIds(request.booksIds());
+
+        bookService.deleteAuthorFromBooks(author.getId());
+        books.forEach(book -> {
+            if (!book.getAuthors().contains(author)) {
+                book.getAuthors().add(author);
+            }
+        });
+
+        author.setName(request.name());
+        author.setBooks(books);
+
         return repository.save(author);
     }
 
