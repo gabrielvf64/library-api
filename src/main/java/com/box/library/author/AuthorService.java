@@ -56,4 +56,10 @@ public class AuthorService {
         return repository.save(author);
     }
 
+    public void deleteById(Long id) {
+        var author = findById(id);
+        bookService.deleteAuthorFromBooks(author.getId());
+        repository.deleteById(id);
+    }
+
 }
