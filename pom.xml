@@ -58,7 +58,7 @@
             <version>2.8.4</version>
         </dependency>
 
-        <dependency> <!-- Lombok -->
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.30</version>
