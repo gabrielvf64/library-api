@@ -5,7 +5,6 @@ import com.box.library.exception.BookNotFoundException;
 import com.box.library.exception.NoFilterProvidedException;
 import com.box.library.request.CreateBookRequest;
 import com.box.library.request.UpdateBookRequest;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -66,11 +65,6 @@ public class BookService {
         }
         return repository.findByAuthorsNameContainingIgnoreCaseOrTitleContainingIgnoreCaseOrISBNContainingIgnoreCaseOrPublisherContainingIgnoreCase(
                 author, title, isbn, publisher);
-    }
-
-    @Transactional
-    public void deleteAuthorFromBooks(Long authorId) {
-        repository.deleteAuthorFromBooks(authorId);
     }
 
     private boolean hasNoFilterAttribute(String author, String title, String isbn, String publisher) {

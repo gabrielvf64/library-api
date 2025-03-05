@@ -1,13 +1,20 @@
 package com.box.library.author;
 
+import com.box.library.book.Book;
 import com.box.library.book.BookService;
 import com.box.library.exception.AuthorNotFoundException;
+import com.box.library.exception.BookNotFoundException;
 import com.box.library.request.CreateAuthorRequest;
 import com.box.library.request.UpdateAuthorRequest;
+import jakarta.transaction.Transactional;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthorService {
@@ -41,25 +48,56 @@ public class AuthorService {
 
     public Author update(Long id, UpdateAuthorRequest request) {
         var author = findById(id);
-        var books = bookService.findAllByIds(request.booksIds());
+        var books = getBooksFromRequest(request.booksIds());
 
-        bookService.deleteAuthorFromBooks(author.getId());
-        books.forEach(book -> {
-            if (!book.getAuthors().contains(author)) {
-                book.getAuthors().add(author);
-            }
-        });
+        removeOldBookAssociations(author, books);
+        addNewBookAssociations(author, books);
 
         author.setName(request.name());
-        author.setBooks(books);
+        author.setBooks(new ArrayList<>(books));
 
         return repository.save(author);
     }
 
+    @Transactional
     public void deleteById(Long id) {
         var author = findById(id);
-        bookService.deleteAuthorFromBooks(author.getId());
+        removeOldBookAssociations(author);
         repository.deleteById(id);
+    }
+
+    private Set<Book> getBooksFromRequest(List<Long> booksIds) {
+        List<Book> books = bookService.findAllByIds(booksIds);
+
+        Set<Long> foundIds = books.stream()
+                .map(Book::getId)
+                .collect(Collectors.toSet());
+
+        Set<Long> missingIds = booksIds.stream()
+                .filter(id -> !foundIds.contains(id))
+                .collect(Collectors.toSet());
+
+        if (!missingIds.isEmpty()) {
+            throw new BookNotFoundException(missingIds.stream().toList());
+        }
+
+        return new HashSet<>(books);
+    }
+
+    private void removeOldBookAssociations(Author author, Set<Book> books) {
+        author.getBooks().stream()
+                .filter(book -> !books.contains(book))
+                .forEach(book -> book.getAuthors().remove(author));
+    }
+
+    private void removeOldBookAssociations(Author author) {
+        author.getBooks().forEach(book -> book.getAuthors().remove(author));
+    }
+
+    private void addNewBookAssociations(Author author, Set<Book> books) {
+        books.stream()
+                .filter(book -> !book.getAuthors().contains(author))
+                .forEach(book -> book.getAuthors().add(author));
     }
 
 }
