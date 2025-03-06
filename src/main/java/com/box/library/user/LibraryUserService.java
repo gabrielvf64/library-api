@@ -35,6 +35,12 @@ public class LibraryUserService {
         return repository.findAll();
     }
 
+    public LibraryUser update(Long id, UpdateLibraryUser request) {
+        var entity = findById(id);
+        entity.setUsername(request.username());
+        return repository.save(entity);
+    }
+
     @Transactional(readOnly = true)
     public LibraryUser findById(Long id) {
         return repository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
