@@ -4,8 +4,6 @@ import com.box.library.jwt.JwtUserDetailsService;
 import com.box.library.request.UserLoginRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,11 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/auth")
 public class AuthenticationController {
 
-
     private final JwtUserDetailsService jwtUserDetailsService;
     private final AuthenticationManager authenticationManager;
-
-    private static final Logger log = LoggerFactory.getLogger(AuthenticationController.class);
 
     public AuthenticationController(JwtUserDetailsService jwtUserDetailsService,
                                     AuthenticationManager authenticationManager) {

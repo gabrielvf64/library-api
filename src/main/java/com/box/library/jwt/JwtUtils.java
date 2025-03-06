@@ -5,8 +5,6 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
@@ -30,8 +28,6 @@ public class JwtUtils {
 
     public static final long EXPIRATION_MINUTES = 30;
 
-    private static final Logger log = LoggerFactory.getLogger(JwtUtils.class);
-
     private JwtUtils() {
     }
 
@@ -42,7 +38,7 @@ public class JwtUtils {
         String token = Jwts.builder()
                 .header().add("typ", "JWT")
                 .and()
-                .subject(username)  //TODO testar com id do usuario
+                .subject(username)  //TODO testar com id do usuario depois
                 .issuedAt(issuedAt)
                 .expiration(expireDate)
                 .signWith(generateKey())
@@ -64,7 +60,7 @@ public class JwtUtils {
                     .parseSignedClaims(removeBearer(token))
                     .getPayload();
         } catch (JwtException e) {
-            log.error(String.format("Token inválido: %s", e.getMessage()));
+            log.error("Token inválido ao buscar claims: {}", e.getMessage());
         }
         return null;
     }
@@ -81,7 +77,7 @@ public class JwtUtils {
                     .parseSignedClaims(removeBearer(token));
             return true;
         } catch (JwtException e) {
-            log.error(String.format("Token inválido: %s", e.getMessage()));
+            log.error("Token inválido: {}", e.getMessage());
         }
         return false;
     }
