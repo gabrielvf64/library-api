@@ -25,10 +25,7 @@ public class LibraryUserService {
 
     public LibraryUser update(Long id, UpdateLibraryUser request) {
         var entity = findById(id);
-
-        entity.setName(request.name());
-        entity.setCpf(request.cpf());
-
+        entity.setUsername(request.username());
         return repository.save(entity);
     }
 

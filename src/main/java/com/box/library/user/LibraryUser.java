@@ -9,16 +9,10 @@ public class LibraryUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String cpf;
-    private String name;
+
+    private String username;
 
     public LibraryUser() {
-    }
-
-    public LibraryUser(Long id, String cpf, String name) {
-        this.id = id;
-        this.cpf = cpf;
-        this.name = name;
     }
 
     public Long getId() {
@@ -29,20 +23,12 @@ public class LibraryUser {
         this.id = id;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getUsername() {
+        return username;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
 

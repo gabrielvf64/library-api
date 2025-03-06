@@ -25,10 +25,15 @@ VALUES
     (3, 5), -- Design Patterns - Ralph Johnson
     (3, 6); -- Design Patterns - John Vlissides
 
-INSERT INTO users (cpf, name)
+INSERT INTO users (username)
 VALUES
-('12345678901', 'John Doe'),
-('98765432109', 'Jane Doe');
+('batman'),
+('spiderman');
+
+INSERT INTO customers (cpf, name)
+VALUES
+('12345678901', 'Bruce Wayne'),
+('98765432109', 'Peter Parker');
 
 INSERT INTO LOANS (USER_ID, BOOKS_IDS, LOAN_DATE, EXPECTED_RETURN_DATE, RETURN_DATE, STATUS)
 VALUES
