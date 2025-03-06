@@ -48,10 +48,10 @@ public class AuthorService {
 
     public Author update(Long id, UpdateAuthorRequest request) {
         var author = findById(id);
-        var books = getBooksFromRequest(request.booksIds());
+        var books = validateAndGetBooksByIds(request.booksIds());
 
-        removeOldBookAssociations(author, books);
-        addNewBookAssociations(author, books);
+        removeOldBooksAssociations(author, books);
+        addNewBooksAssociations(author, books);
 
         author.setName(request.name());
         author.setBooks(new ArrayList<>(books));
@@ -62,11 +62,11 @@ public class AuthorService {
     @Transactional
     public void deleteById(Long id) {
         var author = findById(id);
-        removeOldBookAssociations(author);
+        removeAllBooksAssociations(author);
         repository.deleteById(id);
     }
 
-    private Set<Book> getBooksFromRequest(List<Long> booksIds) {
+    private Set<Book> validateAndGetBooksByIds(List<Long> booksIds) {
         List<Book> books = bookService.findAllByIds(booksIds);
 
         Set<Long> foundIds = books.stream()
@@ -84,17 +84,17 @@ public class AuthorService {
         return new HashSet<>(books);
     }
 
-    private void removeOldBookAssociations(Author author, Set<Book> books) {
+    private void removeOldBooksAssociations(Author author, Set<Book> books) {
         author.getBooks().stream()
                 .filter(book -> !books.contains(book))
                 .forEach(book -> book.getAuthors().remove(author));
     }
 
-    private void removeOldBookAssociations(Author author) {
+    private void removeAllBooksAssociations(Author author) {
         author.getBooks().forEach(book -> book.getAuthors().remove(author));
     }
 
-    private void addNewBookAssociations(Author author, Set<Book> books) {
+    private void addNewBooksAssociations(Author author, Set<Book> books) {
         books.stream()
                 .filter(book -> !book.getAuthors().contains(author))
                 .forEach(book -> book.getAuthors().add(author));
