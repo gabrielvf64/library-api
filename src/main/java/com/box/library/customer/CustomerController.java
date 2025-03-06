@@ -2,7 +2,6 @@ package com.box.library.customer;
 
 import com.box.library.jwt.JwtUserDetails;
 import com.box.library.request.CreateCustomerRequest;
-import com.box.library.request.CustomerRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -33,6 +32,7 @@ public class CustomerController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<Customer>> findAll() {
         var list = service.findAll();
         return list.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(list);
@@ -52,13 +52,15 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') OR (hasAuthority('CLIENT') AND #id == authentication.principal.id)")
     public ResponseEntity<Customer> update(@PathVariable Long id,
-                                           @RequestBody CustomerRequest request) {
+                                           @RequestBody CreateCustomerRequest request) {
         var updatedEntity = service.update(id, request);
         return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') OR (hasAuthority('CLIENT') AND #id == authentication.principal.id)")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         service.deleteById(id);
         return ResponseEntity.noContent().build();

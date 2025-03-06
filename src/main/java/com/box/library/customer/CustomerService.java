@@ -64,8 +64,4 @@ public class CustomerService {
     private boolean doesNotExitsById(Long id) {
         return !repository.existsById(id);
     }
-
-    private Customer toEntity(CreateCustomerRequest request) {
-        return new Customer(request.name(), request.cpf());
-    }
 }
