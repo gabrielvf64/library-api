@@ -4,10 +4,10 @@ VALUES
 ('Effective Java', 'Joshua Bloch', 'Addison-Wesley', '9780134685991', 'AVAILABLE'),
 ('Design Patterns', 'Erich Gamma', 'Addison-Wesley', '9780201633610', 'BORROWED');
 
-INSERT INTO users (cpf, name)
+INSERT INTO users (username)
 VALUES
-('12345678901', 'batman'),
-('98765432109', 'spiderman');
+('batman'),
+('spiderman');
 
 INSERT INTO customers (cpf, name)
 VALUES
