@@ -14,6 +14,11 @@ VALUES
 
 ('superman', '$2a$10$6HhxiIDYziOtChtHBaiF7uc0HKtfkyaddknkd9KGh8LuzWEndE7OS', 'CLIENT', '44787350005', 'Clark Kent'); --password: 111
 
+INSERT INTO customers (cpf, name)
+VALUES
+('12345678901', 'Bruce Wayne'),
+('98765432109', 'Peter Parker');
+
 
 INSERT INTO LOANS (USER_ID, BOOKS_IDS, LOAN_DATE, EXPECTED_RETURN_DATE, RETURN_DATE, STATUS)
 VALUES
