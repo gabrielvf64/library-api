@@ -2,7 +2,6 @@ package com.box.library.exception;
 
 import java.util.List;
 
-// TODO[6]: Herança
 public class BookNotFoundException extends RuntimeException {
 
     public BookNotFoundException(Long bookId) {
@@ -10,6 +9,6 @@ public class BookNotFoundException extends RuntimeException {
     }
 
     public BookNotFoundException(List<Long> booksIds) {
-        super("The following books with id " + booksIds + " were not found.");
+        super("The following books with ids " + booksIds + " were not found.");
     }
 }
