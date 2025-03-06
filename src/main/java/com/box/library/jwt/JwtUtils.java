@@ -6,8 +6,6 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
@@ -30,8 +28,6 @@ public class JwtUtils {
     public static final long EXPIRATION_HOURS = 0;
 
     public static final long EXPIRATION_MINUTES = 30;
-
-    private static final Logger log = LoggerFactory.getLogger(JwtUtils.class);
 
     private JwtUtils() {
     }
