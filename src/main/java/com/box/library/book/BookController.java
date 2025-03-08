@@ -1,6 +1,7 @@
 package com.box.library.book;
 
-import com.box.library.request.UpdateBook;
+import com.box.library.request.CreateBookRequest;
+import com.box.library.request.UpdateBookRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,8 @@ public class BookController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Book> create(@RequestBody Book book) {
-        var savedBook = service.create(book);
+    public ResponseEntity<Book> create(@RequestBody CreateBookRequest request) {
+        var savedBook = service.create(request);
         return ResponseEntity.ok(savedBook);
     }
 
@@ -50,7 +51,7 @@ public class BookController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Book> update(@PathVariable Long id, @RequestBody UpdateBook request) {
+    public ResponseEntity<Book> update(@PathVariable Long id, @RequestBody UpdateBookRequest request) {
         var updatedEntity = service.update(id, request);
         return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
     }

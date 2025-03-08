@@ -1,8 +1,29 @@
-INSERT INTO books (title, author, publisher, isbn, status)
+INSERT INTO
+    authors (name)
 VALUES
-('Clean Code', 'Robert Martin', 'Prentice Hall', '9780132350884', 'AVAILABLE'),
-('Effective Java', 'Joshua Bloch', 'Addison-Wesley', '9780134685991', 'AVAILABLE'),
-('Design Patterns', 'Erich Gamma', 'Addison-Wesley', '9780201633610', 'BORROWED');
+    ('Robert Martin'),
+    ('Joshua Bloch'),
+    ('Erich Gamma'),
+    ('Richard Helm'),
+    ('Ralph Johnson'),
+    ('John Vlissides');
+
+INSERT INTO
+    books (title, publisher, isbn, status)
+VALUES
+    ('Clean Code', 'Prentice Hall', '9780132350884', 'AVAILABLE'),
+    ('Effective Java', 'Addison-Wesley', '9780134685991', 'AVAILABLE'),
+    ('Design Patterns', 'Addison-Wesley', '9780201633610', 'BORROWED');
+
+INSERT INTO
+    book_author (book_id, author_id)
+VALUES
+    (1, 1), -- Clean Code - Robert Martin
+    (2, 2), -- Effective Java - Joshua Bloch
+    (3, 3), -- Design Patterns - Erich Gamma
+    (3, 4), -- Design Patterns - Richard Helm
+    (3, 5), -- Design Patterns - Ralph Johnson
+    (3, 6); -- Design Patterns - John Vlissides
 
 INSERT INTO users (username, password, role)
 VALUES

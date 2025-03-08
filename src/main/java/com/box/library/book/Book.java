@@ -1,7 +1,17 @@
 package com.box.library.book;
 
+import com.box.library.author.Author;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "books")
 public class Book {
@@ -11,7 +21,16 @@ public class Book {
     private Long id;
 
     private String title;
-    private String author;
+
+    @ManyToMany
+    @JoinTable(
+            name = "book_author",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    @JsonIgnoreProperties("books")
+    private List<Author> authors;
+
     private String publisher;
     private String ISBN;
 
@@ -20,63 +39,11 @@ public class Book {
     @Enumerated(EnumType.STRING)
     private BookStatus status = BookStatus.AVAILABLE;
 
-    public Book() {
-    }
-
-    public Book(Long id, String title, String author, String publisher, String ISBN) {
-        this.id = id;
+    public Book(String title, List<Author> authors, String publisher, String ISBN) {
         this.title = title;
-        this.author = author;
+        this.authors = authors;
         this.publisher = publisher;
         this.ISBN = ISBN;
-        this.status = BookStatus.AVAILABLE;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    public String getISBN() {
-        return ISBN;
-    }
-
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
-    }
-
-    public BookStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(BookStatus status) {
-        this.status = status;
-    }
 }
