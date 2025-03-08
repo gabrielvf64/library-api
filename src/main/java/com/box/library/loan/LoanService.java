@@ -1,10 +1,10 @@
 package com.box.library.loan;
 
+import com.box.library.customer.CustomerService;
 import com.box.library.exception.LoanNotFoundException;
 import com.box.library.report.Exporter;
 import com.box.library.request.CreateLoan;
 import com.box.library.response.ReportResponse;
-import com.box.library.user.LibraryUserService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,22 +15,25 @@ public class LoanService {
 
     private final LoanRepository repository;
     private final List<Exporter> exporters;
+    private final CustomerService customerService;
 
-    public LoanService(LoanRepository repository, List<Exporter> exporters) {
+    public LoanService(LoanRepository repository, List<Exporter> exporters, CustomerService customerService) {
         this.repository = repository;
         this.exporters = exporters;
+        this.customerService = customerService;
     }
 
     public List<Loan> findAll() {
         return repository.findAll();
     }
 
-    public List<Loan> findByUserId(Long userId) {
-        return repository.findByUserId(userId);
+    public List<Loan> findByCustomerId(Long customerId) {
+        return repository.findByCustomerId(customerId);
     }
 
     public Loan create(CreateLoan request) {
-        var entity = new Loan(request.userId(), request.booksIds());
+        var customer = customerService.findById(request.customerId());
+        var entity = new Loan(customer, request.booksIds());
         return repository.save(entity);
     }
 

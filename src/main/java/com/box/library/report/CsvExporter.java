@@ -33,7 +33,7 @@ public non-sealed class CsvExporter implements Exporter {
                                 .map(String::valueOf)
                                 .collect(Collectors.joining(" ")),
 
-                        loan.getUserId(),
+                        loan.getCustomer().getId(),
                         loan.getLoanDate(),
                         loan.getExpectedReturnDate()
 
