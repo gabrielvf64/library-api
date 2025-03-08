@@ -32,15 +32,11 @@ public class LoanController {
         return loans.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(loans);
     }
 
-    // TODO[2]: Criação de empréstimo
-
     @PostMapping
     public ResponseEntity<Loan> create(@RequestBody CreateLoanRequest request) {
         var savedLoan = service.create(request);
         return ResponseEntity.ok(savedLoan);
     }
-
-    // TODO[3]: Devolução de empréstimo
 
     @PostMapping("/{loanId}/return")
     public ResponseEntity<Loan> returnLoan(@PathVariable Long loanId) {
