@@ -3,7 +3,7 @@ package com.box.library.loan;
 import com.box.library.customer.CustomerService;
 import com.box.library.exception.LoanNotFoundException;
 import com.box.library.report.Exporter;
-import com.box.library.request.CreateLoan;
+import com.box.library.request.CreateLoanRequest;
 import com.box.library.response.ReportResponse;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,7 @@ public class LoanService {
         return repository.findByCustomerId(customerId);
     }
 
-    public Loan create(CreateLoan request) {
+    public Loan create(CreateLoanRequest request) {
         var customer = customerService.findById(request.customerId());
         var entity = new Loan(customer, request.booksIds());
         return repository.save(entity);

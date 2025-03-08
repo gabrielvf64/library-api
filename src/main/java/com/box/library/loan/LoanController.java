@@ -1,6 +1,6 @@
 package com.box.library.loan;
 
-import com.box.library.request.CreateLoan;
+import com.box.library.request.CreateLoanRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -35,7 +35,7 @@ public class LoanController {
     // TODO[2]: Criação de empréstimo
 
     @PostMapping
-    public ResponseEntity<Loan> create(@RequestBody CreateLoan request) {
+    public ResponseEntity<Loan> create(@RequestBody CreateLoanRequest request) {
         var savedLoan = service.create(request);
         return ResponseEntity.ok(savedLoan);
     }
