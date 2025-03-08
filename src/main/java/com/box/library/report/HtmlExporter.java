@@ -33,7 +33,7 @@ public final class HtmlExporter implements Exporter {
                         """.formatted(
                         loan.getId(),
                         loan.getBooksIds(),
-                        loan.getCustomer(),
+                        loan.getCustomer().getName(),
                         loan.getLoanDate(),
                         loan.getExpectedReturnDate()
                 ))
@@ -47,7 +47,7 @@ public final class HtmlExporter implements Exporter {
                     <tr>
                         <th>Id do emprestimo</th>
                         <th>Ids dos livros</th>
-                        <th>Id do usuario</th>
+                        <th>Cliente</th>
                         <th>Data do emprestimo</th>
                         <th>Data de retorno esperada</th>
                     </tr>

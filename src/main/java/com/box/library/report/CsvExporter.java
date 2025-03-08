@@ -20,7 +20,7 @@ public non-sealed class CsvExporter implements Exporter {
         }
 
         String header = """
-                ID do emprestimo, IDs dos livros, ID do usuario, Data do emprestimo, Data esperada de devolucao
+                ID do emprestimo, IDs dos livros, Cliente, Data do emprestimo, Data esperada de devolucao
                 """;
 
         String rows = loans.stream()
@@ -33,7 +33,7 @@ public non-sealed class CsvExporter implements Exporter {
                                 .map(String::valueOf)
                                 .collect(Collectors.joining(" ")),
 
-                        loan.getCustomer().getId(),
+                        loan.getCustomer().getName(),
                         loan.getLoanDate(),
                         loan.getExpectedReturnDate()
 
