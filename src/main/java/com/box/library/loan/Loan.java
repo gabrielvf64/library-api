@@ -1,5 +1,6 @@
 package com.box.library.loan;
 
+import com.box.library.book.Book;
 import com.box.library.customer.Customer;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -21,7 +22,10 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private List<Long> booksIds;
+    @ManyToMany(mappedBy = "loans")
+    @JsonIgnoreProperties("loans")
+    private List<Book> books;
+
     private LocalDate loanDate;
     private LocalDate expectedReturnDate;
     private LocalDate returnDate;
@@ -32,9 +36,9 @@ public class Loan {
     @JsonIgnoreProperties("loans")
     private Customer customer;
 
-    public Loan(Customer customer, List<Long> booksIds) {
+    public Loan(Customer customer, List<Book> books) {
         this.customer = customer;
-        this.booksIds = booksIds;
+        this.books = books;
         this.loanDate = LocalDate.now();
         this.expectedReturnDate = loanDate.plusDays(3);
         this.status = LoanStatus.ACTIVE;

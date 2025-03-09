@@ -1,6 +1,11 @@
 package com.box.library.loan;
 
+import com.box.library.book.Book;
+import com.box.library.book.BookService;
+import com.box.library.book.BookStatus;
 import com.box.library.customer.CustomerService;
+import com.box.library.exception.BookNotAvailableException;
+import com.box.library.exception.BookNotFoundException;
 import com.box.library.exception.LoanNotFoundException;
 import com.box.library.exception.PendingLoanException;
 import com.box.library.report.Exporter;
@@ -9,7 +14,11 @@ import com.box.library.response.ReportResponse;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class LoanService {
@@ -17,11 +26,13 @@ public class LoanService {
     private final LoanRepository repository;
     private final List<Exporter> exporters;
     private final CustomerService customerService;
+    private final BookService bookService;
 
-    public LoanService(LoanRepository repository, List<Exporter> exporters, CustomerService customerService) {
+    public LoanService(LoanRepository repository, List<Exporter> exporters, CustomerService customerService, BookService bookService) {
         this.repository = repository;
         this.exporters = exporters;
         this.customerService = customerService;
+        this.bookService = bookService;
     }
 
     private static String getContentType(String format) {
@@ -53,8 +64,14 @@ public class LoanService {
         if (hasPendingLoan(customer.getId())) {
             throw new PendingLoanException(customer.getId());
         }
-        var entity = new Loan(customer, request.booksIds());
-        return repository.save(entity);
+
+        var books = validateAndGetAvailableBooksByIds(request.booksIds());
+        var loan = new Loan(customer, new ArrayList<>(books));
+
+        setBorrowedStatusToBooks(books);
+        addNewBooksAssociations(loan, books);
+
+        return repository.save(loan);
     }
 
     public Loan findById(Long loanId) {
@@ -94,5 +111,41 @@ public class LoanService {
 
     private boolean hasPendingLoan(Long customerId) {
         return repository.existsByCustomerIdAndStatusIn(customerId, List.of(LoanStatus.ACTIVE, LoanStatus.OVERDUE));
+    }
+
+    private Set<Book> validateAndGetAvailableBooksByIds(List<Long> booksIds) {
+        List<Book> books = bookService.findAllByIds(booksIds);
+
+        Set<Long> foundIds = books.stream()
+                .map(Book::getId)
+                .collect(Collectors.toSet());
+
+        Set<Long> missingIds = booksIds.stream()
+                .filter(id -> !foundIds.contains(id))
+                .collect(Collectors.toSet());
+
+        if (!missingIds.isEmpty()) {
+            throw new BookNotFoundException(missingIds.stream().toList());
+        }
+
+        List<Book> availableBooks = bookService.findAllAvailableByIds(booksIds);
+
+        Set<Long> notAvailableIds = foundIds.stream()
+                .filter(id -> !availableBooks.stream().map(Book::getId).collect(Collectors.toSet()).contains(id))
+                .collect(Collectors.toSet());
+
+        if (!notAvailableIds.isEmpty()) {
+            throw new BookNotAvailableException(notAvailableIds.stream().toList());
+        }
+
+        return new HashSet<>(books);
+    }
+
+    private void setBorrowedStatusToBooks(Set<Book> books) {
+        books.forEach(book -> book.setStatus(BookStatus.BORROWED));
+    }
+
+    private void addNewBooksAssociations(Loan loan, Set<Book> books) {
+        books.forEach(book -> book.getLoans().add(loan));
     }
 }
