@@ -1,8 +1,11 @@
 package com.box.library.customer;
 
 import com.box.library.exception.UserNotFoundException;
-import com.box.library.request.CustomerRequest;
+import com.box.library.jwt.JwtUserDetails;
+import com.box.library.request.CreateCustomerRequest;
+import com.box.library.user.LibraryUserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -10,24 +13,39 @@ import java.util.List;
 public class CustomerService {
 
     private final CustomerRepository repository;
+    private final LibraryUserService libraryUserService;
 
-    public CustomerService(CustomerRepository repository) {
+    public CustomerService(CustomerRepository repository, LibraryUserService libraryUserService) {
         this.repository = repository;
+        this.libraryUserService = libraryUserService;
     }
 
-    public Customer create(CustomerRequest request) {
-        return repository.save(toEntity(request));
+    @Transactional
+    public Customer save(CreateCustomerRequest request, JwtUserDetails jwtUserDetails) {
+        Customer entity = new Customer(request);
+
+        entity.setUser(libraryUserService.findById(jwtUserDetails.getId()));
+
+        return repository.save(entity);
     }
 
+    @Transactional(readOnly = true)
     public List<Customer> findAll() {
         return repository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public Customer findById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        return repository.findById(id).orElseThrow(
+                () -> new RuntimeException("Customer id [" + id + "] not found"));
     }
 
-    public Customer update(Long id, CustomerRequest request) {
+    @Transactional(readOnly = true)
+    public Customer findUserById(Long id) {
+        return repository.findByUserId(id);
+    }
+
+    public Customer update(Long id, CreateCustomerRequest request) {
         var entity = findById(id);
 
         entity.setName(request.name());
@@ -45,9 +63,5 @@ public class CustomerService {
 
     private boolean doesNotExitsById(Long id) {
         return !repository.existsById(id);
-    }
-
-    private Customer toEntity(CustomerRequest request) {
-        return new Customer(request.name(), request.cpf());
     }
 }
