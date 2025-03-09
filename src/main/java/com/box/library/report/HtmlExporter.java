@@ -1,5 +1,6 @@
 package com.box.library.report;
 
+import com.box.library.book.Book;
 import com.box.library.loan.Loan;
 import com.box.library.loan.LoanStatus;
 import org.springframework.stereotype.Service;
@@ -7,7 +8,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// TODO[7]: Implementação de interface
 @Service
 public final class HtmlExporter implements Exporter {
 
@@ -32,22 +32,23 @@ public final class HtmlExporter implements Exporter {
                         </tr>
                         """.formatted(
                         loan.getId(),
-                        loan.getBooksIds(),
-                        loan.getUserId(),
+                        loan.getBooks().stream()
+                                .map(Book::getTitle)
+                                .collect(Collectors.joining(", ")),
+                        loan.getCustomer().getName(),
                         loan.getLoanDate(),
                         loan.getExpectedReturnDate()
                 ))
                 .collect(Collectors.joining());
 
 
-        // TODO[12]: Text blocks
         return """
                 <h1>Relatorio de emprestimos - Status: %s</h1>
                 <table border="1">
                     <tr>
                         <th>Id do emprestimo</th>
-                        <th>Ids dos livros</th>
-                        <th>Id do usuario</th>
+                        <th>Livros</th>
+                        <th>Cliente</th>
                         <th>Data do emprestimo</th>
                         <th>Data de retorno esperada</th>
                     </tr>

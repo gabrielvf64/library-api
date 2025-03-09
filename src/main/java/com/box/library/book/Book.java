@@ -1,6 +1,7 @@
 package com.box.library.book;
 
 import com.box.library.author.Author;
+import com.box.library.loan.Loan;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -34,6 +35,14 @@ public class Book {
     private String publisher;
     private String ISBN;
 
+    @ManyToMany
+    @JoinTable(
+            name = "book_loan",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "loan_id")
+    )
+    @JsonIgnoreProperties("books")
+    private List<Loan> loans;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

@@ -35,6 +35,10 @@ public class BookService {
         return repository.findAllById(booksIds);
     }
 
+    public List<Book> findAllAvailableByIds(List<Long> bookIds) {
+        return repository.findByIdInAndStatus(bookIds, BookStatus.AVAILABLE);
+    }
+
     public Book findById(Long id) {
         return repository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
     }
