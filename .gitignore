@@ -32,7 +32,7 @@ build/
 ### VS Code ###
 .vscode/
 
-# macOS ###
+### macOS ###
 .DS_Store
 src/.DS_Store
 src/main/.DS_Store
