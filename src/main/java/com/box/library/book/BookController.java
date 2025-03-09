@@ -4,7 +4,7 @@ import com.box.library.request.UpdateBook;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,42 +21,42 @@ public class BookController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Book> create(@RequestBody Book book) {
         var savedBook = service.create(book);
         return ResponseEntity.ok(savedBook);
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
+//    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
     public ResponseEntity<List<Book>> findAll() {
         var books = service.findAll();
         return books.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(books);
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
+//    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
     public ResponseEntity<Book> findById(@PathVariable Long id) {
         var book = service.findById(id);
         return ResponseEntity.ok(book);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Book> update(@PathVariable Long id, @RequestBody UpdateBook request) {
         var updatedEntity = service.update(id, request);
         return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
     }
 
     @GetMapping("/filter")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
+//    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
     public ResponseEntity<List<Book>> findAllByFilter(@RequestParam(required = false) String author, @RequestParam(required = false) String title,
                                                       @RequestParam(required = false) String isbn, @RequestParam(required = false) String publisher) {
         var books = service.findAllByFilter(author, title, isbn, publisher);
