@@ -27,7 +27,7 @@ public class LoanController {
     }
 
     @GetMapping("/user/{customerId}")
-    public ResponseEntity<List<Loan>> findByUserId(@PathVariable Long customerId) {
+    public ResponseEntity<List<Loan>> findByCustomerId(@PathVariable Long customerId) {
         var loans = service.findByCustomerId(customerId);
         return loans.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(loans);
     }

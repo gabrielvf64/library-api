@@ -35,22 +35,6 @@ public class LoanService {
         this.bookService = bookService;
     }
 
-    private static String getContentType(String format) {
-        return switch (format.toLowerCase()) {
-            case "csv" -> "text/csv";
-            case "html" -> "text/html";
-            default -> throw new IllegalArgumentException("Formato não suportado: " + format);
-        };
-    }
-
-    private static String getFileExtension(String format) {
-        return switch (format.toLowerCase()) {
-            case "csv" -> "csv";
-            case "html" -> "html";
-            default -> throw new IllegalArgumentException("Formato não suportado: " + format);
-        };
-    }
-
     public List<Loan> findAll() {
         return repository.findAll();
     }
@@ -153,5 +137,21 @@ public class LoanService {
 
     private void addNewBooksAssociations(Loan loan, Set<Book> books) {
         books.forEach(book -> book.getLoans().add(loan));
+    }
+
+    private static String getContentType(String format) {
+        return switch (format.toLowerCase()) {
+            case "csv" -> "text/csv";
+            case "html" -> "text/html";
+            default -> throw new IllegalArgumentException("Formato não suportado: " + format);
+        };
+    }
+
+    private static String getFileExtension(String format) {
+        return switch (format.toLowerCase()) {
+            case "csv" -> "csv";
+            case "html" -> "html";
+            default -> throw new IllegalArgumentException("Formato não suportado: " + format);
+        };
     }
 }
