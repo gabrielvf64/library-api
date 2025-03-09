@@ -13,7 +13,8 @@ INSERT INTO
 VALUES
     ('Clean Code', 'Prentice Hall', '9780132350884', 'BORROWED'),
     ('Effective Java', 'Addison-Wesley', '9780134685991', 'AVAILABLE'),
-    ('Design Patterns', 'Addison-Wesley', '9780201633610', 'BORROWED');
+    ('Design Patterns', 'Addison-Wesley', '9780201633610', 'BORROWED'),
+    ('Clean Architecture', 'Prentice Hall', '9780134494166', 'BORROWED');
 
 INSERT INTO
     book_author (book_id, author_id)
@@ -23,7 +24,8 @@ VALUES
     (3, 3), -- Design Patterns - Erich Gamma
     (3, 4), -- Design Patterns - Richard Helm
     (3, 5), -- Design Patterns - Ralph Johnson
-    (3, 6); -- Design Patterns - John Vlissides
+    (3, 6), -- Design Patterns - John Vlissides
+    (4, 1); -- Clean Architecture - Robert Martin
 
 INSERT INTO
     users (username)
@@ -49,6 +51,7 @@ INSERT INTO
     BOOK_LOAN (BOOK_ID, LOAN_ID)
 VALUES
     (1, 1), -- Clean Code - Bruce Wayne
+    (4, 1), -- Clean Architecture - Bruce Wayne
     (2, 2), -- Effective Java - Peter Parker
     (3, 3); -- Design Patterns - Diana Prince
 

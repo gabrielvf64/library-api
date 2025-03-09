@@ -80,9 +80,11 @@ public class LoanService {
 
     public Loan returnLoan(Long loanId) {
         var loan = findById(loanId);
+        var books = loan.getBooks();
 
         loan.setReturnDate(LocalDate.now());
         loan.setStatus(LoanStatus.FINISHED);
+        setAvailableStatusToBooks(new HashSet<>(books));
 
         return repository.save(loan);
     }
@@ -143,6 +145,10 @@ public class LoanService {
 
     private void setBorrowedStatusToBooks(Set<Book> books) {
         books.forEach(book -> book.setStatus(BookStatus.BORROWED));
+    }
+
+    private void setAvailableStatusToBooks(Set<Book> books) {
+        books.forEach(book -> book.setStatus(BookStatus.AVAILABLE));
     }
 
     private void addNewBooksAssociations(Loan loan, Set<Book> books) {
