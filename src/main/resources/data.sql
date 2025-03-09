@@ -4,10 +4,11 @@ VALUES
 ('Clean Code', 'Robert Martin', 'Prentice Hall', '9780132350884', 'AVAILABLE'),
 ('Effective Java', 'Joshua Bloch', 'Addison-Wesley', '9780134685991', 'AVAILABLE'),
 ('Design Patterns', 'Erich Gamma', 'Addison-Wesley', '9780201633610', 'BORROWED');
-INSERT INTO users (cpf, name)
+INSERT INTO users (cpf, name, city, street, number, complement, zip_code)
 VALUES
-('12345678901', 'John Doe'),
-('98765432109', 'Jane Doe');
+('12345678901', 'Spiderman', 'New York', 'Queens Blvd', '20', 'Apt 5B', '11101'),
+('98765432100', 'Batman', 'Gotham', 'Wayne Manor', '1007', 'Batcave', '00000');
+
 INSERT INTO LOANS (USER_ID, BOOKS_IDS, LOAN_DATE, EXPECTED_RETURN_DATE, RETURN_DATE,
 STATUS)
 VALUES
