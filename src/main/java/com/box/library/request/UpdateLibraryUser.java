@@ -1,4 +1,6 @@
 package com.box.library.request;
 
-public record UpdateLibraryUser(String username) {
+import jakarta.validation.constraints.NotBlank;
+
+public record UpdateLibraryUser(@NotBlank String username) {
 }

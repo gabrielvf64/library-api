@@ -1,4 +1,8 @@
 package com.box.library.request;
 
-public record CustomerRequest(String name, String cpf) {
+import jakarta.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.br.CPF;
+
+public record CustomerRequest(@NotBlank String name,
+                              @NotBlank @CPF(message = "CPF inválido") String cpf) {
 }
