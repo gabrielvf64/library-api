@@ -29,6 +29,9 @@ public class Loan {
     private LocalDate loanDate;
     private LocalDate expectedReturnDate;
     private LocalDate returnDate;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private LoanStatus status;
 
     @ManyToOne

@@ -4,7 +4,6 @@ import com.box.library.book.Book;
 import com.box.library.book.BookService;
 import com.box.library.book.BookStatus;
 import com.box.library.customer.CustomerService;
-import com.box.library.exception.BookNotAvailableException;
 import com.box.library.exception.BookNotFoundException;
 import com.box.library.exception.LoanNotFoundException;
 import com.box.library.exception.PendingLoanException;
@@ -33,6 +32,22 @@ public class LoanService {
         this.exporters = exporters;
         this.customerService = customerService;
         this.bookService = bookService;
+    }
+
+    private static String getContentType(String format) {
+        return switch (format.toLowerCase()) {
+            case "csv" -> "text/csv";
+            case "html" -> "text/html";
+            default -> throw new IllegalArgumentException("Formato não suportado: " + format);
+        };
+    }
+
+    private static String getFileExtension(String format) {
+        return switch (format.toLowerCase()) {
+            case "csv" -> "csv";
+            case "html" -> "html";
+            default -> throw new IllegalArgumentException("Formato não suportado: " + format);
+        };
     }
 
     public List<Loan> findAll() {
@@ -100,31 +115,28 @@ public class LoanService {
     }
 
     private Set<Book> validateAndGetAvailableBooksByIds(List<Long> booksIds) {
-        List<Book> books = bookService.findAllByIds(booksIds);
-
-        Set<Long> foundIds = books.stream()
+        List<Book> availableBooks = bookService.findAllAvailableByIds(booksIds);
+        Set<Long> availableIds = availableBooks.stream()
                 .map(Book::getId)
                 .collect(Collectors.toSet());
 
         Set<Long> missingIds = booksIds.stream()
-                .filter(id -> !foundIds.contains(id))
+                .filter(id -> isBookNotAvailable(id, availableIds))
                 .collect(Collectors.toSet());
 
-        if (!missingIds.isEmpty()) {
+        if (hasMissingBooks(missingIds)) {
             throw new BookNotFoundException(missingIds.stream().toList());
         }
 
-        List<Book> availableBooks = bookService.findAllAvailableByIds(booksIds);
+        return new HashSet<>(availableBooks);
+    }
 
-        Set<Long> notAvailableIds = foundIds.stream()
-                .filter(id -> !availableBooks.stream().map(Book::getId).collect(Collectors.toSet()).contains(id))
-                .collect(Collectors.toSet());
+    private boolean hasMissingBooks(Set<Long> missingIds) {
+        return !missingIds.isEmpty();
+    }
 
-        if (!notAvailableIds.isEmpty()) {
-            throw new BookNotAvailableException(notAvailableIds.stream().toList());
-        }
-
-        return new HashSet<>(books);
+    private boolean isBookNotAvailable(Long id, Set<Long> availableIds) {
+        return !availableIds.contains(id);
     }
 
     private void setBorrowedStatusToBooks(Set<Book> books) {
@@ -137,21 +149,5 @@ public class LoanService {
 
     private void addNewBooksAssociations(Loan loan, Set<Book> books) {
         books.forEach(book -> book.getLoans().add(loan));
-    }
-
-    private static String getContentType(String format) {
-        return switch (format.toLowerCase()) {
-            case "csv" -> "text/csv";
-            case "html" -> "text/html";
-            default -> throw new IllegalArgumentException("Formato não suportado: " + format);
-        };
-    }
-
-    private static String getFileExtension(String format) {
-        return switch (format.toLowerCase()) {
-            case "csv" -> "csv";
-            case "html" -> "html";
-            default -> throw new IllegalArgumentException("Formato não suportado: " + format);
-        };
     }
 }
