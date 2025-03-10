@@ -1,5 +1,6 @@
 package com.box.library.user;
 
+import com.box.library.customer.Address;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,7 +13,14 @@ public class LibraryUser {
 
     private String username;
 
-    public LibraryUser() {
+    @Embedded
+    private Address address;
+
+    public LibraryUser() {} // Empty constructor (required for Hibernate)
+
+    public LibraryUser(String username, Address address) {
+        this.username = username;
+        this.address = address;
     }
 
     public Long getId() {
@@ -30,5 +38,8 @@ public class LibraryUser {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public Address getAddress() { return address; }
+    public void setAddress(Address address) { this.address = address; }
 }
 

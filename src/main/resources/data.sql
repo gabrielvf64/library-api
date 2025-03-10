@@ -25,10 +25,12 @@ VALUES
     (3, 5), -- Design Patterns - Ralph Johnson
     (3, 6); -- Design Patterns - John Vlissides
 
-INSERT INTO users (username)
+
+INSERT INTO USERS (USERNAME, CITY, COMPLEMENT, NUMBER, STREET, ZIP_CODE)
 VALUES
-('batman'),
-('spiderman');
+('batman', 'Gotham', 'Batcave', '100', 'Wayne Manor', '10000-000'),
+('spiderman', 'New York', 'Apt 42', '20', 'Avengers Tower', '20000-000');
+
 
 INSERT INTO customers (cpf, name)
 VALUES
