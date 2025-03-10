@@ -1,6 +1,11 @@
 package com.box.library.request;
 
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.List;
 
-public record CreateBookRequest(String title, List<Long> authorsIds, String publisher, String ISBN) {
+public record CreateBookRequest(@NotBlank String title,
+                                @NotBlank List<Long> authorsIds,
+                                @NotBlank String publisher,
+                                @NotBlank String isbn) {
 }
