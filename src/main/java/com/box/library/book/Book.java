@@ -3,15 +3,15 @@ package com.box.library.book;
 import com.box.library.author.Author;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "books")
 public class Book {
@@ -38,12 +38,5 @@ public class Book {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private BookStatus status = BookStatus.AVAILABLE;
-
-    public Book(String title, List<Author> authors, String publisher, String ISBN) {
-        this.title = title;
-        this.authors = authors;
-        this.publisher = publisher;
-        this.ISBN = ISBN;
-    }
 
 }

@@ -23,7 +23,14 @@ public class BookService {
 
     public Book create(CreateBookRequest request) {
         var authors = authorService.findAllByIds(request.authorsIds());
-        var book = new Book(request.title(), authors, request.publisher(), request.ISBN());
+
+        var book = Book.builder()
+                .title(request.title())
+                .authors(authors)
+                .publisher(request.publisher())
+                .ISBN(request.ISBN())
+                .build();
+
         return repository.save(book);
     }
 
