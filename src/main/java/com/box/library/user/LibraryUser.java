@@ -16,8 +16,9 @@ public class LibraryUser {
     @Embedded
     private Address address;
 
-    public LibraryUser(String cpf, String username, Address address) {
-        this.username = cpf;
+    public LibraryUser() {} // Empty constructor (required for Hibernate)
+
+    public LibraryUser(String username, Address address) {
         this.username = username;
         this.address = address;
     }
