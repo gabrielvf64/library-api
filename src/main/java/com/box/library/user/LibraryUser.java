@@ -12,7 +12,8 @@ public class LibraryUser {
 
     private String username;
 
-    public LibraryUser() {
+    public LibraryUser(String username) {
+        this.username = username;
     }
 
     public Long getId() {

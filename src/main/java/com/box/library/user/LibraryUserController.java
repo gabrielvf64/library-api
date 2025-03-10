@@ -1,7 +1,9 @@
 package com.box.library.user;
 
+import com.box.library.request.CreateLibraryUserRequest;
 import com.box.library.request.UpdateLibraryUser;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +22,8 @@ public class LibraryUserController {
     }
 
     @PostMapping
-    public ResponseEntity<LibraryUser> createUser(@RequestBody LibraryUser user) {
-        var savedUser = service.createUser(user);
+    public ResponseEntity<LibraryUser> createUser(@RequestBody CreateLibraryUserRequest request) {
+        var savedUser = service.createUser(request);
         return ResponseEntity.ok(savedUser);
     }
 
@@ -38,7 +40,7 @@ public class LibraryUserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LibraryUser> update(@PathVariable Long id, @RequestBody UpdateLibraryUser request) {
+    public ResponseEntity<LibraryUser> update(@PathVariable Long id, @Valid @RequestBody UpdateLibraryUser request) {
         var updatedEntity = service.update(id, request);
         return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
     }
