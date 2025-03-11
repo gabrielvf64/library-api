@@ -33,7 +33,7 @@ public class Loan {
         this.userId = userId;
         this.booksIds = booksIds;
         this.loanDate = LocalDate.now();
-        this.expectedReturnDate = this.loanDate.plusDays(3);
+        this.expectedReturnDate = loanDate.plusDays(3);
         this.status = LoanStatus.ACTIVE;
     }
 
