@@ -34,22 +34,6 @@ public class LoanService {
         this.bookService = bookService;
     }
 
-    private static String getContentType(String format) {
-        return switch (format.toLowerCase()) {
-            case "csv" -> "text/csv";
-            case "html" -> "text/html";
-            default -> throw new IllegalArgumentException("Formato não suportado: " + format);
-        };
-    }
-
-    private static String getFileExtension(String format) {
-        return switch (format.toLowerCase()) {
-            case "csv" -> "csv";
-            case "html" -> "html";
-            default -> throw new IllegalArgumentException("Formato não suportado: " + format);
-        };
-    }
-
     public List<Loan> findAll() {
         return repository.findAll();
     }
@@ -108,6 +92,22 @@ public class LoanService {
                 .filter(e -> e.getFileExtension().equalsIgnoreCase(format))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Formato não suportado: " + format));
+    }
+
+    private static String getContentType(String format) {
+        return switch (format.toLowerCase()) {
+            case "csv" -> "text/csv";
+            case "html" -> "text/html";
+            default -> throw new IllegalArgumentException("Formato não suportado: " + format);
+        };
+    }
+
+    private static String getFileExtension(String format) {
+        return switch (format.toLowerCase()) {
+            case "csv" -> "csv";
+            case "html" -> "html";
+            default -> throw new IllegalArgumentException("Formato não suportado: " + format);
+        };
     }
 
     private boolean hasPendingLoan(Long customerId) {
