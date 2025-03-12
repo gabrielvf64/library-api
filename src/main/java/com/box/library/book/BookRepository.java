@@ -17,4 +17,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @NonNull
     List<Book> findAll();
 
+    List<Book> findByIdInAndStatus(List<Long> ids, BookStatus status);
 }
