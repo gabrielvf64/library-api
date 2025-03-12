@@ -2,9 +2,8 @@ package com.box.library.loan;
 
 import com.box.library.exception.LoanNotFoundException;
 import com.box.library.report.Exporter;
-import com.box.library.request.CreateLoan;
+import com.box.library.request.CreateLoanRequest;
 import com.box.library.response.ReportResponse;
-import com.box.library.user.LibraryUserService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -29,7 +28,7 @@ public class LoanService {
         return repository.findByUserId(userId);
     }
 
-    public Loan create(CreateLoan request) {
+    public Loan create(CreateLoanRequest request) {
         var entity = new Loan(request.userId(), request.booksIds());
         return repository.save(entity);
     }

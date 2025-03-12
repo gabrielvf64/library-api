@@ -15,15 +15,18 @@ public class BookService {
 
     private final BookRepository repository;
     private final AuthorService authorService;
+    private final BookMapper bookMapper;
 
-    public BookService(BookRepository repository, AuthorService authorService) {
+    public BookService(BookRepository repository, AuthorService authorService, BookMapper bookMaper) {
         this.repository = repository;
         this.authorService = authorService;
+        this.bookMapper = bookMaper;
     }
 
     public Book create(CreateBookRequest request) {
         var authors = authorService.findAllByIds(request.authorsIds());
-        var book = new Book(request.title(), authors, request.publisher(), request.ISBN());
+        var book = bookMapper.toBook(request);
+        book.setAuthors(authors);
         return repository.save(book);
     }
 
@@ -50,13 +53,11 @@ public class BookService {
         var existingBook = findById(id);
         var authors = authorService.findAllByIds(request.authorsIds());
 
-        existingBook.setTitle(request.title());
-        existingBook.setAuthors(authors);
-        existingBook.setISBN(request.ISBN());
-        existingBook.setPublisher(request.publisher());
-        existingBook.setStatus(request.status());
+        var updatedBook = bookMapper.toBook(request);
+        updatedBook.setId(existingBook.getId());
+        updatedBook.setAuthors(authors);
 
-        return repository.save(existingBook);
+        return repository.save(updatedBook);
     }
 
     public List<Book> findAllByFilter(String author, String title, String isbn, String publisher) {
