@@ -27,7 +27,8 @@ public class LoanService {
     private final CustomerService customerService;
     private final BookService bookService;
 
-    public LoanService(LoanRepository repository, List<Exporter> exporters, CustomerService customerService, BookService bookService) {
+    public LoanService(LoanRepository repository, List<Exporter> exporters,
+                       CustomerService customerService, BookService bookService) {
         this.repository = repository;
         this.exporters = exporters;
         this.customerService = customerService;
