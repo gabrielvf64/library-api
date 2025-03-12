@@ -1,5 +1,6 @@
 package com.box.library.customer;
 
+import com.box.library.address.Address;
 import com.box.library.loan.Loan;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -27,8 +28,12 @@ public class Customer {
     @JsonIgnoreProperties("customer")
     private List<Loan> loans;
 
-    public Customer(String name, String cpf) {
+    @Embedded
+    private Address address;
+
+    public Customer(String name, String cpf, Address address) {
         this.name = name;
         this.cpf = cpf;
+        this.address = address;
     }
 }
