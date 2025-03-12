@@ -4,5 +4,5 @@ import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
 public record UpdateCustomerRequest(@NotBlank String name,
-                                    @NotBlank @CPF(message = "CPF inválido") String cpf) {
+                                    @NotBlank @CPF String cpf) {
 }
