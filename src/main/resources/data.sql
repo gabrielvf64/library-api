@@ -36,8 +36,8 @@ VALUES
 INSERT INTO
     customers (cpf, name)
 VALUES
-    ('12345678901', 'Bruce Wayne'),
-    ('98765432109', 'Peter Parker'),
+    ('118.043.180-43', 'Bruce Wayne'),
+    ('38542484070', 'Peter Parker'),
     ('02086685866', 'Diana Prince');
 
 INSERT INTO

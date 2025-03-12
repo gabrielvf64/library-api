@@ -1,6 +1,10 @@
 package com.box.library.request;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+
 import java.util.List;
 
-public record UpdateAuthorRequest(String name, List<Long> booksIds) {
+public record UpdateAuthorRequest(@NotBlank String name,
+                                  @NotEmpty List<Long> booksIds) {
 }

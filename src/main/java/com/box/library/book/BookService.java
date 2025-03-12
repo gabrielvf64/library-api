@@ -23,7 +23,7 @@ public class BookService {
 
     public Book create(CreateBookRequest request) {
         var authors = authorService.findAllByIds(request.authorsIds());
-        var book = new Book(request.title(), authors, request.publisher(), request.ISBN());
+        var book = new Book(request.title(), authors, request.publisher(), request.isbn());
         return repository.save(book);
     }
 
@@ -56,7 +56,7 @@ public class BookService {
 
         existingBook.setTitle(request.title());
         existingBook.setAuthors(authors);
-        existingBook.setISBN(request.ISBN());
+        existingBook.setISBN(request.isbn());
         existingBook.setPublisher(request.publisher());
         existingBook.setStatus(request.status());
 

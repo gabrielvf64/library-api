@@ -2,6 +2,7 @@ package com.box.library.loan;
 
 import com.box.library.request.CreateLoanRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class LoanController {
     }
 
     @PostMapping
-    public ResponseEntity<Loan> create(@RequestBody CreateLoanRequest request) {
+    public ResponseEntity<Loan> create(@Valid @RequestBody CreateLoanRequest request) {
         var savedLoan = service.create(request);
         return ResponseEntity.ok(savedLoan);
     }

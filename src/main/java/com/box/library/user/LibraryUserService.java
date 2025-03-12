@@ -1,6 +1,7 @@
 package com.box.library.user;
 
 import com.box.library.exception.UserNotFoundException;
+import com.box.library.request.CreateLibraryUserRequest;
 import com.box.library.request.UpdateLibraryUser;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,8 @@ public class LibraryUserService {
         this.repository = repository;
     }
 
-    public LibraryUser createUser(LibraryUser user) {
-        return repository.save(user);
+    public LibraryUser createUser(CreateLibraryUserRequest request) {
+        return repository.save(toEntity(request));
     }
 
     public List<LibraryUser> findAll() {
@@ -38,6 +39,10 @@ public class LibraryUserService {
             throw new UserNotFoundException(id);
         }
         repository.deleteById(id);
+    }
+
+    private LibraryUser toEntity(CreateLibraryUserRequest request) {
+        return new LibraryUser(request.username());
     }
 
     private boolean doesNotExitsById(Long id) {
