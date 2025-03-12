@@ -49,6 +49,6 @@ public class CustomerService {
     }
 
     private Customer toEntity(CreateCustomerRequest request) {
-        return new Customer(request.name(), request.cpf());
+        return new Customer(request.name(), request.cpf(), request.address());
     }
 }

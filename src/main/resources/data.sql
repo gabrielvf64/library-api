@@ -34,11 +34,11 @@ VALUES
     ('spiderman');
 
 INSERT INTO
-    customers (cpf, name)
+    customers (cpf, name, city, street, address_number, complement, zip_code)
 VALUES
-    ('118.043.180-43', 'Bruce Wayne'),
-    ('38542484070', 'Peter Parker'),
-    ('02086685866', 'Diana Prince');
+    ('118.043.180-43', 'Bruce Wayne', 'Gotham City', 'Wayne Manor', '1007', 'Batcave', '12345678'),
+    ('385.424.840-70', 'Peter Parker', 'New York', 'Queens', '78', 'Apt 4A', '87654321'),
+    ('123.456.789-00', 'Diana Prince', 'Themyscira', 'Amazon Island', '1', 'Apt 1', '65432178');
 
 INSERT INTO
     LOANS (CUSTOMER_ID, LOAN_DATE, EXPECTED_RETURN_DATE, RETURN_DATE, STATUS)
