@@ -25,8 +25,7 @@ public class BookService {
 
     public Book create(CreateBookRequest request) {
         var authors = authorService.findAllByIds(request.authorsIds());
-        var book = bookMapper.toBook(request);
-        book.setAuthors(authors);
+        var book = bookMapper.toBook(request, authors);
         return repository.save(book);
     }
 
@@ -50,13 +49,8 @@ public class BookService {
     }
 
     public Book update(Long id, UpdateBookRequest request) {
-        var existingBook = findById(id);
         var authors = authorService.findAllByIds(request.authorsIds());
-
-        var updatedBook = bookMapper.toBook(request);
-        updatedBook.setId(existingBook.getId());
-        updatedBook.setAuthors(authors);
-
+        var updatedBook = bookMapper.toBook(request, id, authors);
         return repository.save(updatedBook);
     }
 

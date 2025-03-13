@@ -9,7 +9,6 @@ import com.box.library.request.UpdateAuthorRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -21,10 +20,12 @@ public class AuthorService {
 
     private final AuthorRepository repository;
     private final BookService bookService;
+    private final AuthorMapper authorMapper;
 
-    public AuthorService(AuthorRepository repository, @Lazy BookService bookService) {
+    public AuthorService(AuthorRepository repository, @Lazy BookService bookService, AuthorMapper authorMapper) {
         this.repository = repository;
         this.bookService = bookService;
+        this.authorMapper = authorMapper;
     }
 
     public List<Author> findAllByIds(List<Long> ids) {
@@ -41,7 +42,7 @@ public class AuthorService {
 
     public Author create(CreateAuthorRequest request) {
         var books = bookService.findAllByIds(request.booksIds());
-        var author = new Author(request.name(), books);
+        var author = authorMapper.toAuthor(request, books);
         books.forEach(book -> book.getAuthors().add(author));
         return repository.save(author);
     }
@@ -53,10 +54,8 @@ public class AuthorService {
         removeOldBooksAssociations(author, books);
         addNewBooksAssociations(author, books);
 
-        author.setName(request.name());
-        author.setBooks(new ArrayList<>(books));
-
-        return repository.save(author);
+        var updatedAuthor = authorMapper.toAuthor(request, new ArrayList<>(books), id);
+        return repository.save(updatedAuthor);
     }
 
     @Transactional
