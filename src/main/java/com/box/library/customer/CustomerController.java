@@ -1,7 +1,9 @@
 package com.box.library.customer;
 
-import com.box.library.request.CustomerRequest;
+import com.box.library.request.CreateCustomerRequest;
+import com.box.library.request.UpdateCustomerRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +22,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<Customer> create(@RequestBody CustomerRequest request) {
+    public ResponseEntity<Customer> create(@Valid @RequestBody CreateCustomerRequest request) {
         return ResponseEntity.ok(service.create(request));
     }
 
@@ -37,7 +39,7 @@ public class CustomerController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Customer> update(@PathVariable Long id,
-                                           @RequestBody CustomerRequest request) {
+                                           @RequestBody @Valid UpdateCustomerRequest request) {
         var updatedEntity = service.update(id, request);
         return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
     }

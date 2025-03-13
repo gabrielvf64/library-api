@@ -1,7 +1,8 @@
 package com.box.library.loan;
 
-import com.box.library.request.CreateLoan;
+import com.box.library.request.CreateLoanRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,21 +27,17 @@ public class LoanController {
         return loansList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(loansList);
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Loan>> findByUserId(@PathVariable Long userId) {
-        var loans = service.findByUserId(userId);
+    @GetMapping("/customer/{customerId}")
+    public ResponseEntity<List<Loan>> findByCustomerId(@PathVariable Long customerId) {
+        var loans = service.findByCustomerId(customerId);
         return loans.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(loans);
     }
 
-    // TODO[2]: Criação de empréstimo
-
     @PostMapping
-    public ResponseEntity<Loan> create(@RequestBody CreateLoan request) {
+    public ResponseEntity<Loan> create(@Valid @RequestBody CreateLoanRequest request) {
         var savedLoan = service.create(request);
         return ResponseEntity.ok(savedLoan);
     }
-
-    // TODO[3]: Devolução de empréstimo
 
     @PostMapping("/{loanId}/return")
     public ResponseEntity<Loan> returnLoan(@PathVariable Long loanId) {

@@ -1,5 +1,6 @@
 package com.box.library.user;
 
+import com.box.library.request.CreateLibraryUserRequest;
 import com.box.library.request.UpdateLibraryUser;
 import com.box.library.request.UpdatePasswordRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,7 +23,7 @@ public class LibraryUserController {
     }
 
     @PostMapping
-    public ResponseEntity<LibraryUser> createUser(@RequestBody CreateUserRequest request) {
+    public ResponseEntity<LibraryUser> createUser(@Valid @RequestBody CreateLibraryUserRequest request) {
         var savedUser = service.createUser(request);
         return ResponseEntity.ok(savedUser);
     }
@@ -40,7 +41,7 @@ public class LibraryUserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LibraryUser> update(@PathVariable Long id, @RequestBody UpdateLibraryUser request) {
+    public ResponseEntity<LibraryUser> update(@PathVariable Long id, @Valid @RequestBody UpdateLibraryUser request) {
         var updatedEntity = service.update(id, request);
         return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
     }
