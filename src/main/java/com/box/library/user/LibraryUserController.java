@@ -41,7 +41,8 @@ public class LibraryUserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LibraryUser> update(@PathVariable Long id, @Valid @RequestBody UpdateLibraryUser request) {
+    public ResponseEntity<LibraryUser> update(@PathVariable Long id,
+                                              @Valid @RequestBody UpdateLibraryUser request) {
         var updatedEntity = service.update(id, request);
         return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
     }

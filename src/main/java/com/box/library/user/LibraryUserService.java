@@ -23,7 +23,7 @@ public class LibraryUserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public LibraryUser createUser(CreateUserRequest request) {
+    public LibraryUser createUser(CreateLibraryUserRequest request) {
         var entity = toEntity(request);
 
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
@@ -90,7 +90,7 @@ public class LibraryUserService {
         return !passwordEncoder.matches(request.currentPassword(), libraryUser.getPassword());
     }
 
-    private LibraryUser toEntity(CreateUserRequest request) {
+    private LibraryUser toEntity(CreateLibraryUserRequest request) {
         return new LibraryUser(request.username(), request.password(), request.role(),
                 request.cpf(), request.name());
     }
