@@ -3,12 +3,15 @@ package com.box.library.loan;
 import com.box.library.book.Book;
 import com.box.library.book.BookService;
 import com.box.library.book.BookStatus;
+import com.box.library.customer.Customer;
 import com.box.library.customer.CustomerService;
 import com.box.library.exception.BookNotFoundException;
 import com.box.library.exception.LoanNotFoundException;
 import com.box.library.exception.PendingLoanException;
 import com.box.library.report.Exporter;
 import com.box.library.request.CreateLoanRequest;
+import com.box.library.response.CreateLoanBookDetailsResponse;
+import com.box.library.response.CreateLoanResponse;
 import com.box.library.response.ReportResponse;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +46,7 @@ public class LoanService {
         return repository.findByCustomerId(customerId);
     }
 
-    public Loan create(CreateLoanRequest request) {
+    public CreateLoanResponse create(CreateLoanRequest request) {
         var customer = customerService.findById(request.customerId());
         if (hasPendingLoan(customer.getId())) {
             throw new PendingLoanException(customer.getId());
@@ -55,7 +58,8 @@ public class LoanService {
         setBorrowedStatusToBooks(books);
         addNewBooksAssociations(loan, books);
 
-        return repository.save(loan);
+        repository.save(loan);
+        return loanToRequest(loan, new ArrayList<>(books), customer);
     }
 
     public Loan findById(Long loanId) {
@@ -150,5 +154,12 @@ public class LoanService {
 
     private void addNewBooksAssociations(Loan loan, Set<Book> books) {
         books.forEach(book -> book.getLoans().add(loan));
+    }
+
+    private CreateLoanResponse loanToRequest(Loan loan, List<Book> books, Customer customer) {
+        var bookDetailsResponse = books.stream()
+                .map(book -> new CreateLoanBookDetailsResponse(book.getTitle(), book.getISBN()))
+                .toList();
+        return new CreateLoanResponse(loan.getCustomer().getId(), customer.getName(), bookDetailsResponse, loan.getLoanDate(), loan.getExpectedReturnDate(), loan.getStatus().name());
     }
 }
