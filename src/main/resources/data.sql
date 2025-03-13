@@ -6,7 +6,12 @@ VALUES
     ('Erich Gamma'),
     ('Richard Helm'),
     ('Ralph Johnson'),
-    ('John Vlissides');
+    ('John Vlissides'),
+    ('Martin Fowler'),
+    ('Kent Beck'),
+    ('Brian Goetz'),
+    ('Andrew Hunt'),
+    ('David Thomas');
 
 INSERT INTO
     books (title, publisher, isbn, status)
@@ -14,7 +19,17 @@ VALUES
     ('Clean Code', 'Prentice Hall', '9780132350884', 'BORROWED'),
     ('Effective Java', 'Addison-Wesley', '9780134685991', 'AVAILABLE'),
     ('Design Patterns', 'Addison-Wesley', '9780201633610', 'BORROWED'),
-    ('Clean Architecture', 'Prentice Hall', '9780134494166', 'BORROWED');
+    ('Clean Architecture', 'Prentice Hall', '9780134494166', 'BORROWED'),
+    ('Refactoring', 'Addison-Wesley', '9780201485677', 'AVAILABLE'),
+    ('Test Driven Development', 'Addison-Wesley', '9780321146533', 'AVAILABLE'),
+    ('Java Concurrency in Practice', 'Addison-Wesley', '9780321349606', 'AVAILABLE'),
+    ('The Pragmatic Programmer', 'Addison-Wesley', '9780201616224', 'AVAILABLE'),
+    ('Agile Software Development', 'Prentice Hall', '9780135974440', 'AVAILABLE'),
+    ('Patterns of Enterprise Application Architecture', 'Addison-Wesley', '9780321127426', 'AVAILABLE'),
+    ('Extreme Programming Explained', 'Addison-Wesley', '9780321278654', 'AVAILABLE'),
+    ('Domain-Driven Design', 'Addison-Wesley', '9780321125217', 'AVAILABLE'),
+    ('Continuous Delivery', 'Addison-Wesley', '9780321601919', 'AVAILABLE');
+
 
 INSERT INTO
     book_author (book_id, author_id)
@@ -25,7 +40,17 @@ VALUES
     (3, 4), -- Design Patterns - Richard Helm
     (3, 5), -- Design Patterns - Ralph Johnson
     (3, 6), -- Design Patterns - John Vlissides
-    (4, 1); -- Clean Architecture - Robert Martin
+    (4, 1), -- Clean Architecture - Robert Martin
+    (5, 7), -- Refactoring - Martin Fowler
+    (6, 8), -- Test Driven Development - Kent Beck
+    (7, 9), -- Java Concurrency in Practice - Brian Goetz
+    (8, 10), -- The Pragmatic Programmer - Andrew Hunt
+    (8, 11), -- The Pragmatic Programmer - David Thomas
+    (9, 1), -- Agile Software Development - Robert Martin
+    (10, 7), -- Patterns of Enterprise Application Architecture - Martin Fowler
+    (11, 8), -- Extreme Programming Explained - Kent Beck
+    (12, 7), -- Domain-Driven Design - Martin Fowler
+    (13, 8); -- Continuous Delivery - Kent Beck
 
 INSERT INTO
     users (username)
