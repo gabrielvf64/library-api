@@ -10,9 +10,10 @@ import com.box.library.exception.LoanNotFoundException;
 import com.box.library.exception.PendingLoanException;
 import com.box.library.report.Exporter;
 import com.box.library.request.CreateLoanRequest;
-import com.box.library.response.CreateLoanBookDetailsResponse;
+import com.box.library.response.BookDetailsResponse;
 import com.box.library.response.CreateLoanResponse;
 import com.box.library.response.ReportResponse;
+import com.box.library.response.ReturnLoanResponse;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -59,14 +60,14 @@ public class LoanService {
         addNewBooksAssociations(loan, books);
 
         repository.save(loan);
-        return loanToRequest(loan, new ArrayList<>(books), customer);
+        return createLoanToResponse(loan, new ArrayList<>(books), customer);
     }
 
     public Loan findById(Long loanId) {
         return repository.findById(loanId).orElseThrow(() -> new LoanNotFoundException(loanId));
     }
 
-    public Loan returnLoan(Long loanId) {
+    public ReturnLoanResponse returnLoan(Long loanId) {
         var loan = findById(loanId);
         var books = loan.getBooks();
 
@@ -74,7 +75,8 @@ public class LoanService {
         loan.setStatus(LoanStatus.FINISHED);
         setAvailableStatusToBooks(new HashSet<>(books));
 
-        return repository.save(loan);
+        repository.save(loan);
+        return returnLoanToResponse(loan, new ArrayList<>(books), loan.getCustomer());
     }
 
     public ReportResponse generateLoanReport(String format, LoanStatus status) {
@@ -156,10 +158,17 @@ public class LoanService {
         books.forEach(book -> book.getLoans().add(loan));
     }
 
-    private CreateLoanResponse loanToRequest(Loan loan, List<Book> books, Customer customer) {
+    private CreateLoanResponse createLoanToResponse(Loan loan, List<Book> books, Customer customer) {
         var bookDetailsResponse = books.stream()
-                .map(book -> new CreateLoanBookDetailsResponse(book.getTitle(), book.getISBN()))
+                .map(book -> new BookDetailsResponse(book.getTitle(), book.getISBN()))
                 .toList();
         return new CreateLoanResponse(loan.getCustomer().getId(), customer.getName(), bookDetailsResponse, loan.getLoanDate(), loan.getExpectedReturnDate(), loan.getStatus().name());
+    }
+
+    private ReturnLoanResponse returnLoanToResponse(Loan loan, List<Book> books, Customer customer){
+        var bookDetailsResponse = books.stream()
+                .map(book -> new BookDetailsResponse(book.getTitle(), book.getISBN()))
+                .toList();
+        return new ReturnLoanResponse(loan.getId(), customer.getName(), bookDetailsResponse, loan.getLoanDate(), loan.getExpectedReturnDate(), loan.getReturnDate(), loan.getStatus().name());
     }
 }

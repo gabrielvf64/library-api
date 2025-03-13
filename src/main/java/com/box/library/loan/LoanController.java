@@ -2,6 +2,7 @@ package com.box.library.loan;
 
 import com.box.library.request.CreateLoanRequest;
 import com.box.library.response.CreateLoanResponse;
+import com.box.library.response.ReturnLoanResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
@@ -41,7 +42,7 @@ public class LoanController {
     }
 
     @PostMapping("/{loanId}/return")
-    public ResponseEntity<Loan> returnLoan(@PathVariable Long loanId) {
+    public ResponseEntity<ReturnLoanResponse> returnLoan(@PathVariable Long loanId) {
         var loan = service.returnLoan(loanId);
         return ResponseEntity.ok(loan);
     }
