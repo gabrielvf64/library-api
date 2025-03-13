@@ -2,6 +2,7 @@ package com.box.library.book;
 
 import com.box.library.request.CreateBookRequest;
 import com.box.library.request.UpdateBookRequest;
+import com.box.library.response.CreateBookResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<Book> create(@Valid @RequestBody CreateBookRequest request) {
+    public ResponseEntity<CreateBookResponse> create(@Valid @RequestBody CreateBookRequest request) {
         var savedBook = service.create(request);
         return ResponseEntity.ok(savedBook);
     }
