@@ -94,6 +94,7 @@ public class LibraryUserService {
     }
 
     private LibraryUser toEntity(CreateUserRequest request) {
-        return new LibraryUser(request.username(), request.password(), request.role());
+        return new LibraryUser(request.username(), request.password(),
+                request.role(), request.cpf(), request.name());
     }
 }

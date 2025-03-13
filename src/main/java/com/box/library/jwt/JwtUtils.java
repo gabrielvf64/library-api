@@ -39,7 +39,7 @@ public class JwtUtils {
         String token = Jwts.builder()
                 .header().add("typ", "JWT")
                 .and()
-                .subject(username)  //TODO testar com id do usuario depois
+                .subject(username)
                 .issuedAt(issuedAt)
                 .expiration(expireDate)
                 .signWith(generateKey())
