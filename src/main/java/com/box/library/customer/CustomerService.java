@@ -3,6 +3,7 @@ package com.box.library.customer;
 import com.box.library.exception.UserNotFoundException;
 import com.box.library.jwt.JwtUserDetails;
 import com.box.library.request.CreateCustomerRequest;
+import com.box.library.request.UpdateCustomerRequest;
 import com.box.library.user.LibraryUserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +23,7 @@ public class CustomerService {
 
     @Transactional
     public Customer save(CreateCustomerRequest request, JwtUserDetails jwtUserDetails) {
-        Customer entity = new Customer(request);
+        Customer entity = toEntity(request);
 
         entity.setUser(libraryUserService.findById(jwtUserDetails.getId()));
 
@@ -45,7 +46,7 @@ public class CustomerService {
         return repository.findByUserId(id);
     }
 
-    public Customer update(Long id, CreateCustomerRequest request) {
+    public Customer update(Long id, UpdateCustomerRequest request) {
         var entity = findById(id);
 
         entity.setName(request.name());
@@ -63,5 +64,9 @@ public class CustomerService {
 
     private boolean doesNotExitsById(Long id) {
         return !repository.existsById(id);
+    }
+
+    private Customer toEntity(CreateCustomerRequest request) {
+        return new Customer(request.name(), request.cpf(), request.address());
     }
 }

@@ -1,6 +1,6 @@
 package com.box.library.user;
 
-import com.box.library.request.CreateUserRequest;
+import com.box.library.request.CreateLibraryUserRequest;
 import com.box.library.request.UpdatePasswordRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -23,7 +23,7 @@ public class LibraryUserController {
     }
 
     @PostMapping
-    public ResponseEntity<LibraryUser> createUser(@RequestBody CreateUserRequest request) {
+    public ResponseEntity<LibraryUser> createUser(@Valid @RequestBody CreateLibraryUserRequest request) {
         var savedUser = service.createUser(request);
         return ResponseEntity.ok(savedUser);
     }

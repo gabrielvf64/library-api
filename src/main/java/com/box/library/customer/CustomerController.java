@@ -1,7 +1,8 @@
 package com.box.library.customer;
 
-import com.box.library.jwt.JwtUserDetails;
 import com.box.library.request.CreateCustomerRequest;
+import com.box.library.request.UpdateCustomerRequest;
+import com.box.library.jwt.JwtUserDetails;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -54,7 +55,7 @@ public class CustomerController {
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN') OR (hasAuthority('CLIENT') AND #id == authentication.principal.id)")
     public ResponseEntity<Customer> update(@PathVariable Long id,
-                                           @RequestBody CreateCustomerRequest request) {
+                                           @RequestBody @Valid UpdateCustomerRequest request) {
         var updatedEntity = service.update(id, request);
         return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
     }

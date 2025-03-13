@@ -23,7 +23,7 @@ public class BookService {
 
     public Book create(CreateBookRequest request) {
         var authors = authorService.findAllByIds(request.authorsIds());
-        var book = new Book(request.title(), authors, request.publisher(), request.ISBN());
+        var book = new Book(request.title(), authors, request.publisher(), request.isbn());
         return repository.save(book);
     }
 
@@ -33,6 +33,10 @@ public class BookService {
 
     public List<Book> findAllByIds(List<Long> booksIds) {
         return repository.findAllById(booksIds);
+    }
+
+    public List<Book> findAllAvailableByIds(List<Long> bookIds) {
+        return repository.findByIdInAndStatus(bookIds, BookStatus.AVAILABLE);
     }
 
     public Book findById(Long id) {
@@ -52,7 +56,7 @@ public class BookService {
 
         existingBook.setTitle(request.title());
         existingBook.setAuthors(authors);
-        existingBook.setISBN(request.ISBN());
+        existingBook.setIsbn(request.isbn());
         existingBook.setPublisher(request.publisher());
         existingBook.setStatus(request.status());
 
@@ -63,7 +67,7 @@ public class BookService {
         if (hasNoFilterAttribute(author, title, isbn, publisher)) {
             throw new NoFilterProvidedException();
         }
-        return repository.findByAuthorsNameContainingIgnoreCaseOrTitleContainingIgnoreCaseOrISBNContainingIgnoreCaseOrPublisherContainingIgnoreCase(
+        return repository.findByAuthorsNameContainingIgnoreCaseOrTitleContainingIgnoreCaseOrIsbnContainingIgnoreCaseOrPublisherContainingIgnoreCase(
                 author, title, isbn, publisher);
     }
 

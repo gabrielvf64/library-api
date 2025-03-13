@@ -3,6 +3,7 @@ package com.box.library.author;
 import com.box.library.request.CreateAuthorRequest;
 import com.box.library.request.UpdateAuthorRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ public class AuthorController {
     }
 
     @PostMapping
-    public ResponseEntity<Author> create(@RequestBody CreateAuthorRequest request) {
+    public ResponseEntity<Author> create(@Valid @RequestBody CreateAuthorRequest request) {
         var savedAuthor = service.create(request);
         return ResponseEntity.ok(savedAuthor);
     }
@@ -38,7 +39,8 @@ public class AuthorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Author> update(@PathVariable Long id, @RequestBody UpdateAuthorRequest request) {
+    public ResponseEntity<Author> update(@PathVariable Long id,
+                                         @Valid @RequestBody UpdateAuthorRequest request) {
         var updatedAuthor = service.update(id, request);
         return ResponseEntity.ok(updatedAuthor);
     }
@@ -48,5 +50,4 @@ public class AuthorController {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
-
 }

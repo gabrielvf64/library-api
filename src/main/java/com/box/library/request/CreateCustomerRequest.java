@@ -1,8 +1,10 @@
 package com.box.library.request;
 
+import com.box.library.address.Address;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.br.CPF;
 
 public record CreateCustomerRequest(@NotBlank String name,
-                                    @NotBlank @Size(min = 11, max = 11) String cpf) {
+                                    @NotBlank @CPF String cpf,
+                                    @NotBlank Address address) {
 }

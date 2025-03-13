@@ -10,11 +10,12 @@ import java.util.List;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    List<Book> findByAuthorsNameContainingIgnoreCaseOrTitleContainingIgnoreCaseOrISBNContainingIgnoreCaseOrPublisherContainingIgnoreCase(
+    List<Book> findByAuthorsNameContainingIgnoreCaseOrTitleContainingIgnoreCaseOrIsbnContainingIgnoreCaseOrPublisherContainingIgnoreCase(
             String author, String title, String isbn, String publisher);
 
     @EntityGraph(attributePaths = "authors")
     @NonNull
     List<Book> findAll();
 
+    List<Book> findByIdInAndStatus(List<Long> ids, BookStatus status);
 }

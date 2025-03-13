@@ -5,6 +5,6 @@ import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;
 
-public record UpdateAuthorRequest(@NotBlank String name,
-                                  @NotEmpty List<Long> booksIds) {
+public record CreateLoanRequest(@NotBlank Long customerId,
+                                @NotEmpty List<Long> booksIds) {
 }

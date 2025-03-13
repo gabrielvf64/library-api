@@ -2,7 +2,7 @@ package com.box.library.user;
 
 import com.box.library.exception.InvalidPasswordException;
 import com.box.library.exception.UserNotFoundException;
-import com.box.library.request.CreateUserRequest;
+import com.box.library.request.CreateLibraryUserRequest;
 import com.box.library.request.UpdateLibraryUser;
 import com.box.library.request.UpdatePasswordRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,7 +23,7 @@ public class LibraryUserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public LibraryUser createUser(CreateUserRequest request) {
+    public LibraryUser createUser(CreateLibraryUserRequest request) {
         var entity = toEntity(request);
 
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
@@ -93,7 +93,7 @@ public class LibraryUserService {
         return !passwordEncoder.matches(request.currentPassword(), libraryUser.getPassword());
     }
 
-    private LibraryUser toEntity(CreateUserRequest request) {
+    private LibraryUser toEntity(CreateLibraryUserRequest request) {
         return new LibraryUser(request.username(), request.password(),
                 request.role(), request.cpf(), request.name());
     }
