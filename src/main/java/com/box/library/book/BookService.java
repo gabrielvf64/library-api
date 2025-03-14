@@ -3,8 +3,10 @@ package com.box.library.book;
 import com.box.library.author.AuthorService;
 import com.box.library.exception.BookNotFoundException;
 import com.box.library.exception.NoFilterProvidedException;
+import com.box.library.loan.LoanService;
 import com.box.library.request.CreateBookRequest;
 import com.box.library.request.UpdateBookRequest;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -16,11 +18,13 @@ public class BookService {
     private final BookRepository repository;
     private final AuthorService authorService;
     private final BookMapper bookMapper;
+    private final LoanService loanService;
 
-    public BookService(BookRepository repository, AuthorService authorService, BookMapper bookMaper) {
+    public BookService(BookRepository repository, AuthorService authorService, BookMapper bookMaper, @Lazy LoanService loanService) {
         this.repository = repository;
         this.authorService = authorService;
         this.bookMapper = bookMaper;
+        this.loanService = loanService;
     }
 
     public Book create(CreateBookRequest request) {
@@ -54,7 +58,9 @@ public class BookService {
 
     public Book update(Long id, UpdateBookRequest request) {
         var authors = authorService.findAllByIds(request.authorsIds());
-        var updatedBook = bookMapper.toBook(request, id, authors);
+        var loans = loanService.findAllByIds(request.loansIds());
+        var updatedBook = bookMapper.toBook(request, id, authors, loans);
+
         return repository.save(updatedBook);
     }
 

@@ -39,6 +39,8 @@ public class LoanService {
         return repository.findAll();
     }
 
+    public List<Loan> findAllByIds(List<Long> ids){return repository.findAllById(ids);}
+
     public List<Loan> findByCustomerId(Long customerId) {
         return repository.findByCustomerId(customerId);
     }
