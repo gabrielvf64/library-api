@@ -99,7 +99,7 @@ public class BookService {
                 book.getTitle(),
                 getAuthorResponse(book),
                 book.getPublisher(),
-                book.getISBN(),
+                book.getIsbn(),
                 book.getStatus().name()
         );
     }

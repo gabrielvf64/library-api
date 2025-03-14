@@ -18,7 +18,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             "JOIN b.authors a " +
             "WHERE (:author IS NULL OR LOWER(a.name) LIKE LOWER(CONCAT('%', :author, '%'))) " +
             "AND (:title IS NULL OR LOWER(b.title) LIKE LOWER(CONCAT('%', :title, '%'))) " +
-            "AND (:isbn IS NULL OR LOWER(b.ISBN) LIKE LOWER(CONCAT('%', :isbn, '%'))) " +
+            "AND (:isbn IS NULL OR LOWER(b.isbn) LIKE LOWER(CONCAT('%', :isbn, '%'))) " +
             "AND (:publisher IS NULL OR LOWER(b.publisher) LIKE LOWER(CONCAT('%', :publisher, '%')))")
     List<Book> findAllByFilter(@Param("author") String author,
                                @Param("title") String title,
