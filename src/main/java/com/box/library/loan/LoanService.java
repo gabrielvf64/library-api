@@ -6,14 +6,12 @@ import com.box.library.book.BookStatus;
 import com.box.library.customer.Customer;
 import com.box.library.customer.CustomerService;
 import com.box.library.exception.BookNotFoundException;
+import com.box.library.exception.CustomerLoansNotFoundException;
 import com.box.library.exception.LoanNotFoundException;
 import com.box.library.exception.PendingLoanException;
 import com.box.library.report.Exporter;
 import com.box.library.request.CreateLoanRequest;
-import com.box.library.response.BookDetailsResponse;
-import com.box.library.response.CreateLoanResponse;
-import com.box.library.response.ReportResponse;
-import com.box.library.response.ReturnLoanResponse;
+import com.box.library.response.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -43,8 +41,13 @@ public class LoanService {
         return repository.findAll();
     }
 
-    public List<Loan> findByCustomerId(Long customerId) {
-        return repository.findByCustomerId(customerId);
+    public FindLoanByCustomerResponse findByCustomerId(Long customerId) {
+        var customer = customerService.findById(customerId);
+        var loansByCustomerId = repository.findByCustomerId(customerId);
+        if(loansByCustomerId.isEmpty()){
+           throw new CustomerLoansNotFoundException(customerId);
+        }
+        return loanByCustomerToResponse(customer, loansByCustomerId);
     }
 
     public CreateLoanResponse create(CreateLoanRequest request) {
@@ -171,4 +174,16 @@ public class LoanService {
                 .toList();
         return new ReturnLoanResponse(loan.getId(), customer.getName(), bookDetailsResponse, loan.getLoanDate(), loan.getExpectedReturnDate(), loan.getReturnDate(), loan.getStatus().name());
     }
+
+    private FindLoanByCustomerResponse loanByCustomerToResponse(Customer customer, List<Loan> loans){
+        var loansDetailsResponseList = new ArrayList<LoanDetailsResponse>();
+        for(Loan loan : loans){
+            var bookDetailsResponseList = loan.getBooks().stream()
+                    .map(book -> new BookDetailsResponse(book.getTitle(), book.getISBN()))
+                    .toList();
+            loansDetailsResponseList.add(new LoanDetailsResponse(loan.getId(), bookDetailsResponseList, loan.getLoanDate(), loan.getExpectedReturnDate(), loan.getReturnDate(), loan.getStatus().name()));
+        }
+        return new FindLoanByCustomerResponse(customer.getName(), loansDetailsResponseList);
+    }
+
 }

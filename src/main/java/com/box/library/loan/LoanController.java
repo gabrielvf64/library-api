@@ -2,6 +2,7 @@ package com.box.library.loan;
 
 import com.box.library.request.CreateLoanRequest;
 import com.box.library.response.CreateLoanResponse;
+import com.box.library.response.FindLoanByCustomerResponse;
 import com.box.library.response.ReturnLoanResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -30,9 +31,9 @@ public class LoanController {
     }
 
     @GetMapping("/customer/{customerId}")
-    public ResponseEntity<List<Loan>> findByCustomerId(@PathVariable Long customerId) {
+    public ResponseEntity<FindLoanByCustomerResponse> findByCustomerId(@PathVariable Long customerId) {
         var loans = service.findByCustomerId(customerId);
-        return loans.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(loans);
+        return ResponseEntity.ok(loans);
     }
 
     @PostMapping
