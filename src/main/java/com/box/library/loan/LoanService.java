@@ -4,7 +4,9 @@ import com.box.library.exception.LoanNotFoundException;
 import com.box.library.report.Exporter;
 import com.box.library.request.CreateLoan;
 import com.box.library.response.ReportResponse;
-import com.box.library.user.LibraryUserService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -21,23 +23,29 @@ public class LoanService {
         this.exporters = exporters;
     }
 
+    @Cacheable(value = "loans")
     public List<Loan> findAll() {
         return repository.findAll();
     }
 
+    @Cacheable(value = "loansByUser", key = "#userId")
     public List<Loan> findByUserId(Long userId) {
         return repository.findByUserId(userId);
     }
 
+    @CacheEvict(value = "loans", allEntries = true)
     public Loan create(CreateLoan request) {
         var entity = new Loan(request.userId(), request.booksIds());
         return repository.save(entity);
     }
 
+    @Cacheable(value = "loan", key = "#loanId")
     public Loan findById(Long loanId) {
         return repository.findById(loanId).orElseThrow(() -> new LoanNotFoundException(loanId));
     }
 
+    @CachePut(value = "loan", key = "#loanId")
+    @CacheEvict(value = "loans", allEntries = true)
     public Loan returnLoan(Long loanId) {
         var loan = findById(loanId);
 
@@ -47,6 +55,7 @@ public class LoanService {
         return repository.save(loan);
     }
 
+    @Cacheable(value = "loanReports", key = "#format + #status")
     public ReportResponse generateLoanReport(String format, LoanStatus status) {
 
         var filteredLoans = repository.findByStatus(status);
