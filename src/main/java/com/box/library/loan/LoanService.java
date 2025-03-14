@@ -45,8 +45,8 @@ public class LoanService {
     public FindLoanByCustomerResponse findByCustomerId(Long id) {
         var customer = customerService.findById(id);
         var loansByCustomerId = repository.findByCustomerId(id);
-        if(loansByCustomerId.isEmpty()){
-           throw new CustomerLoansNotFoundException(id);
+        if (loansByCustomerId.isEmpty()) {
+            throw new CustomerLoansNotFoundException(id);
         }
         return loanByCustomerToResponse(customer, loansByCustomerId);
     }
@@ -164,34 +164,34 @@ public class LoanService {
 
     private CreateLoanResponse createLoanToResponse(Loan loan, List<Book> books, Customer customer) {
         var bookDetailsResponse = books.stream()
-                .map(book -> new BookDetailsResponse(book.getTitle(), book.getISBN()))
+                .map(book -> new BookDetailsResponse(book.getTitle(), book.getIsbn()))
                 .toList();
         return new CreateLoanResponse(loan.getCustomer().getId(), customer.getName(), bookDetailsResponse, loan.getLoanDate(), loan.getExpectedReturnDate(), loan.getStatus().name());
     }
 
-    private ReturnLoanResponse returnLoanToResponse(Loan loan, List<Book> books, Customer customer){
+    private ReturnLoanResponse returnLoanToResponse(Loan loan, List<Book> books, Customer customer) {
         var bookDetailsResponse = books.stream()
-                .map(book -> new BookDetailsResponse(book.getTitle(), book.getISBN()))
+                .map(book -> new BookDetailsResponse(book.getTitle(), book.getIsbn()))
                 .toList();
         return new ReturnLoanResponse(loan.getId(), customer.getName(), bookDetailsResponse, loan.getLoanDate(), loan.getExpectedReturnDate(), loan.getReturnDate(), loan.getStatus().name());
     }
 
-    private FindLoanByCustomerResponse loanByCustomerToResponse(Customer customer, List<Loan> loans){
+    private FindLoanByCustomerResponse loanByCustomerToResponse(Customer customer, List<Loan> loans) {
         var loansDetailsResponseList = new ArrayList<LoanDetailsResponse>();
-        for(Loan loan : loans){
+        for (Loan loan : loans) {
             var bookDetailsResponseList = loan.getBooks().stream()
-                    .map(book -> new BookDetailsResponse(book.getTitle(), book.getISBN()))
+                    .map(book -> new BookDetailsResponse(book.getTitle(), book.getIsbn()))
                     .toList();
             loansDetailsResponseList.add(new LoanDetailsResponse(loan.getId(), bookDetailsResponseList, loan.getLoanDate(), loan.getExpectedReturnDate(), loan.getReturnDate(), loan.getStatus().name()));
         }
         return new FindLoanByCustomerResponse(customer.getName(), loansDetailsResponseList);
     }
 
-    private List<FindAllLoansResponse> allLoansToResponse(List<Loan> loans){
+    private List<FindAllLoansResponse> allLoansToResponse(List<Loan> loans) {
         var allLoansResponse = new ArrayList<FindAllLoansResponse>();
-        for(Loan loan : loans){
+        for (Loan loan : loans) {
             var bookDetailsResponseList = loan.getBooks().stream()
-                    .map(book -> new BookDetailsResponse(book.getTitle(), book.getISBN()))
+                    .map(book -> new BookDetailsResponse(book.getTitle(), book.getIsbn()))
                     .toList();
             allLoansResponse.add(new FindAllLoansResponse(loan.getId(), loan.getCustomer().getName(), bookDetailsResponseList,
                     loan.getLoanDate(), loan.getExpectedReturnDate(), loan.getReturnDate(), loan.getStatus().name()));
