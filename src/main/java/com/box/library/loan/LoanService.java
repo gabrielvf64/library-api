@@ -37,8 +37,9 @@ public class LoanService {
         this.bookService = bookService;
     }
 
-    public List<Loan> findAll() {
-        return repository.findAll();
+    public List<FindAllLoansResponse> findAll() {
+        var allLoans = repository.findAll();
+        return allLoansToResponse(allLoans);
     }
 
     public FindLoanByCustomerResponse findByCustomerId(Long customerId) {
@@ -186,4 +187,15 @@ public class LoanService {
         return new FindLoanByCustomerResponse(customer.getName(), loansDetailsResponseList);
     }
 
+    private List<FindAllLoansResponse> allLoansToResponse(List<Loan> loans){
+        var allLoansResponse = new ArrayList<FindAllLoansResponse>();
+        for(Loan loan : loans){
+            var bookDetailsResponseList = loan.getBooks().stream()
+                    .map(book -> new BookDetailsResponse(book.getTitle(), book.getISBN()))
+                    .toList();
+            allLoansResponse.add(new FindAllLoansResponse(loan.getId(), loan.getCustomer().getName(), bookDetailsResponseList,
+                    loan.getLoanDate(), loan.getExpectedReturnDate(), loan.getReturnDate(), loan.getStatus().name()));
+        }
+        return allLoansResponse;
+    }
 }

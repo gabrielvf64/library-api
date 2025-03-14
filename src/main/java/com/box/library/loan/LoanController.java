@@ -2,6 +2,7 @@ package com.box.library.loan;
 
 import com.box.library.request.CreateLoanRequest;
 import com.box.library.response.CreateLoanResponse;
+import com.box.library.response.FindAllLoansResponse;
 import com.box.library.response.FindLoanByCustomerResponse;
 import com.box.library.response.ReturnLoanResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,7 +26,7 @@ public class LoanController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Loan>> findAll() {
+    public ResponseEntity<List<FindAllLoansResponse>> findAll() {
         var loansList = service.findAll();
         return loansList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(loansList);
     }
