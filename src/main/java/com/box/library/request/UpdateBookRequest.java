@@ -9,7 +9,8 @@ import java.util.List;
 
 public record UpdateBookRequest(@NotBlank String title,
                                 @NotEmpty List<Long> authorsIds,
+                                List<Long> loansIds,
                                 @NotBlank String publisher,
                                 @NotBlank String isbn,
-                                @NotNull BookStatus status) {
+                                @NotNull String status) {
 }
