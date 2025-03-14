@@ -2,9 +2,10 @@ package com.box.library.book;
 
 import com.box.library.request.CreateBookRequest;
 import com.box.library.request.UpdateBookRequest;
+import com.box.library.response.BookResponse;
+import com.box.library.response.GenericPagedResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,9 +37,8 @@ public class BookController {
     }
 
     @GetMapping("/pageable")
-    public ResponseEntity<Page<Book>> findAll(Pageable pageable) {
-        var books = service.findAllPageable(pageable);
-        return books.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(books);
+    public ResponseEntity<GenericPagedResponse<BookResponse>> findAll(Pageable pageable) {
+        return ResponseEntity.ok(service.findAllPageable(pageable));
     }
 
     @GetMapping("/{id}")
