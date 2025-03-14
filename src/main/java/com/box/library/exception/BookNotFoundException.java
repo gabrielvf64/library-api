@@ -9,6 +9,6 @@ public class BookNotFoundException extends RuntimeException {
     }
 
     public BookNotFoundException(List<Long> booksIds) {
-        super("The following books with ids " + booksIds + " were not found.");
+        super("The following books with ids " + booksIds + " are missing/not available.");
     }
 }
