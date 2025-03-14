@@ -32,7 +32,7 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Book>> findAll() {
+    public ResponseEntity<List<BookResponse>> findAll() {
         var books = service.findAll();
         return books.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(books);
     }

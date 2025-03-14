@@ -35,8 +35,8 @@ public class BookService {
         return bookToResponse(book, authors);
     }
 
-    public List<Book> findAll() {
-        return repository.findAll();
+    public List<BookResponse> findAll() {
+        return toBookListResponse(repository.findAll());
     }
 
     public GenericPagedResponse<BookResponse> findAllPageable(Pageable pageable) {
