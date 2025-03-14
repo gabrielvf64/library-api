@@ -60,10 +60,10 @@ public class BookController {
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<List<Book>> findAllByFilter(@RequestParam(required = false) String author,
-                                                      @RequestParam(required = false) String title,
-                                                      @RequestParam(required = false) String isbn,
-                                                      @RequestParam(required = false) String publisher) {
+    public ResponseEntity<List<BookResponse>> findAllByFilter(@RequestParam(required = false) String author,
+                                                              @RequestParam(required = false) String title,
+                                                              @RequestParam(required = false) String isbn,
+                                                              @RequestParam(required = false) String publisher) {
         var books = service.findAllByFilter(author, title, isbn, publisher);
         return books.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(books);
     }

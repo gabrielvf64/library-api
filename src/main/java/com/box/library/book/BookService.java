@@ -74,16 +74,23 @@ public class BookService {
         return repository.save(existingBook);
     }
 
-    public List<Book> findAllByFilter(String author, String title, String isbn, String publisher) {
+    public List<BookResponse> findAllByFilter(String author, String title, String isbn, String publisher) {
         if (hasNoFilterAttribute(author, title, isbn, publisher)) {
             throw new NoFilterProvidedException();
         }
-        return repository.findAllByFilter(author, title, isbn, publisher);
+        List<Book> filteredBooks = repository.findAllByFilter(author, title, isbn, publisher);
+        return toBookListResponse(filteredBooks);
     }
 
     private boolean hasNoFilterAttribute(String author, String title, String isbn, String publisher) {
         return !StringUtils.hasText(author) && !StringUtils.hasText(title)
                 && !StringUtils.hasText(isbn) && !StringUtils.hasText(publisher);
+    }
+
+    private List<BookResponse> toBookListResponse(List<Book> books) {
+        return books.stream()
+                .map(this::toBookResponse)
+                .toList();
     }
 
     private BookResponse toBookResponse(Book book) {
