@@ -34,7 +34,7 @@ public class Book {
     private String publisher;
     private String ISBN;
 
-
+    @Builder.Default
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private BookStatus status = BookStatus.AVAILABLE;
