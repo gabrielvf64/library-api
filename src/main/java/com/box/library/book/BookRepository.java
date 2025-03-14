@@ -1,5 +1,7 @@
 package com.box.library.book;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -27,6 +29,10 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @EntityGraph(attributePaths = "authors")
     @NonNull
     List<Book> findAll();
+
+    @EntityGraph(attributePaths = "authors")
+    @NonNull
+    Page<Book> findAll(Pageable pageable);
 
     List<Book> findByIdInAndStatus(List<Long> ids, BookStatus status);
 }
