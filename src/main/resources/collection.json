@@ -12,19 +12,72 @@
 				{
 					"name": "List All Books",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2YWRlciIsImlhdCI6MTc0MDg4NDM0MiwiZXhwIjoxNzQwODg2MTQyLCJyb2xlIjoiQURNSU4ifQ.GJ534idR7VEZjojuIHCFrvacL2chsNfNBiFDnR6jm0E",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/books",
-							"protocol": "http",
+							"raw": "{{url}}/api/v1/books",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"v1",
 								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Books Pageble",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2YWRlciIsImlhdCI6MTc0MDg4NDM0MiwiZXhwIjoxNzQwODg2MTQyLCJyb2xlIjoiQURNSU4ifQ.GJ534idR7VEZjojuIHCFrvacL2chsNfNBiFDnR6jm0E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/books/pageable?page=0&size=5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"books",
+								"pageable"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								},
+								{
+									"key": "sort",
+									"value": "title,asc",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -37,7 +90,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"You Don't Know JS: Scope & Closures\",\r\n    \"author\": \"Kyle Simpson\",\r\n    \"publisher\": \"O'Reilly Media\",\r\n    \"status\": \"AVAILABLE\",\r\n    \"isbn\": \"9781449335588\"\r\n}",
+							"raw": "{\r\n    \"title\": \"You Don't Know JS: Scope & Closures\",\r\n    \"publisher\": \"O'Reilly Media\",\r\n    \"authorsIds\" : [1,4,5],\r\n    \"isbn\": \"9781449335588\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -66,7 +119,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/books/1",
+							"raw": "http://localhost:8080/api/v1/books/3",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -76,7 +129,7 @@
 								"api",
 								"v1",
 								"books",
-								"1"
+								"3"
 							]
 						}
 					},
@@ -89,7 +142,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Design Patterns\",\r\n    \"author\": \"Erich Gamma, John Vlissides, Richard Helm, Ralph Johnson\",\r\n    \"publisher\": \"Addison-Wesley\",\r\n    \"status\": \"AVAILABLE\",\r\n    \"ISBN\": \"9780201633610\"\r\n  }",
+							"raw": "{\r\n    \"title\": \"Design Patterns\",\r\n    \"authorsIds\": [1,4],\r\n    \"publisher\": \"Alta Books\",\r\n    \"status\": \"AVAILABLE\",\r\n    \"isbn\": \"9780201633610\"\r\n  }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -119,7 +172,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/books/filter?author=gamma",
+							"raw": "http://localhost:8080/api/v1/books/filter?author=kent",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -134,11 +187,11 @@
 							"query": [
 								{
 									"key": "author",
-									"value": "gamma"
+									"value": "kent"
 								},
 								{
 									"key": "title",
-									"value": "closures",
+									"value": "delivery",
 									"disabled": true
 								},
 								{
@@ -148,7 +201,7 @@
 								},
 								{
 									"key": "publisher",
-									"value": "wesley",
+									"value": "hall",
 									"disabled": true
 								}
 							]
@@ -211,7 +264,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cpf\": \"99601607340\",\r\n    \"name\": \"Victor Caio Farias 4devs\"\r\n}",
+							"raw": "{\r\n    \"username\" : \"Mr. Box\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -263,7 +316,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cpf\" : \"12345678901\",\r\n    \"name\" : \"John Doe da Caixa\"\r\n}",
+							"raw": "{\r\n    \"username\" : \"Batman da Caixa\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -342,7 +395,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userId\" : 2,\r\n    \"booksIds\" : [2,3]\r\n}",
+							"raw": "{\r\n    \"customerId\" : 2,\r\n    \"booksIds\" : [7,8]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -371,7 +424,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/loans/user/2",
+							"raw": "http://localhost:8080/api/v1/loans/customer/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -381,7 +434,7 @@
 								"api",
 								"v1",
 								"loans",
-								"user",
+								"customer",
 								"2"
 							]
 						}
@@ -394,7 +447,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/loans/report?status=OVERDUE",
+							"raw": "http://localhost:8080/api/v1/loans/report?status=ACTIVE",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -414,7 +467,7 @@
 								},
 								{
 									"key": "status",
-									"value": "OVERDUE"
+									"value": "ACTIVE"
 								}
 							]
 						}
@@ -427,7 +480,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/loans/2/return",
+							"raw": "http://localhost:8080/api/v1/loans/1/return",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -437,8 +490,254 @@
 								"api",
 								"v1",
 								"loans",
-								"2",
+								"1",
 								"return"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": []
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "List All Customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/customers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cpf\": \"54042362052\",\r\n    \"name\": \"Zé Carioca\",\r\n    \"address\": {\r\n        \"city\": \"Hell de Janeiro\",\r\n        \"street\": \"Rua da Lapa\",\r\n        \"addressNumber\": \"123\",\r\n        \"complement\": \"Fundos\",\r\n        \"zipCode\": \"20021-180\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/customers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Customer by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/customers/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Customer by Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Alfred Pennyworth\",\r\n    \"cpf\" : \"178.149.160-70\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/customers/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete customer by Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/customers/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Author",
+			"item": [
+				{
+					"name": "List All Authors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/authors",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Author",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Paulo Coelho\",\r\n    \"booksIds\" : [7,8]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/authors",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Author by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/authors/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Author by Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Erich Gamma\",\r\n    \"booksIds\" : [2]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/authors/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete by Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/authors/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								"1"
 							]
 						}
 					},

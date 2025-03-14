@@ -1,6 +1,10 @@
 package com.box.library.loan;
 
 import com.box.library.request.CreateLoanRequest;
+import com.box.library.response.CreateLoanResponse;
+import com.box.library.response.FindAllLoansResponse;
+import com.box.library.response.FindLoanByCustomerResponse;
+import com.box.library.response.ReturnLoanResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
@@ -22,25 +26,25 @@ public class LoanController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Loan>> findAll() {
+    public ResponseEntity<List<FindAllLoansResponse>> findAll() {
         var loansList = service.findAll();
         return loansList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(loansList);
     }
 
     @GetMapping("/customer/{customerId}")
-    public ResponseEntity<List<Loan>> findByCustomerId(@PathVariable Long customerId) {
+    public ResponseEntity<FindLoanByCustomerResponse> findByCustomerId(@PathVariable Long customerId) {
         var loans = service.findByCustomerId(customerId);
-        return loans.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(loans);
+        return ResponseEntity.ok(loans);
     }
 
     @PostMapping
-    public ResponseEntity<Loan> create(@Valid @RequestBody CreateLoanRequest request) {
+    public ResponseEntity<CreateLoanResponse> create(@Valid @RequestBody CreateLoanRequest request) {
         var savedLoan = service.create(request);
         return ResponseEntity.ok(savedLoan);
     }
 
     @PostMapping("/{loanId}/return")
-    public ResponseEntity<Loan> returnLoan(@PathVariable Long loanId) {
+    public ResponseEntity<ReturnLoanResponse> returnLoan(@PathVariable Long loanId) {
         var loan = service.returnLoan(loanId);
         return ResponseEntity.ok(loan);
     }
