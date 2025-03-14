@@ -2,6 +2,7 @@ package com.box.library.user;
 
 import com.box.library.request.CreateLibraryUserRequest;
 import com.box.library.request.UpdateLibraryUser;
+import com.box.library.request.UpdatePasswordRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -40,9 +41,17 @@ public class LibraryUserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LibraryUser> update(@PathVariable Long id, @Valid @RequestBody UpdateLibraryUser request) {
+    public ResponseEntity<LibraryUser> update(@PathVariable Long id,
+                                              @Valid @RequestBody UpdateLibraryUser request) {
         var updatedEntity = service.update(id, request);
         return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<LibraryUser> updatePassword(@PathVariable Long id,
+                                                      @Valid @RequestBody UpdatePasswordRequest request) {
+        var updatedPassword = service.updatePassword(id, request);
+        return new ResponseEntity<>(updatedPassword, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
