@@ -5,6 +5,11 @@ import com.box.library.exception.BookNotFoundException;
 import com.box.library.exception.NoFilterProvidedException;
 import com.box.library.request.CreateBookRequest;
 import com.box.library.request.UpdateBookRequest;
+import com.box.library.response.AuthorResponse;
+import com.box.library.response.BookResponse;
+import com.box.library.response.GenericPagedResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -29,6 +34,12 @@ public class BookService {
 
     public List<Book> findAll() {
         return repository.findAll();
+    }
+
+    public GenericPagedResponse<BookResponse> findAllPageable(Pageable pageable) {
+        Page<Book> entityPage = repository.findAll(pageable);
+        Page<BookResponse> responsePage = entityPage.map(this::toBookResponse);
+        return GenericPagedResponse.fromPage(responsePage);
     }
 
     public List<Book> findAllByIds(List<Long> booksIds) {
@@ -76,4 +87,21 @@ public class BookService {
                 && !StringUtils.hasText(isbn) && !StringUtils.hasText(publisher);
     }
 
+    private BookResponse toBookResponse(Book book) {
+        return new BookResponse(
+                book.getId(),
+                book.getTitle(),
+                getAuthorResponse(book),
+                book.getPublisher(),
+                book.getISBN(),
+                book.getStatus().name()
+        );
+    }
+
+    private static List<AuthorResponse> getAuthorResponse(Book book) {
+        return book.getAuthors()
+                .stream()
+                .map(author -> new AuthorResponse(author.getId(), author.getName()))
+                .toList();
+    }
 }
