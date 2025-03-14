@@ -4,6 +4,8 @@ import com.box.library.request.CreateBookRequest;
 import com.box.library.request.UpdateBookRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,12 @@ public class BookController {
     @GetMapping
     public ResponseEntity<List<Book>> findAll() {
         var books = service.findAll();
+        return books.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(books);
+    }
+
+    @GetMapping("/pageable")
+    public ResponseEntity<Page<Book>> findAll(Pageable pageable) {
+        var books = service.findAllPageable(pageable);
         return books.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(books);
     }
 

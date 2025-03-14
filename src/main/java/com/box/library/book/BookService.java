@@ -5,6 +5,8 @@ import com.box.library.exception.BookNotFoundException;
 import com.box.library.exception.NoFilterProvidedException;
 import com.box.library.request.CreateBookRequest;
 import com.box.library.request.UpdateBookRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -29,6 +31,10 @@ public class BookService {
 
     public List<Book> findAll() {
         return repository.findAll();
+    }
+
+    public Page<Book> findAllPageable(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     public List<Book> findAllByIds(List<Long> booksIds) {
