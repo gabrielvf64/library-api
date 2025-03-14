@@ -67,8 +67,7 @@ public class BookService {
         if (hasNoFilterAttribute(author, title, isbn, publisher)) {
             throw new NoFilterProvidedException();
         }
-        return repository.findByAuthorsNameContainingIgnoreCaseOrTitleContainingIgnoreCaseOrISBNContainingIgnoreCaseOrPublisherContainingIgnoreCase(
-                author, title, isbn, publisher);
+        return repository.findAllByFilter(author, title, isbn, publisher);
     }
 
     private boolean hasNoFilterAttribute(String author, String title, String isbn, String publisher) {
