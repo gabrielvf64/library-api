@@ -1,7 +1,8 @@
 package com.box.library.customer;
 
 import com.box.library.exception.UserNotFoundException;
-import com.box.library.request.CustomerRequest;
+import com.box.library.request.CreateCustomerRequest;
+import com.box.library.request.UpdateCustomerRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class CustomerService {
         this.repository = repository;
     }
 
-    public Customer create(CustomerRequest request) {
+    public Customer create(CreateCustomerRequest request) {
         return repository.save(toEntity(request));
     }
 
@@ -27,7 +28,7 @@ public class CustomerService {
         return repository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    public Customer update(Long id, CustomerRequest request) {
+    public Customer update(Long id, UpdateCustomerRequest request) {
         var entity = findById(id);
 
         entity.setName(request.name());
@@ -47,7 +48,7 @@ public class CustomerService {
         return !repository.existsById(id);
     }
 
-    private Customer toEntity(CustomerRequest request) {
-        return new Customer(request.name(), request.cpf());
+    private Customer toEntity(CreateCustomerRequest request) {
+        return new Customer(request.name(), request.cpf(), request.address());
     }
 }

@@ -3,6 +3,7 @@ package com.box.library.book;
 import com.box.library.request.CreateBookRequest;
 import com.box.library.request.UpdateBookRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<Book> create(@RequestBody CreateBookRequest request) {
+    public ResponseEntity<Book> create(@Valid @RequestBody CreateBookRequest request) {
         var savedBook = service.create(request);
         return ResponseEntity.ok(savedBook);
     }
@@ -45,7 +46,7 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Book> update(@PathVariable Long id, @RequestBody UpdateBookRequest request) {
+    public ResponseEntity<Book> update(@PathVariable Long id, @Valid @RequestBody UpdateBookRequest request) {
         var updatedEntity = service.update(id, request);
         return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
     }
