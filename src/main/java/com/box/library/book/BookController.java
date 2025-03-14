@@ -2,9 +2,12 @@ package com.box.library.book;
 
 import com.box.library.request.CreateBookRequest;
 import com.box.library.request.UpdateBookRequest;
+import com.box.library.response.BookResponse;
+import com.box.library.response.GenericPagedResponse;
 import com.box.library.response.CreateBookResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +37,11 @@ public class BookController {
         return books.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(books);
     }
 
+    @GetMapping("/pageable")
+    public ResponseEntity<GenericPagedResponse<BookResponse>> findAll(Pageable pageable) {
+        return ResponseEntity.ok(service.findAllPageable(pageable));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Book> findById(@PathVariable Long id) {
         var book = service.findById(id);
@@ -53,8 +61,10 @@ public class BookController {
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<List<Book>> findAllByFilter(@RequestParam(required = false) String author, @RequestParam(required = false) String title,
-                                                      @RequestParam(required = false) String isbn, @RequestParam(required = false) String publisher) {
+    public ResponseEntity<List<BookResponse>> findAllByFilter(@RequestParam(required = false) String author,
+                                                              @RequestParam(required = false) String title,
+                                                              @RequestParam(required = false) String isbn,
+                                                              @RequestParam(required = false) String publisher) {
         var books = service.findAllByFilter(author, title, isbn, publisher);
         return books.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(books);
     }
