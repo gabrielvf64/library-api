@@ -1,6 +1,10 @@
 package com.box.library.loan;
 
 import com.box.library.request.CreateLoanRequest;
+import com.box.library.response.CreateLoanResponse;
+import com.box.library.response.FindAllLoansResponse;
+import com.box.library.response.FindLoanByCustomerResponse;
+import com.box.library.response.ReturnLoanResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
@@ -24,34 +28,34 @@ public class LoanController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<List<Loan>> findAll() {
+    public ResponseEntity<List<FindAllLoansResponse>> findAll() {
         var loansList = service.findAll();
         return loansList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(loansList);
     }
 
     @GetMapping("/customer/{id}")
     @PreAuthorize("hasAuthority('ADMIN') OR (hasAuthority('CLIENT') AND #id == authentication.principal.id)")
-    public ResponseEntity<List<Loan>> findByCustomerId(@PathVariable Long id) {
+    public ResponseEntity<FindLoanByCustomerResponse> findByCustomerId(@PathVariable Long id) {
         var loans = service.findByCustomerId(id);
-        return loans.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(loans);
+        return ResponseEntity.ok(loans);
     }
 
     @PostMapping
     @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
-    public ResponseEntity<Loan> create(@Valid @RequestBody CreateLoanRequest request) {
+    public ResponseEntity<CreateLoanResponse> create(@Valid @RequestBody CreateLoanRequest request) {
         var savedLoan = service.create(request);
         return ResponseEntity.ok(savedLoan);
     }
 
     @PostMapping("/{loanId}/return")
     @PreAuthorize("hasAuthority('ADMIN') OR (hasAuthority('CLIENT') AND #id == authentication.principal.id)")
-    public ResponseEntity<Loan> returnLoan(@PathVariable Long loanId) {
+    public ResponseEntity<ReturnLoanResponse> returnLoan(@PathVariable Long loanId) {
         var loan = service.returnLoan(loanId);
         return ResponseEntity.ok(loan);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value = "/report", produces = {"text/html", "text/csv"})
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> exportLoans(
             @RequestParam(defaultValue = "html") String format,
             @RequestParam LoanStatus status) {

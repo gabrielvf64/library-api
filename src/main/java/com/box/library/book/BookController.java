@@ -3,6 +3,7 @@ package com.box.library.book;
 import com.box.library.request.CreateBookRequest;
 import com.box.library.request.UpdateBookRequest;
 import com.box.library.response.BookResponse;
+import com.box.library.response.CreateBookResponse;
 import com.box.library.response.GenericPagedResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -27,14 +28,14 @@ public class BookController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Book> create(@Valid @RequestBody CreateBookRequest request) {
+    public ResponseEntity<CreateBookResponse> create(@Valid @RequestBody CreateBookRequest request) {
         var savedBook = service.create(request);
         return ResponseEntity.ok(savedBook);
     }
 
     @GetMapping
     @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
-    public ResponseEntity<List<Book>> findAll() {
+    public ResponseEntity<List<BookResponse>> findAll() {
         var books = service.findAll();
         return books.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(books);
     }
