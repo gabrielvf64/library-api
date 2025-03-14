@@ -53,17 +53,20 @@ VALUES
     (13, 8); -- Continuous Delivery - Kent Beck
 
 INSERT INTO
-    users (username)
+    users (username, password, role, cpf, name)
 VALUES
-    ('batman'),
-    ('spiderman');
+('batman', '$2a$10$Nh1M35SC9QX5Qn6Cm9pK3.LYAkRLI03qZI1w3l/YRFxVy.4x1V/oe', 'ADMIN', '60236589032', 'Bruce Wayne'), --password: 123
+
+('spiderman', '$2a$10$n5VxUOHCpcv7f8CJwdrdAOP72zfEqbWzBB4CTP1xqbz7w3CUqfvW2', 'CLIENT', '62006878034', 'Peter Parker'), --password: 789
+
+('superman', '$2a$10$6HhxiIDYziOtChtHBaiF7uc0HKtfkyaddknkd9KGh8LuzWEndE7OS', 'CLIENT', '44787350005', 'Clark Kent'); --password: 111
 
 INSERT INTO
-    customers (cpf, name, city, street, address_number, complement, zip_code)
+    customers (user_id, cpf, name, city, street, address_number, complement, zip_code)
 VALUES
-    ('118.043.180-43', 'Bruce Wayne', 'Gotham City', 'Wayne Manor', '1007', 'Batcave', '12345678'),
-    ('385.424.840-70', 'Peter Parker', 'New York', 'Queens', '78', 'Apt 4A', '87654321'),
-    ('123.456.789-00', 'Diana Prince', 'Themyscira', 'Amazon Island', '1', 'Apt 1', '65432178');
+    (1, '118.043.180-43', 'Bruce Wayne', 'Gotham City', 'Wayne Manor', '1007', 'Batcave', '12345678'),
+    (2, '385.424.840-70', 'Peter Parker', 'New York', 'Queens', '78', 'Apt 4A', '87654321'),
+    (3, '987.654.321-00', 'Clark Kent', 'Smallville', 'Kansas', '1', 'Apt 1', '12345678');
 
 INSERT INTO
     LOANS (CUSTOMER_ID, LOAN_DATE, EXPECTED_RETURN_DATE, RETURN_DATE, STATUS)

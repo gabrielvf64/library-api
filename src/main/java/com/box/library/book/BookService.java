@@ -8,10 +8,10 @@ import com.box.library.request.CreateBookRequest;
 import com.box.library.request.UpdateBookRequest;
 import com.box.library.response.AuthorResponse;
 import com.box.library.response.BookResponse;
+import com.box.library.response.CreateBookResponse;
 import com.box.library.response.GenericPagedResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import com.box.library.response.CreateBookResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -70,7 +70,7 @@ public class BookService {
 
         existingBook.setTitle(request.title());
         existingBook.setAuthors(authors);
-        existingBook.setISBN(request.isbn());
+        existingBook.setIsbn(request.isbn());
         existingBook.setPublisher(request.publisher());
         existingBook.setStatus(request.status());
 
@@ -102,7 +102,7 @@ public class BookService {
                 book.getTitle(),
                 getAuthorResponse(book),
                 book.getPublisher(),
-                book.getISBN(),
+                book.getIsbn(),
                 book.getStatus().name()
         );
     }
@@ -113,8 +113,9 @@ public class BookService {
                 .map(author -> new AuthorResponse(author.getId(), author.getName()))
                 .toList();
     }
-    private CreateBookResponse bookToResponse(Book book, List<Author> authors){
-        return new CreateBookResponse(book.getId(), book.getTitle(), authors.stream().map(Author::getName).toList(), book.getPublisher(), book.getISBN(), book.getStatus().name());
+
+    private CreateBookResponse bookToResponse(Book book, List<Author> authors) {
+        return new CreateBookResponse(book.getId(), book.getTitle(), authors.stream().map(Author::getName).toList(), book.getPublisher(), book.getIsbn(), book.getStatus().name());
     }
 
 }

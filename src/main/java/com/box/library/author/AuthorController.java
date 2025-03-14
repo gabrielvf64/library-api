@@ -5,6 +5,7 @@ import com.box.library.request.UpdateAuthorRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,30 +22,36 @@ public class AuthorController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
     public ResponseEntity<List<Author>> findAll() {
         var authorsList = service.findAll();
         return authorsList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(authorsList);
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Author> create(@Valid @RequestBody CreateAuthorRequest request) {
         var savedAuthor = service.create(request);
         return ResponseEntity.ok(savedAuthor);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
     public ResponseEntity<Author> findById(@PathVariable Long id) {
         var author = service.findById(id);
         return ResponseEntity.ok(author);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Author> update(@PathVariable Long id, @Valid @RequestBody UpdateAuthorRequest request) {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Author> update(@PathVariable Long id,
+                                         @Valid @RequestBody UpdateAuthorRequest request) {
         var updatedAuthor = service.update(id, request);
         return ResponseEntity.ok(updatedAuthor);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
