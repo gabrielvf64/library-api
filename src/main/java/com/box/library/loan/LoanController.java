@@ -29,10 +29,10 @@ public class LoanController {
         return loansList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(loansList);
     }
 
-    @GetMapping("/customer/{customerId}")
+    @GetMapping("/customer/{id}")
     @PreAuthorize("hasAuthority('ADMIN') OR (hasAuthority('CLIENT') AND #id == authentication.principal.id)")
-    public ResponseEntity<List<Loan>> findByCustomerId(@PathVariable Long customerId) {
-        var loans = service.findByCustomerId(customerId);
+    public ResponseEntity<List<Loan>> findByCustomerId(@PathVariable Long id) {
+        var loans = service.findByCustomerId(id);
         return loans.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(loans);
     }
 
