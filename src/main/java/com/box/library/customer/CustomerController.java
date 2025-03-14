@@ -1,8 +1,8 @@
 package com.box.library.customer;
 
+import com.box.library.jwt.JwtUserDetails;
 import com.box.library.request.CreateCustomerRequest;
 import com.box.library.request.UpdateCustomerRequest;
-import com.box.library.jwt.JwtUserDetails;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -46,7 +46,6 @@ public class CustomerController {
     }
 
     @GetMapping("/details")
-    @PreAuthorize("hasAuthority('ADMIN') OR (hasAuthority('CLIENT') AND #id == authentication.principal.id)")
     public ResponseEntity<Customer> getDetails(@AuthenticationPrincipal JwtUserDetails jwtUserDetails) {
         var entity = service.findUserById(jwtUserDetails.getId());
         return ResponseEntity.ok(entity);
