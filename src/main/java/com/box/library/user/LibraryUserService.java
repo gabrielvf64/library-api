@@ -81,6 +81,10 @@ public class LibraryUserService {
         repository.deleteById(id);
     }
 
+    private LibraryUser toEntity(CreateLibraryUserRequest request) {
+        return new LibraryUser(request.username());
+    }
+
     private boolean doesNotExitsById(Long id) {
         return !repository.existsById(id);
     }
