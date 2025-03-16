@@ -2,6 +2,7 @@ package com.box.library.customer;
 
 import com.box.library.address.Address;
 import com.box.library.loan.Loan;
+import com.box.library.user.LibraryUser;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -23,13 +24,17 @@ public class Customer {
     private String cpf;
     private String name;
 
+    @Embedded
+    private Address address;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private LibraryUser user;
+
     @OneToMany
     @JoinColumn(name = "customer_id")
     @JsonIgnoreProperties("customer")
     private List<Loan> loans;
-
-    @Embedded
-    private Address address;
 
     public Customer(String name, String cpf, Address address) {
         this.name = name;
