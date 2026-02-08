@@ -1,5 +1,5 @@
 
-# API REST de Biblioteca - ADA
+# API REST de Biblioteca
 
 API REST para gerenciamente de uma biblioteca. Gerencia usuários, livros e empréstimos dos livros
 
