@@ -3,13 +3,14 @@ package com.box.library.book;
 import com.box.library.request.CreateBookRequest;
 import com.box.library.request.UpdateBookRequest;
 import com.box.library.response.BookResponse;
-import com.box.library.response.GenericPagedResponse;
 import com.box.library.response.CreateBookResponse;
+import com.box.library.response.GenericPagedResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,12 +27,14 @@ public class BookController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<CreateBookResponse> create(@Valid @RequestBody CreateBookRequest request) {
         var savedBook = service.create(request);
         return ResponseEntity.ok(savedBook);
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
     public ResponseEntity<List<BookResponse>> findAll() {
         var books = service.findAll();
         return books.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(books);
@@ -43,24 +46,28 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
     public ResponseEntity<Book> findById(@PathVariable Long id) {
         var book = service.findById(id);
         return ResponseEntity.ok(book);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Book> update(@PathVariable Long id, @Valid @RequestBody UpdateBookRequest request) {
         var updatedEntity = service.update(id, request);
         return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
     }
 
     @GetMapping("/filter")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
     public ResponseEntity<List<BookResponse>> findAllByFilter(@RequestParam(required = false) String author,
                                                               @RequestParam(required = false) String title,
                                                               @RequestParam(required = false) String isbn,

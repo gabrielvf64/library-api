@@ -33,7 +33,7 @@ public class Book {
     private List<Author> authors;
 
     private String publisher;
-    private String ISBN;
+    private String isbn;
 
     @ManyToMany
     @JoinTable(
@@ -48,11 +48,10 @@ public class Book {
     @Enumerated(EnumType.STRING)
     private BookStatus status = BookStatus.AVAILABLE;
 
-    public Book(String title, List<Author> authors, String publisher, String ISBN) {
+    public Book(String title, List<Author> authors, String publisher, String isbn) {
         this.title = title;
         this.authors = authors;
         this.publisher = publisher;
-        this.ISBN = ISBN;
+        this.isbn = isbn;
     }
-
 }
